@@ -63,10 +63,13 @@
     { "year": 1988, "date": "1988-07-01", "dateVerified": true, "place": "Rome", "title": "Excommunications declared", "text": "The Congregation for Bishops declares that Lefebvre, Castro Mayer and the four new bishops incurred latae sententiae excommunication.", "sources": ["wikipedia-en", "ecclesia-dei"] },
     { "year": 1988, "date": "1988-07-02", "dateVerified": true, "place": "Rome", "title": "'Ecclesia Dei'", "text": "John Paul II's motu proprio calls the consecrations 'a schismatic act' and establishes the Ecclesia Dei Commission for faithful attached to the traditional liturgy.", "sources": ["ecclesia-dei"] },
     { "year": 1988, "date": "1988-07-18", "dateVerified": true, "place": "Hauterive Abbey, Switzerland", "title": "FSSP founded", "text": "Twelve former SSPX priests led by Fr. Josef Bisig found the Priestly Fraternity of Saint Peter in full communion with Rome.", "sources": ["wikipedia-fssp"] },
+    { "year": 1988, "date": "1988-08-15", "dateVerified": true, "place": "Campos, Brazil", "title": "Campos priests form the Priestly Union of Saint John Mary Vianney", "text": "The priests loyal to Bishop Castro Mayer formally organize the União Sacerdotal São João Maria Vianney, continuing the traditional Mass across the diocese of Campos.", "sources": ["wikipedia-campos-aa"] },
     { "year": 1991, "date": "1991-03-25", "dateVerified": true, "place": "Martigny, Switzerland", "title": "Death of Marcel Lefebvre", "text": "The founder dies at 85 and is buried at the Écône seminary.", "sources": ["wikipedia-lefebvre"] },
+    { "year": 1991, "date": "1991-04-25", "dateVerified": true, "place": "Campos, Brazil", "title": "Death of Antônio de Castro Mayer", "text": "The co-consecrator of the 1988 Écône consecrations dies a month after Lefebvre.", "sources": ["wikipedia-castro-mayer"] },
+    { "year": 1991, "date": "1991-07-28", "dateVerified": true, "place": "São Fidélis, Brazil", "title": "Rangel consecrated for the Campos union", "text": "Licínio Rangel is consecrated without papal mandate by Bishop Tissier de Mallerais, assisted by de Galarreta and Williamson, to lead the Campos priests after Castro Mayer's death.", "sources": ["wikipedia-rangel", "wikipedia-campos-aa"] },
     { "year": 1994, "date": "1994", "dateVerified": true, "place": "Écône", "title": "Fellay elected Superior General", "text": "Bishop Bernard Fellay leads the Society 1994–2018 (re-elected 2006).", "sources": ["wikipedia-en"] },
     { "year": 2000, "date": "2000-08", "dateVerified": false, "place": "Rome", "title": "Jubilee pilgrimage to Rome", "text": "Over 5,000 SSPX pilgrims visit the major basilicas; Cardinal Castrillón Hoyos opens contacts, reportedly offering a personal prelature or apostolic administration.", "sources": ["wikipedia-en"] },
-    { "year": 2002, "date": "2002-01-18", "dateVerified": false, "place": "Campos, Brazil", "title": "Campos priests reconcile with Rome", "text": "The priestly union founded by Castro Mayer's followers is received as the Apostolic Administration Saint John Mary Vianney — a path the SSPX declined; a Brazil-relevant parallel case.", "sources": ["onepeterfive-campos"] },
+    { "year": 2002, "date": "2002-01-18", "dateVerified": false, "place": "Campos, Brazil", "title": "Campos priests reconcile with Rome", "text": "The priestly union founded by Castro Mayer's followers is received as the Personal Apostolic Administration Saint John Mary Vianney under Bishop Rangel; Fernando Rifan, consecrated in full communion later that year, succeeds him in December — a path the SSPX declined.", "sources": ["wikipedia-campos-aa", "onepeterfive-campos"] },
     { "year": 2007, "date": "2007-07-07", "dateVerified": true, "place": "Rome", "title": "'Summorum Pontificum'", "text": "Benedict XVI liberalizes the 1962 Missal as the 'extraordinary form', meeting one of the SSPX's two stated preconditions for talks.", "sources": ["summorum-pontificum"] },
     { "year": 2009, "date": "2009-01-21", "dateVerified": true, "place": "Rome", "title": "1988 excommunications remitted", "text": "A decree of the Congregation for Bishops (dated 21 January, published 24 January) lifts the excommunications of the four bishops; some sources cite 10 March 2009, the date of Benedict XVI's explanatory letter.", "sources": ["decree-2009"] },
     { "year": 2009, "date": "2009-01", "dateVerified": true, "place": "Worldwide", "title": "Williamson affair", "text": "A television interview in which Bishop Richard Williamson denied the Holocaust airs just before the remission is announced, causing worldwide controversy; the SSPX removes him as rector of the La Reja seminary.", "sources": ["wikipedia-williamson"] },
@@ -92,7 +95,9 @@
   ],
   "figures": [
     { "name": "Marcel Lefebvre", "role": "Founder and first Superior General (1970–1982); former Archbishop of Dakar and Superior General of the Holy Ghost Fathers; suspended a divinis 1976; consecrated four bishops in 1988 and was declared excommunicated; buried at Écône.", "dates": "1905–1991", "country": "France", "sources": ["wikipedia-lefebvre"] },
-    { "name": "Antônio de Castro Mayer", "role": "Bishop of Campos, Brazil (1949–1981), co-consecrator of the 1988 Écône consecrations; his priests later reconciled with Rome as the Campos apostolic administration (2002). Exact biographical dates to verify.", "dates": "1904–1991", "country": "Brazil", "sources": ["wikipedia-en", "onepeterfive-campos"] },
+    { "name": "Antônio de Castro Mayer", "role": "Bishop of Campos, Brazil (1949–1981), the 'other bishop of 1988': co-consecrator of the Écône consecrations. His priests formed the Priestly Union of Saint John Mary Vianney (1988), root of the Campos line that later reconciled with Rome (2002).", "dates": "1904–1991", "country": "Brazil", "sources": ["wikipedia-castro-mayer", "wikipedia-campos-aa", "onepeterfive-campos"] },
+    { "name": "Licínio Rangel", "role": "Successor of Castro Mayer at the head of the Campos priests' union; consecrated without mandate by three SSPX bishops at São Fidélis (1991); led the union into full communion with Rome as apostolic administrator (January 2002).", "dates": "1936–2002", "country": "Brazil", "sources": ["wikipedia-rangel", "wikipedia-campos-aa"] },
+    { "name": "Fernando Arêas Rifan", "role": "Apostolic administrator of the Campos administration since December 2002; appointed coadjutor by John Paul II and consecrated in full communion (2002).", "dates": "b. 1950", "country": "Brazil", "sources": ["wikipedia-campos-aa"] },
     { "name": "Franz Schmidberger", "role": "Superior General 1982–1994; later German district superior and seminary rector.", "dates": "b. 1946", "country": "Germany", "sources": ["wikipedia-en"] },
     { "name": "Bernard Fellay", "role": "One of the four 1988 bishops; Superior General 1994–2018; led the 2000s–2010s negotiations with Rome; co-consecrator of the 2026 consecrations.", "dates": "b. 1958", "country": "Switzerland", "sources": ["wikipedia-en", "wikipedia-2026"] },
     { "name": "Bernard Tissier de Mallerais", "role": "One of the four 1988 bishops; Lefebvre's biographer.", "dates": "1945–2024", "country": "France", "sources": ["wikipedia-en"] },
@@ -114,7 +119,7 @@
     { "name": "Society of Saint Pius V (SSPV)", "founded": "1983", "place": "United States", "relation": "Founded by nine priests expelled from or leaving the SSPX in a dispute over the liturgy and sedevacantism; sedevacantist-leaning and organizationally separate from the SSPX.", "url": "https://en.wikipedia.org/wiki/Society_of_Saint_Pius_V", "sources": ["wikipedia-sspv"] },
     { "name": "CMRI — Congregation of Mary Immaculate Queen", "founded": "1967", "place": "Spokane, USA", "relation": "An explicitly sedevacantist congregation founded before the SSPX existed and never part of it — a common confusion this project flags rather than repeats.", "url": "https://en.wikipedia.org/wiki/Congregation_of_Mary_Immaculate_Queen", "sources": ["wikipedia-cmri"] },
     { "name": "The 'Resistance' (Williamson line)", "founded": "2012", "place": "worldwide", "relation": "A loose movement — not a single institute — around Bishop Williamson after his 2012 expulsion, rejecting any accord with Rome; Williamson consecrated further bishops without mandate, beginning with Jean-Michel Faure at Nova Friburgo, Brazil (2015).", "sources": ["wikipedia-williamson"] },
-    { "name": "Apostolic Administration Saint John Mary Vianney (Campos)", "founded": "2002", "place": "Campos, Brazil", "relation": "The priestly union founded by Bishop Castro Mayer's followers in Campos, which reconciled with Rome in 2002 — the 'other path' of Brazilian traditionalism, often contrasted with the SSPX's.", "sources": ["onepeterfive-campos"] },
+    { "name": "Priestly Union of Saint John Mary Vianney → Apostolic Administration (Campos)", "founded": "1988 / 2002", "place": "Campos, Brazil", "relation": "Formed on 15 August 1988 by the Campos priests loyal to Bishop Castro Mayer, the co-consecrator of the Écône consecrations; received its own bishop (Licínio Rangel, 1991) from SSPX hands; reconciled with Rome in January 2002 as the Personal Apostolic Administration Saint John Mary Vianney under Rangel and then Fernando Rifan — the 'other path' of Brazilian traditionalism.", "url": "https://en.wikipedia.org/wiki/Personal_Apostolic_Administration_of_Saint_John_Mary_Vianney", "sources": ["wikipedia-campos-aa", "onepeterfive-campos"] },
     { "name": "Casa Autônoma do Brasil", "founded": "2017", "place": "São Paulo, Brazil", "relation": "The SSPX's Brazilian autonomous house ('district in formation'), erected in 2017 from the Argentina-based District of South America; priories reported in São Paulo and other states, with formation at La Reja, Argentina.", "url": "https://fsspx.com.br", "notes": "Exact founding dates of individual Brazilian priories are not yet verified — see GitHub issues.", "sources": ["fsspx-news-brazil", "fsspx-brasil"] }
   ],
   "episcopalLineage": {
@@ -142,6 +147,28 @@
                 { "name": "Michael Goldade", "detail": "Écône, 1 July 2026; rector of the Dillwyn seminary", "status": "excommunication declared by the DDF, 2 July 2026 (SSPX disputes it)", "sources": ["wikipedia-2026", "pillar-2026"] },
                 { "name": "Michel Poinsinet de Sivry", "detail": "Écône, 1 July 2026; Benelux district superior", "status": "excommunication declared by the DDF, 2 July 2026 (SSPX disputes it)", "sources": ["wikipedia-2026", "pillar-2026"] },
                 { "name": "Marc Hanappier", "detail": "Écône, 1 July 2026; seminary professor", "status": "excommunication declared by the DDF, 2 July 2026 (SSPX disputes it)", "sources": ["wikipedia-2026", "pillar-2026"] }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "title": "Campos line — from Antônio de Castro Mayer (Brazil)",
+        "summary": "The 'other bishop of 1988': Castro Mayer, emeritus of Campos (RJ), co-consecrated the Écône four. His priests had formed the Priestly Union of Saint John Mary Vianney (15 August 1988); after his death they received their own bishop from SSPX hands, and in 2002 the union reconciled with Rome as the Personal Apostolic Administration Saint John Mary Vianney — the 'other path' of Brazilian traditionalism, often contrasted with the SSPX's.",
+        "sources": ["wikipedia-castro-mayer", "wikipedia-campos-aa", "onepeterfive-campos"],
+        "root": {
+          "name": "Antônio de Castro Mayer",
+          "detail": "Bishop of Campos 1949–1981; co-consecrator at Écône, 30 June 1988; † 25 April 1991",
+          "status": "1988 excommunication declared (the 2009 remission concerned the four living bishops)",
+          "sources": ["wikipedia-castro-mayer"],
+          "children": [
+            {
+              "name": "Licínio Rangel",
+              "detail": "São Fidélis (Brazil), 28 July 1991 — consecrated by Tissier de Mallerais, assisted by de Galarreta and Williamson, to lead the Campos priests' union; † 2002",
+              "status": "excommunication latae sententiae per the Holy See; reconciled January 2002 as apostolic administrator",
+              "sources": ["wikipedia-rangel", "wikipedia-campos-aa"],
+              "children": [
+                { "name": "Fernando Arêas Rifan", "detail": "2002 — appointed coadjutor by John Paul II (28 June 2002) and consecrated in full communion; succeeded Rangel in December 2002", "status": "in full communion with Rome", "sources": ["wikipedia-campos-aa"] }
               ]
             }
           ]
@@ -220,6 +247,9 @@
     { "id": "pillar-2026", "title": "Vatican confirms six SSPX bishops excommunicated", "url": "https://www.pillarcatholic.com/p/vatican-confirms-six-sspx-bishops", "publisher": "The Pillar", "type": "news" },
     { "id": "ewtn-2026", "title": "SSPX rejects Vatican's excommunication, calls it 'objectively unjust and invalid'", "url": "https://www.ewtnnews.com/vatican/sspx-rejects-vatican-s-excommunication-calls-it-objectively-unjust-and-invalid", "publisher": "EWTN News", "type": "news" },
     { "id": "wapo-williamson-obit", "title": "Bishop Richard Williamson, excommunicated bishop and Holocaust denier, dies (31 January 2025)", "url": "https://www.washingtonpost.com/obituaries/2025/01/31/bishop-richard-williamson-dead/", "publisher": "The Washington Post", "type": "news" },
+    { "id": "wikipedia-castro-mayer", "title": "Antônio de Castro Mayer", "url": "https://en.wikipedia.org/wiki/Ant%C3%B4nio_de_Castro_Mayer", "publisher": "Wikipedia (EN)", "type": "encyclopedia" },
+    { "id": "wikipedia-rangel", "title": "Licínio Rangel", "url": "https://en.wikipedia.org/wiki/Lic%C3%ADnio_Rangel", "publisher": "Wikipedia (EN)", "type": "encyclopedia" },
+    { "id": "wikipedia-campos-aa", "title": "Personal Apostolic Administration of Saint John Mary Vianney", "url": "https://en.wikipedia.org/wiki/Personal_Apostolic_Administration_of_Saint_John_Mary_Vianney", "publisher": "Wikipedia (EN)", "type": "encyclopedia" },
     { "id": "wikipedia-thuc", "title": "Ngô Đình Thục", "url": "https://en.wikipedia.org/wiki/Ng%C3%B4_%C4%90%C3%ACnh_Th%E1%BB%A5c", "publisher": "Wikipedia (EN)", "type": "encyclopedia" },
     { "id": "wikipedia-palmarian", "title": "Palmarian Catholic Church", "url": "https://en.wikipedia.org/wiki/Palmarian_Catholic_Church", "publisher": "Wikipedia (EN)", "type": "encyclopedia" },
     { "id": "lundberg-palmar", "title": "Outline of the History of the Palmarian Movement/Church 1968–2016 (Magnus Lundberg)", "url": "https://magnuslundberg.net/2016/04/30/chronological-outline-of-the-palmarian-church/", "publisher": "Magnus Lundberg (Uppsala University)", "type": "academic" },
