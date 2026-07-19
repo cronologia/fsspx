@@ -1,0 +1,198 @@
+{
+  "generatedBy": "scripts/archive-refs.js",
+  "updatedAt": "2026-07-19",
+  "snapshots": {
+    "https://en.wikipedia.org/wiki/2026_%C3%89c%C3%B4ne_consecrations": {
+      "refId": "wikipedia-2026",
+      "archiveUrl": "https://web.archive.org/web/20260708015710/https://en.wikipedia.org/wiki/2026_%C3%89c%C3%B4ne_consecrations",
+      "timestamp": "20260708015710",
+      "checkedAt": "2026-07-19"
+    },
+    "https://en.wikipedia.org/wiki/Congregation_of_Mary_Immaculate_Queen": {
+      "refId": "wikipedia-cmri",
+      "archiveUrl": "https://web.archive.org/web/20260704013357/https://en.wikipedia.org/wiki/Congregation_of_Mary_Immaculate_Queen",
+      "timestamp": "20260704013357",
+      "checkedAt": "2026-07-19"
+    },
+    "https://en.wikipedia.org/wiki/Dialogue_between_the_Holy_See_and_the_Society_of_Saint_Pius_X": {
+      "refId": "wikipedia-dialogue",
+      "archiveUrl": "https://web.archive.org/web/20260711163516/https://en.wikipedia.org/wiki/Dialogue_between_the_Holy_See_and_the_Society_of_Saint_Pius_X",
+      "timestamp": "20260711163516",
+      "checkedAt": "2026-07-19"
+    },
+    "https://en.wikipedia.org/wiki/Institute_of_the_Good_Shepherd": {
+      "refId": "wikipedia-ibp",
+      "archiveUrl": "https://web.archive.org/web/20260702202703/https://en.wikipedia.org/wiki/Institute_of_the_Good_Shepherd",
+      "timestamp": "20260702202703",
+      "checkedAt": "2026-07-19"
+    },
+    "https://en.wikipedia.org/wiki/Lic%C3%ADnio_Rangel": {
+      "refId": "wikipedia-rangel",
+      "archiveUrl": "https://web.archive.org/web/20260610040440/https://en.wikipedia.org/wiki/Lic%C3%ADnio_Rangel",
+      "timestamp": "20260610040440",
+      "checkedAt": "2026-07-19"
+    },
+    "https://en.wikipedia.org/wiki/Marcel_Lefebvre": {
+      "refId": "wikipedia-lefebvre",
+      "archiveUrl": "https://web.archive.org/web/20260716020457/https://en.wikipedia.org/wiki/Marcel_Lefebvre",
+      "timestamp": "20260716020457",
+      "checkedAt": "2026-07-19"
+    },
+    "https://en.wikipedia.org/wiki/Ng%C3%B4_%C4%90%C3%ACnh_Th%E1%BB%A5c": {
+      "refId": "wikipedia-thuc",
+      "archiveUrl": "https://web.archive.org/web/20260623092423/https://en.wikipedia.org/wiki/Ng%C3%B4_%C4%90%C3%ACnh_Th%E1%BB%A5c",
+      "timestamp": "20260623092423",
+      "checkedAt": "2026-07-19"
+    },
+    "https://en.wikipedia.org/wiki/Palmarian_Catholic_Church": {
+      "refId": "wikipedia-palmarian",
+      "archiveUrl": "https://web.archive.org/web/20260630102844/https://en.wikipedia.org/wiki/Palmarian_Catholic_Church",
+      "timestamp": "20260630102844",
+      "checkedAt": "2026-07-19"
+    },
+    "https://en.wikipedia.org/wiki/Personal_Apostolic_Administration_of_Saint_John_Mary_Vianney": {
+      "refId": "wikipedia-campos-aa",
+      "archiveUrl": "https://web.archive.org/web/20260702202703/https://en.wikipedia.org/wiki/Personal_Apostolic_Administration_of_Saint_John_Mary_Vianney",
+      "timestamp": "20260702202703",
+      "checkedAt": "2026-07-19"
+    },
+    "https://en.wikipedia.org/wiki/Richard_Williamson_(bishop)": {
+      "refId": "wikipedia-williamson",
+      "archiveUrl": "https://web.archive.org/web/20260708152255/https://en.wikipedia.org/wiki/Richard_Williamson_(bishop)",
+      "timestamp": "20260708152255",
+      "checkedAt": "2026-07-19"
+    },
+    "https://en.wikipedia.org/wiki/Seminario_Nuestra_Se%C3%B1ora_Corredentora": {
+      "refId": "wikipedia-lareja",
+      "archiveUrl": "https://web.archive.org/web/20251115021014/https://en.wikipedia.org/wiki/Seminario_Nuestra_Se%C3%B1ora_Corredentora",
+      "timestamp": "20251115021014",
+      "checkedAt": "2026-07-19"
+    },
+    "https://en.wikipedia.org/wiki/Society_of_Saint_Pius_V": {
+      "refId": "wikipedia-sspv",
+      "archiveUrl": "https://web.archive.org/web/20260630103027/https://en.wikipedia.org/wiki/Society_of_Saint_Pius_V",
+      "timestamp": "20260630103027",
+      "checkedAt": "2026-07-19"
+    },
+    "https://en.wikipedia.org/wiki/Society_of_Saint_Pius_X": {
+      "refId": "wikipedia-en",
+      "archiveUrl": "https://web.archive.org/web/20260707175038/https://en.wikipedia.org/wiki/Society_of_Saint_Pius_X",
+      "timestamp": "20260707175038",
+      "checkedAt": "2026-07-19"
+    },
+    "https://fsspx.com.br": {
+      "refId": "fsspx-brasil",
+      "archiveUrl": "https://web.archive.org/web/20260520042216/http://www.fsspx.com.br/",
+      "timestamp": "20260520042216",
+      "checkedAt": "2026-07-19"
+    },
+    "https://fsspx.news/en/news/sspx-brazil-becomes-autonomous-house-16213": {
+      "refId": "fsspx-news-brazil",
+      "archiveUrl": "https://web.archive.org/web/20260719203554/https://fsspx.news/en/news/sspx-brazil-becomes-autonomous-house-16213",
+      "timestamp": "20260719203554",
+      "checkedAt": "2026-07-19"
+    },
+    "https://fsspx.org": {
+      "refId": "fsspx-org",
+      "archiveUrl": "https://web.archive.org/web/20240531072540/https://fsspx.org/",
+      "timestamp": "20240531072540",
+      "checkedAt": "2026-07-19"
+    },
+    "https://magnuslundberg.net/2016/04/30/chronological-outline-of-the-palmarian-church/": {
+      "refId": "lundberg-palmar",
+      "archiveUrl": "https://web.archive.org/web/20260330121247/https://magnuslundberg.net/2016/04/30/chronological-outline-of-the-palmarian-church/",
+      "timestamp": "20260330121247",
+      "checkedAt": "2026-07-19"
+    },
+    "https://pt.wikipedia.org/wiki/Fraternidade_Sacerdotal_de_S%C3%A3o_Pio_X": {
+      "refId": "wikipedia-pt",
+      "archiveUrl": "https://web.archive.org/web/20260703180432/https://pt.wikipedia.org/wiki/Fraternidade_Sacerdotal_de_S%C3%A3o_Pio_X",
+      "timestamp": "20260703180432",
+      "checkedAt": "2026-07-19"
+    },
+    "https://sspx.org/en/news/timeline-society-saint-pius-xs-july-1-2026-episcopal-consecrations-60126": {
+      "refId": "sspx-org",
+      "archiveUrl": "https://web.archive.org/web/20260715072715/https://sspx.org/en/news/timeline-society-saint-pius-xs-july-1-2026-episcopal-consecrations-60126",
+      "timestamp": "20260715072715",
+      "checkedAt": "2026-07-19"
+    },
+    "https://www.americamagazine.org/vatican-dispatch/2026/07/01/sspx-ordains-four-new-bishops-in-defiance-of-pope-leo-and-the-vatican/": {
+      "refId": "america-2026",
+      "archiveUrl": "https://web.archive.org/web/20260716034721/https://www.americamagazine.org/vatican-dispatch/2026/07/01/sspx-ordains-four-new-bishops-in-defiance-of-pope-leo-and-the-vatican/",
+      "timestamp": "20260716034721",
+      "checkedAt": "2026-07-19"
+    },
+    "https://www.arlingtondiocese.org/2017/05/08/statement-from-most-reverend-michael-f-burbidge-on-the-consecration-of-father-gerardo-zendejas-member-of-an-independent-church/": {
+      "refId": "arlington-zendejas",
+      "archiveUrl": "https://web.archive.org/web/20251009194953/https://www.arlingtondiocese.org/2017/05/08/statement-from-most-reverend-michael-f-burbidge-on-the-consecration-of-father-gerardo-zendejas-member-of-an-independent-church/",
+      "timestamp": "20251009194953",
+      "checkedAt": "2026-07-19"
+    },
+    "https://www.cnnbrasil.com.br/internacional/excomungado-pelo-vaticano-conheca-grupo-ultraconservador-alvo-de-punicao/": {
+      "refId": "cnn-brasil-2026",
+      "archiveUrl": "https://web.archive.org/web/20260703072619/https://www.cnnbrasil.com.br/internacional/excomungado-pelo-vaticano-conheca-grupo-ultraconservador-alvo-de-punicao/",
+      "timestamp": "20260703072619",
+      "checkedAt": "2026-07-19"
+    },
+    "https://www.ewtnnews.com/vatican/sspx-rejects-vatican-s-excommunication-calls-it-objectively-unjust-and-invalid": {
+      "refId": "ewtn-2026",
+      "archiveUrl": "https://web.archive.org/web/20260714044858/https://www.ewtnnews.com/vatican/sspx-rejects-vatican-s-excommunication-calls-it-objectively-unjust-and-invalid",
+      "timestamp": "20260714044858",
+      "checkedAt": "2026-07-19"
+    },
+    "https://www.ncronline.org/vatican-declares-sspx-bishops-priests-schismatic-says-lay-faithful-risk-excommunication": {
+      "refId": "ncr-2026",
+      "archiveUrl": "https://web.archive.org/web/20260717043152/https://www.ncronline.org/vatican-declares-sspx-bishops-priests-schismatic-says-lay-faithful-risk-excommunication",
+      "timestamp": "20260717043152",
+      "checkedAt": "2026-07-19"
+    },
+    "https://www.pillarcatholic.com/p/vatican-confirms-six-sspx-bishops": {
+      "refId": "pillar-2026",
+      "archiveUrl": "https://web.archive.org/web/20260703130717/https://www.pillarcatholic.com/p/vatican-confirms-six-sspx-bishops",
+      "timestamp": "20260703130717",
+      "checkedAt": "2026-07-19"
+    },
+    "https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html": {
+      "refId": "summorum-pontificum",
+      "archiveUrl": "https://web.archive.org/web/20260715001935/https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html",
+      "timestamp": "20260715001935",
+      "checkedAt": "2026-07-19"
+    },
+    "https://www.vatican.va/content/francesco/en/apost_letters/documents/papa-francesco-lettera-ap_20161120_misericordia-et-misera.html": {
+      "refId": "misericordia-et-misera",
+      "archiveUrl": "https://web.archive.org/web/20260714064543/https://www.vatican.va/content/francesco/en/apost_letters/documents/papa-francesco-lettera-ap_20161120_misericordia-et-misera.html",
+      "timestamp": "20260714064543",
+      "checkedAt": "2026-07-19"
+    },
+    "https://www.vatican.va/content/francesco/en/motu_proprio/documents/20210716-motu-proprio-traditionis-custodes.html": {
+      "refId": "traditionis-custodes",
+      "archiveUrl": "https://web.archive.org/web/20260719203921/https://www.vatican.va/content/francesco/en/motu_proprio/documents/20210716-motu-proprio-traditionis-custodes.html",
+      "timestamp": "20260719203921",
+      "checkedAt": "2026-07-19"
+    },
+    "https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html": {
+      "refId": "ecclesia-dei",
+      "archiveUrl": "https://web.archive.org/web/20260703125137/https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html",
+      "timestamp": "20260703125137",
+      "checkedAt": "2026-07-19"
+    },
+    "https://www.vatican.va/roman_curia/congregations/cbishops/documents/rc_con_cbishops_doc_20090121_remissione-scomunica_en.html": {
+      "refId": "decree-2009",
+      "archiveUrl": "https://web.archive.org/web/20260716213732/https://www.vatican.va/roman_curia/congregations/cbishops/documents/rc_con_cbishops_doc_20090121_remissione-scomunica_en.html",
+      "timestamp": "20260716213732",
+      "checkedAt": "2026-07-19"
+    },
+    "https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html": {
+      "refId": "ecclesia-dei-marriages",
+      "archiveUrl": "https://web.archive.org/web/20260702232448/https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html",
+      "timestamp": "20260702232448",
+      "checkedAt": "2026-07-19"
+    },
+    "https://www.washingtonpost.com/obituaries/2025/01/31/bishop-richard-williamson-dead/": {
+      "refId": "wapo-williamson-obit",
+      "archiveUrl": "https://web.archive.org/web/20251010230714/https://www.washingtonpost.com/obituaries/2025/01/31/bishop-richard-williamson-dead/",
+      "timestamp": "20251010230714",
+      "checkedAt": "2026-07-19"
+    }
+  }
+}

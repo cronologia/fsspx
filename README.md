@@ -23,13 +23,16 @@ compiles it into plain HTML/CSS that can be hosted anywhere.
 ```
 fsspx/
 ├── data/
-│   └── chronology.json       # SINGLE SOURCE OF TRUTH — facts, events, figures, references
+│   ├── chronology.json       # SINGLE SOURCE OF TRUTH — facts, events, figures, references
+│   └── archives.json         # machine-generated Wayback snapshot cache (committed)
 ├── src/
 │   └── styles.css            # stylesheet (copied into the build)
 ├── scripts/
-│   └── validate-data.js      # schema check (runs in CI before the build)
+│   ├── validate-data.js      # schema check (runs in CI before the build)
+│   └── archive-refs.js       # Wayback preservation: references[] -> data/archives.json
 ├── .github/workflows/
-│   └── deploy.yml            # CI: validate, test, build, drift check, deploy
+│   ├── deploy.yml            # CI: validate, test, build, drift check, deploy
+│   └── wayback.yml           # CI: weekly Wayback run, commits archives.json + docs/
 ├── build.js                  # compiler: data/chronology.json -> docs/
 ├── docs/                     # COMPILED OUTPUT (served by GitHub Pages)
 ├── AGENTS.md                 # how AI agents/humans should work in this repo
@@ -102,8 +105,15 @@ dates are flagged; contested claims are attributed to their authors, never
 asserted in the site's own voice. **Corrections against primary sources are
 welcome** — open an issue or a PR.
 
-Planned work (Wayback archiving of every reference, a document vault, deeper
-dossiers) is tracked in GitHub issues, mirroring the pipeline the
+Every reference URL is preserved in the Internet Archive:
+`scripts/archive-refs.js` (from the shared
+[`cronologia/core`](https://github.com/cronologia/core) template) looks up an
+existing Wayback snapshot for each `references[].url`, triggers polite Save
+Page Now captures for URLs without one, and writes `data/archives.json`;
+`build.js` renders those as "archived" fallback links in the References
+section. The `wayback.yml` workflow re-runs it weekly on GitHub runners and
+commits the result. Remaining planned work (a document vault, deeper dossiers)
+is tracked in GitHub issues, mirroring the pipeline the
 [`fsp`](https://github.com/cronologia/fsp) project already runs.
 
 ## License
