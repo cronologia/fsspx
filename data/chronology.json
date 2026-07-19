@@ -73,6 +73,8 @@
     { "year": 2009, "date": "2009-10", "dateVerified": false, "place": "Vatican", "title": "Doctrinal talks begin", "text": "Discussions between the CDF and the SSPX on Vatican II (religious liberty, ecumenism, collegiality) run until 2012 without producing an agreement.", "sources": ["wikipedia-dialogue"] },
     { "year": 2012, "date": "2012-10-04", "dateVerified": true, "place": "Menzingen", "title": "Williamson expelled", "text": "The SSPX expels Bishop Williamson after unauthorized confirmations in Brazil and public defiance; he goes on to lead the loose 'Resistance' network.", "sources": ["wikipedia-williamson"] },
     { "year": 2015, "date": "2015-03-19", "dateVerified": false, "place": "Nova Friburgo, Brazil", "title": "Resistance consecration in Brazil", "text": "Williamson consecrates Jean-Michel Faure without mandate at the Santa Cruz Monastery, incurring a new automatic excommunication and consolidating the 'Resistance' splinter.", "sources": ["wikipedia-williamson"] },
+    { "year": 2016, "date": "2016-03-19", "dateVerified": true, "place": "Nova Friburgo, Brazil", "title": "Second Resistance consecration in Brazil", "text": "Williamson consecrates Tomás de Aquino Ferreira da Costa, prior of the Santa Cruz Monastery, without mandate.", "sources": ["novusordowatch-aquino"] },
+    { "year": 2017, "date": "2017-05-11", "dateVerified": true, "place": "Diocese of Arlington, Virginia, USA", "title": "Zendejas consecrated for the Resistance", "text": "Williamson, assisted by Faure and Tomás de Aquino, consecrates Gerardo Zendejas; the local bishop's statement notes the excommunication incurred.", "sources": ["arlington-zendejas"] },
     { "year": 2015, "date": "2015-09-01", "dateVerified": false, "place": "Rome", "title": "Confession faculties for the Jubilee", "text": "Pope Francis grants that the faithful can validly and licitly receive absolution from SSPX priests during the Year of Mercy.", "sources": ["misericordia-et-misera"] },
     { "year": 2016, "date": "2016-11-20", "dateVerified": true, "place": "Rome", "title": "Faculties extended indefinitely", "text": "In 'Misericordia et misera' §12 Francis extends the SSPX confession faculty 'until further provisions are made'.", "sources": ["misericordia-et-misera"] },
     { "year": 2017, "date": "2017-03-19", "dateVerified": false, "place": "Brazil", "title": "Casa Autônoma do Brasil", "text": "Brazil is erected as an Autonomous House ('district in formation') of the SSPX, separated from the Argentina-based District of South America for linguistic and cultural reasons.", "sources": ["fsspx-news-brazil", "fsspx-brasil"] },
@@ -115,6 +117,70 @@
     { "name": "Apostolic Administration Saint John Mary Vianney (Campos)", "founded": "2002", "place": "Campos, Brazil", "relation": "The priestly union founded by Bishop Castro Mayer's followers in Campos, which reconciled with Rome in 2002 — the 'other path' of Brazilian traditionalism, often contrasted with the SSPX's.", "sources": ["onepeterfive-campos"] },
     { "name": "Casa Autônoma do Brasil", "founded": "2017", "place": "São Paulo, Brazil", "relation": "The SSPX's Brazilian autonomous house ('district in formation'), erected in 2017 from the Argentina-based District of South America; priories reported in São Paulo and other states, with formation at La Reja, Argentina.", "url": "https://fsspx.com.br", "notes": "Exact founding dates of individual Brazilian priories are not yet verified — see GitHub issues.", "sources": ["fsspx-news-brazil", "fsspx-brasil"] }
   ],
+  "episcopalLineage": {
+    "note": "Who consecrated whom. Episcopal genealogy is the clearest way to keep the traditionalist groups distinct: the SSPX and 'Resistance' bishops all descend from Marcel Lefebvre, while the Palmar de Troya (Palmarian) bishops descend from Archbishop Ngô Đình Thục and have no lineage connection to Lefebvre or the SSPX — the two are often confused. Validity/liceity characterizations are attributed: the Holy See holds these consecrations valid but illicit (gravely unlawful), except the Palmarian line after 1978, which it treats as outside the Church entirely.",
+    "trees": [
+      {
+        "title": "SSPX line — from Marcel Lefebvre",
+        "summary": "The 1988 Écône consecrations (co-consecrator: Antônio de Castro Mayer, emeritus of Campos, Brazil) and the 2026 consecrations performed by two of the 1988 bishops.",
+        "sources": ["wikipedia-en", "wikipedia-2026"],
+        "root": {
+          "name": "Marcel Lefebvre",
+          "detail": "consecrated bishop 1947; Archbishop of Dakar; founder of the SSPX",
+          "sources": ["wikipedia-lefebvre"],
+          "children": [
+            { "name": "Bernard Fellay", "detail": "Écône, 30 June 1988", "status": "1988 excommunication declared, remitted 2009; new excommunication declared 2026 as co-consecrator (SSPX disputes it)", "sources": ["wikipedia-en", "pillar-2026"] },
+            { "name": "Bernard Tissier de Mallerais", "detail": "Écône, 30 June 1988; † 2024", "status": "1988 excommunication declared, remitted 2009", "sources": ["wikipedia-en"] },
+            { "name": "Richard Williamson", "detail": "Écône, 30 June 1988; expelled from the SSPX 2012 — see the 'Resistance' branch; † 2025", "status": "1988 excommunication declared, remitted 2009; new excommunications declared for his later consecrations", "sources": ["wikipedia-williamson"] },
+            {
+              "name": "Alfonso de Galarreta",
+              "detail": "Écône, 30 June 1988; principal consecrator of the 2026 consecrations (co-consecrator: Fellay)",
+              "status": "1988 excommunication declared, remitted 2009; new excommunication declared 2026 (SSPX disputes it)",
+              "sources": ["wikipedia-en", "wikipedia-2026"],
+              "children": [
+                { "name": "Pascal Schreiber", "detail": "Écône, 1 July 2026; rector of the Zaitzkofen seminary", "status": "excommunication declared by the DDF, 2 July 2026 (SSPX disputes it)", "sources": ["wikipedia-2026", "pillar-2026"] },
+                { "name": "Michael Goldade", "detail": "Écône, 1 July 2026; rector of the Dillwyn seminary", "status": "excommunication declared by the DDF, 2 July 2026 (SSPX disputes it)", "sources": ["wikipedia-2026", "pillar-2026"] },
+                { "name": "Michel Poinsinet de Sivry", "detail": "Écône, 1 July 2026; Benelux district superior", "status": "excommunication declared by the DDF, 2 July 2026 (SSPX disputes it)", "sources": ["wikipedia-2026", "pillar-2026"] },
+                { "name": "Marc Hanappier", "detail": "Écône, 1 July 2026; seminary professor", "status": "excommunication declared by the DDF, 2 July 2026 (SSPX disputes it)", "sources": ["wikipedia-2026", "pillar-2026"] }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "title": "'Resistance' line — from Richard Williamson (ex-SSPX)",
+        "summary": "After his 2012 expulsion, Williamson consecrated bishops for the loose 'Resistance' network — two of them in Brazil. Each consecration incurred a new latae sententiae excommunication per the Holy See.",
+        "sources": ["wikipedia-williamson", "arlington-zendejas"],
+        "root": {
+          "name": "Richard Williamson",
+          "detail": "consecrated 1988 by Lefebvre (see SSPX line); expelled from the SSPX 2012; † 2025",
+          "sources": ["wikipedia-williamson"],
+          "children": [
+            { "name": "Jean-Michel Faure", "detail": "Santa Cruz Monastery, Nova Friburgo (Brazil), 19 March 2015", "status": "excommunication latae sententiae per the Holy See", "sources": ["wikipedia-williamson"] },
+            { "name": "Tomás de Aquino Ferreira da Costa", "detail": "Nova Friburgo (Brazil), 19 March 2016; prior of the Santa Cruz Monastery", "status": "excommunication latae sententiae per the Holy See", "sources": ["novusordowatch-aquino"] },
+            { "name": "Gerardo Zendejas", "detail": "Diocese of Arlington, Virginia (USA), 11 May 2017; co-consecrators: Faure and Tomás de Aquino", "status": "excommunication latae sententiae per the Holy See (statement of Bishop Burbidge)", "sources": ["arlington-zendejas"] }
+          ]
+        }
+      },
+      {
+        "title": "Palmar de Troya line — from Ngô Đình Thục (NOT SSPX)",
+        "summary": "Included for disambiguation only: the Palmarian bishops of El Palmar de Troya (Seville, Spain) derive their orders from Archbishop Ngô Đình Thục, not from Lefebvre. There is no lineage or organizational connection to the SSPX — both merely emerged from the same 1970s traditionalist ferment. Thục's later consecrations also seeded sedevacantist lineages (distinct again from both the SSPX and the Palmarians).",
+        "separate": true,
+        "sources": ["wikipedia-palmarian", "wikipedia-thuc", "lundberg-palmar"],
+        "root": {
+          "name": "Ngô Đình Thục",
+          "detail": "Archbishop emeritus of Huế (Vietnam), consecrated 1938; performed the Palmar consecrations in 1976",
+          "sources": ["wikipedia-thuc"],
+          "children": [
+            { "name": "Clemente Domínguez y Gómez", "detail": "El Palmar de Troya, 11 January 1976; proclaimed himself 'Pope Gregory XVII' in 1978, founding the Palmarian Christian Church", "status": "excommunicated January 1976; the Palmarian Church is a separate body not in communion with Rome", "sources": ["wikipedia-palmarian", "lundberg-palmar"] },
+            { "name": "Manuel Alonso Corral", "detail": "El Palmar de Troya, 11 January 1976; later Palmarian 'Pope Peter II' (2005–2011)", "status": "excommunicated January 1976", "sources": ["wikipedia-palmarian", "lundberg-palmar"] },
+            { "name": "Three further Palmar bishops", "detail": "El Palmar de Troya, 11 January 1976", "status": "excommunicated January 1976", "sources": ["lundberg-palmar"] },
+            { "name": "M.-L. Guérard des Lauriers; Moisés Carmona and Adolfo Zamora", "detail": "1981 — Thục's later consecrations, sources of today's sedevacantist episcopal lineages (including the line behind CMRI clergy)", "status": "excommunications declared; lineages distinct from both SSPX and Palmar", "sources": ["wikipedia-thuc", "wikipedia-cmri"] }
+          ]
+        }
+      }
+    ]
+  },
   "disambiguation": {
     "note": "The Society's status and identity are contested terrain. The entries below record distinctions that are easy to flatten; each characterization is attributed to its source.",
     "items": [
@@ -122,6 +188,7 @@
       { "title": "SSPX ≠ FSSP", "text": "Both serve the traditional Latin Mass, but the FSSP was founded in 1988 by priests who left the SSPX precisely to remain in full communion with Rome, and has always been canonically regular.", "sources": ["wikipedia-fssp"] },
       { "title": "SSPV ≠ CMRI", "text": "Both are US sedevacantist-milieu groups, but they are unrelated organizations; only the SSPV is an SSPX splinter — the CMRI predates the SSPX and never belonged to it.", "sources": ["wikipedia-sspv", "wikipedia-cmri"] },
       { "title": "Canonical status must be dated", "text": "1970–1975: approved (pia unio). 1975–2026: canonically irregular — 'no canonical status' in Benedict XVI's 2009 wording — but repeatedly described by Vatican officials as not formally schismatic, with confession and marriage provisions granted 2015–2017. Since 2 July 2026: a DDF decree declares the consecrations schismatic, the six bishops excommunicated and the clergy in schism, and revokes those provisions; the SSPX disputes the decree's validity. Each characterization is attributed to its author.", "sources": ["decree-2009", "wikipedia-2026", "ncr-2026", "ewtn-2026"] },
+      { "title": "SSPX ≠ Palmar de Troya", "text": "The Palmarian Church of El Palmar de Troya (Spain) is sometimes confused with the SSPX. Its bishops were consecrated in 1976 by Archbishop Ngô Đình Thục — not by Lefebvre — and from 1978 it elected its own popes, placing it outside the Catholic Church entirely; the SSPX has always recognized the Roman pontiff. See the episcopal genealogy section.", "sources": ["wikipedia-palmarian", "lundberg-palmar", "wikipedia-thuc"] },
       { "title": "Names and domains", "text": "Portuguese: Fraternidade Sacerdotal São Pio X (FSSPX); English: Society of Saint Pius X (SSPX); Latin: Fraternitas Sacerdotalis Sancti Pii X. fsspx.org is the General House, sspx.org the US district, fsspx.news the news organ, fsspx.com.br the Brazilian house.", "sources": ["wikipedia-en", "fsspx-brasil"] }
     ]
   },
@@ -153,6 +220,11 @@
     { "id": "pillar-2026", "title": "Vatican confirms six SSPX bishops excommunicated", "url": "https://www.pillarcatholic.com/p/vatican-confirms-six-sspx-bishops", "publisher": "The Pillar", "type": "news" },
     { "id": "ewtn-2026", "title": "SSPX rejects Vatican's excommunication, calls it 'objectively unjust and invalid'", "url": "https://www.ewtnnews.com/vatican/sspx-rejects-vatican-s-excommunication-calls-it-objectively-unjust-and-invalid", "publisher": "EWTN News", "type": "news" },
     { "id": "wapo-williamson-obit", "title": "Bishop Richard Williamson, excommunicated bishop and Holocaust denier, dies (31 January 2025)", "url": "https://www.washingtonpost.com/obituaries/2025/01/31/bishop-richard-williamson-dead/", "publisher": "The Washington Post", "type": "news" },
+    { "id": "wikipedia-thuc", "title": "Ngô Đình Thục", "url": "https://en.wikipedia.org/wiki/Ng%C3%B4_%C4%90%C3%ACnh_Th%E1%BB%A5c", "publisher": "Wikipedia (EN)", "type": "encyclopedia" },
+    { "id": "wikipedia-palmarian", "title": "Palmarian Catholic Church", "url": "https://en.wikipedia.org/wiki/Palmarian_Catholic_Church", "publisher": "Wikipedia (EN)", "type": "encyclopedia" },
+    { "id": "lundberg-palmar", "title": "Outline of the History of the Palmarian Movement/Church 1968–2016 (Magnus Lundberg)", "url": "https://magnuslundberg.net/2016/04/30/chronological-outline-of-the-palmarian-church/", "publisher": "Magnus Lundberg (Uppsala University)", "type": "academic" },
+    { "id": "arlington-zendejas", "title": "Statement of Bishop Michael F. Burbidge on the consecration of Fr. Gerardo Zendejas (8 May 2017)", "url": "https://www.arlingtondiocese.org/2017/05/08/statement-from-most-reverend-michael-f-burbidge-on-the-consecration-of-father-gerardo-zendejas-member-of-an-independent-church/", "publisher": "Catholic Diocese of Arlington (official)", "type": "primary" },
+    { "id": "novusordowatch-aquino", "title": "Bp. Williamson consecrates Fr. Tomás de Aquino a bishop for Resistance group (March 2016)", "url": "https://novusordowatch.org/2016/03/williamson-consecrates-tomas-de-aquino/", "publisher": "Novus Ordo Watch (sedevacantist site — labeled as such)", "type": "analysis" },
     { "id": "onepeterfive-campos", "title": "Two Paths of Catholic Traditionalism: Campos, the SSPX, and the debate over communion with Rome", "url": "https://onepeterfive.com/two-paths-of-catholic-traditionalism-campos-the-sspx-and-the-debate-over-communion-with-rome/", "publisher": "OnePeterFive (traditionalist-leaning — labeled as such)", "type": "analysis" },
     { "id": "cnn-brasil-2026", "title": "Excomungado pelo Vaticano: conheça o grupo ultraconservador alvo de punição (July 2026)", "url": "https://www.cnnbrasil.com.br/internacional/excomungado-pelo-vaticano-conheca-grupo-ultraconservador-alvo-de-punicao/", "publisher": "CNN Brasil", "type": "news" }
   ]

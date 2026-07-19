@@ -124,6 +124,40 @@ function renderOrgCard(org, refNumById) {
       </div>`;
 }
 
+/** Recursively render one node of an episcopal-lineage tree. */
+function renderLineageNode(node, refNumById) {
+  const detail = node.detail ? ` <span class="tree-detail">${esc(node.detail)}</span>` : '';
+  const status = node.status ? `<div class="tree-status">${esc(node.status)}</div>` : '';
+  const kids = Array.isArray(node.children) && node.children.length
+    ? `\n<ul>\n${node.children.map((c) => renderLineageNode(c, refNumById)).join('\n')}\n</ul>`
+    : '';
+  return `<li><span class="tree-node"><strong>${esc(node.name)}</strong>${detail}${renderCites(node.sources, refNumById)}</span>${status}${kids}</li>`;
+}
+
+/**
+ * Render the episcopal-genealogy section: one tree per lineage branch
+ * (SSPX/Lefebvre, the Williamson "Resistance", and — clearly separated —
+ * the Thục-derived Palmar de Troya line, which is NOT SSPX lineage).
+ */
+function renderLineageSection(lineage, refNumById) {
+  if (!lineage || !Array.isArray(lineage.trees) || lineage.trees.length === 0) return '';
+  const branches = lineage.trees
+    .map((t) => `      <div class="lineage-branch${t.separate ? ' lineage-separate' : ''}">
+        <h3>${esc(t.title)}</h3>
+        ${t.summary ? `<p class="related-meta">${esc(t.summary)}${renderCites(t.sources, refNumById)}</p>` : ''}
+        <ul class="tree">
+${renderLineageNode(t.root, refNumById)}
+        </ul>
+      </div>`)
+    .join('\n');
+  return `    <section id="lineage">
+      <h2>Episcopal genealogy</h2>
+      <p class="section-intro">${esc(lineage.note)}</p>
+${branches}
+    </section>
+`;
+}
+
 function renderReference(r, n, archives) {
   const snap = archives[r.url];
   const archived = snap && snap.archiveUrl
@@ -196,6 +230,7 @@ ${ANALYTICS}
     <div class="wrap">
       <a href="#about">About</a>
       <a href="#chronology">Chronology</a>
+      ${data.episcopalLineage ? '<a href="#lineage">Genealogy</a>' : ''}
       <a href="#figures">Key figures</a>
       <a href="#organizations">Organizations</a>
       ${disambigCards ? '<a href="#disambiguation">Disambiguation</a>' : ''}
@@ -228,6 +263,7 @@ ${eventRows}
       </div>
     </section>
 
+${renderLineageSection(data.episcopalLineage, refNumById)}
     <section id="figures">
       <h2>Key figures</h2>
       <div class="party-grid">
