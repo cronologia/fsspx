@@ -119,3 +119,18 @@ ol.references a:hover { text-decoration: underline; }
   .facts { grid-template-columns: 1fr; gap: .1rem; }
   .facts dt { margin-top: .5rem; }
 }
+
+/* Episcopal genealogy trees */
+.lineage-branch { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 6px; padding: 1rem 1.25rem; margin: 1rem 0; }
+.lineage-branch h3 { margin: 0 0 .25rem; }
+.lineage-branch.lineage-separate { border-left-color: #c47f17; background: #fffdf7; }
+ul.tree, ul.tree ul { list-style: none; margin: 0; padding-left: 1.4rem; }
+ul.tree { padding-left: 0; margin-top: .6rem; }
+ul.tree ul { position: relative; }
+ul.tree ul::before { content: ""; position: absolute; top: 0; bottom: .75em; left: .35rem; border-left: 2px solid var(--line); }
+ul.tree li { position: relative; padding: .25rem 0 .25rem .5rem; }
+ul.tree ul li::before { content: ""; position: absolute; top: 1em; left: -1.05rem; width: 1.3rem; border-top: 2px solid var(--line); }
+.tree-node strong { color: var(--ink); }
+.tree-detail { color: var(--muted); font-size: .85rem; }
+.tree-status { font-size: .78rem; color: var(--accent-dark); background: var(--accent-soft); display: inline-block; border-radius: 999px; padding: .05rem .6rem; margin: .15rem 0 0; }
+.lineage-separate .tree-status { color: #7a5410; background: #f7ecd4; }

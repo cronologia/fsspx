@@ -121,6 +121,29 @@ if (d.organizations !== undefined) {
   });
 }
 
+// ---- episcopalLineage -----------------------------------------------------
+function checkLineageNode(node, at) {
+  if (!node || !isStr(node.name)) return err(`${at}.name missing`);
+  checkSources(at, node.sources, true);
+  if (node.children !== undefined) {
+    if (!isArr(node.children)) return err(`${at}.children must be an array`);
+    node.children.forEach((c, i) => checkLineageNode(c, `${at}.children[${i}]`));
+  }
+}
+if (d.episcopalLineage !== undefined) {
+  if (!isStr(d.episcopalLineage.note)) err('episcopalLineage.note missing');
+  if (!isArr(d.episcopalLineage.trees) || d.episcopalLineage.trees.length === 0) {
+    err('episcopalLineage.trees must be a non-empty array');
+  } else {
+    d.episcopalLineage.trees.forEach((t, i) => {
+      const at = `episcopalLineage.trees[${i}]`;
+      if (!isStr(t.title)) err(`${at}.title missing`);
+      checkSources(at, t.sources, true);
+      checkLineageNode(t.root, `${at}.root`);
+    });
+  }
+}
+
 // ---- disambiguation -------------------------------------------------------
 if (d.disambiguation !== undefined) {
   const items = d.disambiguation.items;
