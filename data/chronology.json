@@ -4,7 +4,12 @@
     "subtitle": "Chronology of the Society of Saint Pius X (1970–present)",
     "description": "An open, source-referenced chronology of the Fraternidade Sacerdotal São Pio X (Society of Saint Pius X, SSPX/FSSPX) — the traditionalist Catholic priestly society founded by Archbishop Marcel Lefebvre in 1970 — and its relationship with the Holy See.",
     "language": "en",
-    "lastUpdated": "2026-07-19",
+    "lastUpdated": "2026-07-20",
+    "vizChips": [
+      { "href": "#branch-timeline", "label": "🚇 Divisions timeline" },
+      { "href": "#lineage", "label": "🌳 Episcopal genealogy" },
+      { "href": "#chronology", "label": "📜 Chronology" }
+    ],
     "dataQualityNote": "This is a work-in-progress dataset compiled from public sources (see references). The Society's canonical status is contested and time-sensitive: characterizations are attributed to their authors (the Holy See, the SSPX itself, commentators), never asserted in the site's own voice, and dates not yet verified against a primary source are flagged with a ? mark. Corrections against primary sources are welcome."
   },
   "facts": [
@@ -127,7 +132,11 @@
     { "name": "Casa Autônoma do Brasil", "founded": "2017", "place": "São Paulo, Brazil", "relation": "The SSPX's Brazilian autonomous house ('district in formation'), erected in 2017 from the Argentina-based District of South America; priories reported in São Paulo and other states, with formation at La Reja, Argentina.", "url": "https://fsspx.com.br", "notes": "Exact founding dates of individual Brazilian priories are not yet verified — see GitHub issues.", "sources": ["fsspx-news-brazil", "fsspx-brasil"] }
   ],
   "episcopalLineage": {
-    "note": "Who consecrated whom. Episcopal genealogy is the clearest way to keep the traditionalist groups distinct: the SSPX and 'Resistance' bishops all descend from Marcel Lefebvre, while the Palmar de Troya (Palmarian) bishops descend from Archbishop Ngô Đình Thục and have no lineage connection to Lefebvre or the SSPX — the two are often confused. Validity/liceity characterizations are attributed: the Holy See holds these consecrations valid but illicit (gravely unlawful), except the Palmarian line after 1978, which it treats as outside the Church entirely.",
+    "note": "Who consecrated whom. Episcopal genealogy is the clearest way to keep the traditionalist groups distinct: the SSPX and 'Resistance' bishops all descend from Marcel Lefebvre, while the Palmar de Troya (Palmarian) bishops descend from Archbishop Ngô Đình Thục and have no lineage connection to Lefebvre or the SSPX — the two are often confused. Solid connectors are direct consecrations (by the principal consecrator); dashed connectors mark documented indirect links — co-consecration, organizational succession, or a personnel association — each labeled on the edge and cited. Validity/liceity characterizations are attributed: the Holy See holds these consecrations valid but illicit (gravely unlawful), except the Palmarian line after 1978, which it treats as outside the Church entirely.",
+    "edgeLegend": {
+      "direct": "Direct consecration (principal consecrator)",
+      "indirect": "Indirect link — co-consecration, succession or association (labeled on the edge)"
+    },
     "trees": [
       {
         "title": "SSPX line — from Marcel Lefebvre",
@@ -167,12 +176,21 @@
           "sources": ["wikipedia-castro-mayer"],
           "children": [
             {
+              "name": "The 1988 Écône four — Fellay, Tissier de Mallerais, Williamson, de Galarreta",
+              "edge": "indirect",
+              "edgeLabel": "co-consecrator bridge — Écône, 30 June 1988",
+              "detail": "Castro Mayer assisted as co-consecrator at their consecration; the principal consecrator was Lefebvre — see the SSPX line",
+              "sources": ["wikipedia-en", "wikipedia-castro-mayer"]
+            },
+            {
               "name": "Licínio Rangel",
-              "detail": "São Fidélis (Brazil), 28 July 1991 — consecrated by Tissier de Mallerais, assisted by de Galarreta and Williamson, to lead the Campos priests' union; † 2002",
+              "edge": "indirect",
+              "edgeLabel": "succession — consecrated by Tissier de Mallerais (SSPX line)",
+              "detail": "São Fidélis (Brazil), 28 July 1991 — consecrated by Tissier de Mallerais, assisted by de Galarreta and Williamson, to lead the Campos priests' union after Castro Mayer's death; † 2002",
               "status": "excommunication latae sententiae per the Holy See; reconciled January 2002 as apostolic administrator",
               "sources": ["wikipedia-rangel", "wikipedia-campos-aa"],
               "children": [
-                { "name": "Fernando Arêas Rifan", "detail": "2002 — appointed coadjutor by John Paul II (28 June 2002) and consecrated in full communion; succeeded Rangel in December 2002", "status": "in full communion with Rome", "sources": ["wikipedia-campos-aa"] }
+                { "name": "Fernando Arêas Rifan", "edge": "indirect", "edgeLabel": "succession as apostolic administrator", "detail": "2002 — appointed coadjutor by John Paul II (28 June 2002) and consecrated in full communion; succeeded Rangel in December 2002", "status": "in full communion with Rome", "sources": ["wikipedia-campos-aa"] }
               ]
             }
           ]
@@ -209,10 +227,31 @@
             { "name": "Clemente Domínguez y Gómez", "detail": "El Palmar de Troya, 11 January 1976; proclaimed himself 'Pope Gregory XVII' in 1978, founding the Palmarian Christian Church", "status": "excommunicated January 1976; the Palmarian Church is a separate body not in communion with Rome", "sources": ["wikipedia-palmarian", "lundberg-palmar"] },
             { "name": "Manuel Alonso Corral", "detail": "El Palmar de Troya, 11 January 1976; later Palmarian 'Pope Peter II' (2005–2011)", "status": "excommunicated January 1976", "sources": ["wikipedia-palmarian", "lundberg-palmar"] },
             { "name": "Three further Palmar bishops", "detail": "El Palmar de Troya, 11 January 1976", "status": "excommunicated January 1976", "sources": ["lundberg-palmar"] },
+            { "name": "Maurice Revaz", "edge": "indirect", "edgeLabel": "Écône personnel link — not a Thục consecration", "detail": "canon of the Grand-Saint-Bernard and canon-law professor at Écône, who drove Thục to El Palmar de Troya (December 1975); consecrated a Palmarian bishop on 28 January 1976 by Clemente Domínguez and others — placing him in the Palmarian, not the Thục, lineage; he left the movement about two years later (Lundberg, pp. 72–80)", "status": "the one documented Écône–Palmar personnel link; Lefebvre took no part in the Palmar consecrations", "sources": ["lundberg-book", "lundberg-palmar"] },
             { "name": "M.-L. Guérard des Lauriers; Moisés Carmona and Adolfo Zamora", "detail": "1981 — Thục's later consecrations, sources of today's sedevacantist episcopal lineages (including the line behind CMRI clergy). Guérard des Lauriers had been professor of theology at Écône from 1971 until his dismissal in autumn 1977 over the vacant-see thesis — SSPX and sedeprivationist (IMBC) accounts agree — a second documented Écône personnel link to the Thục world alongside Revaz", "status": "excommunications declared; lineages distinct from both SSPX and Palmar", "sources": ["wikipedia-thuc", "wikipedia-cmri", "sisinono-sedevacantist-priests", "imbc-murro-guerard"] }
           ]
         }
       }
+    ]
+  },
+  "branchTimeline": {
+    "heading": "Divisions timeline",
+    "navLabel": "Divisions",
+    "note": "How the groups around the SSPX forked over time, at a glance. Each fork is summarized with citations below the figure; contested characterizations are attributed there. One lane is not a split in the strict sense: the Campos priests' union was an organizationally separate Brazilian ally of the SSPX, and its lane ends where it was regularized by Rome (2002); the 2026 lane marks the rupture between the SSPX and Rome (a 'schism' per the DDF decree, disputed by the SSPX), not the departure of a group from the Society.",
+    "end": 2026,
+    "trunk": {
+      "id": "sspx",
+      "label": "SSPX",
+      "start": 1970,
+      "note": "founded 1 November 1970 at Fribourg by Archbishop Marcel Lefebvre; canonical approval withdrawn in 1975 — a withdrawal the SSPX disputes.",
+      "sources": ["wikipedia-en"]
+    },
+    "branches": [
+      { "label": "SSPV", "year": 1983, "note": "Fr. Clarence Kelly and eight other US priests, expelled from or leaving the SSPX in a dispute over the 1962 Missal and openness to sedevacantism, found the Society of Saint Pius V — sedevacantist-leaning and organizationally separate.", "sources": ["wikipedia-sspv"] },
+      { "label": "FSSP", "year": 1988, "note": "after the Écône consecrations, twelve former SSPX priests led by Fr. Josef Bisig found the Priestly Fraternity of Saint Peter, in full communion with Rome.", "sources": ["wikipedia-fssp"] },
+      { "label": "Campos union", "year": 1988, "end": 2002, "note": "the priests loyal to Bp. Antônio de Castro Mayer — co-consecrator of the 1988 Écône consecrations — organize the Priestly Union of Saint John Mary Vianney (15 August 1988), an SSPX ally rather than a subdivision; the lane ends in January 2002, when the union is regularized as the Personal Apostolic Administration Saint John Mary Vianney — a path the SSPX declined.", "sources": ["wikipedia-campos-aa", "onepeterfive-campos"] },
+      { "label": "Resistance", "year": 2012, "note": "Bishop Richard Williamson, expelled from the SSPX in October 2012, leads the loose 'Resistance' network, for which he consecrated six bishops without mandate (2015–2022).", "sources": ["wikipedia-williamson"] },
+      { "label": "Rupture", "year": 2026, "note": "1 July 2026: de Galarreta and Fellay consecrate four bishops without papal mandate. 2 July: a DDF decree declares the six bishops excommunicated and describes SSPX clergy as in schism — a decree the SSPX rejects as 'objectively unjust and invalid' and against which it filed canonical recourse on 11 July 2026.", "sources": ["wikipedia-2026", "ncr-2026", "ewtn-2026", "fsspx-news-recourse"] }
     ]
   },
   "disambiguation": {
