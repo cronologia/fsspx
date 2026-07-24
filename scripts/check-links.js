@@ -61,9 +61,30 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
  * Pure helpers (unit-tested offline in test/link-health.test.js).
  * ---------------------------------------------------------------------- */
 
+/**
+ * Make a string safe to send as an HTTP header value. This project's title
+ * carries an em dash (—) and accented Latin letters (e.g. "São"); a raw
+ * User-Agent built from it makes `fetch` throw "Cannot convert argument to a
+ * ByteString" before any request leaves — which `httpRequest` would then swallow
+ * as a network error, silently reporting *every* reference as inconclusive. We
+ * fold diacritics, turn Unicode dashes into '-', and drop any remaining
+ * non-printable-ASCII so the UA is a valid ByteString. ASCII names pass through
+ * unchanged.
+ */
+function headerSafe(s) {
+  return String(s)
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')   // strip combining diacritics (Sao)
+    .replace(/[\u2010-\u2015]/g, '-')  // Unicode hyphens/dashes (em/en) -> '-'
+    .replace(/[^\x20-\x7e]/g, '')      // drop anything left outside printable ASCII
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 /** A polite User-Agent that names the project (falls back to a generic id). */
 function deriveUserAgent(projectName) {
-  const name = (typeof projectName === 'string' && projectName.trim()) ? projectName.trim() : 'Cronologia project';
+  const raw = (typeof projectName === 'string' && projectName.trim()) ? projectName.trim() : 'Cronologia project';
+  const name = headerSafe(raw) || 'Cronologia project';
   return `cronologia-check-links/1.0 (${name}; +https://github.com/cronologia)`;
 }
 
