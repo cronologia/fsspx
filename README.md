@@ -29,12 +29,16 @@ fsspx/
 │   └── styles.css            # stylesheet (copied into the build)
 ├── scripts/
 │   ├── validate-data.js      # schema check (runs in CI before the build)
-│   └── archive-refs.js       # Wayback preservation: references[] -> data/archives.json
+│   ├── archive-refs.js       # Wayback preservation: references[] -> data/archives.json
+│   └── check-links.js        # link-health report (out-of-band; never edits data)
 ├── .github/workflows/
 │   ├── deploy.yml            # CI: validate, test, build, drift check, deploy
-│   └── wayback.yml           # CI: weekly Wayback run, commits archives.json + docs/
+│   ├── wayback.yml           # CI: weekly Wayback run, commits archives.json + docs/
+│   └── link-health.yml       # CI: weekly link check -> single tracking issue
 ├── build.js                  # compiler: data/chronology.json -> docs/
 ├── docs/                     # COMPILED OUTPUT (served by GitHub Pages)
+├── adr/                      # this repo's standing decisions
+├── .claude/skills/           # vendored copies of the cronologia/core skills (generated)
 ├── AGENTS.md                 # how AI agents/humans should work in this repo
 ├── context.md                # domain background
 └── README.md

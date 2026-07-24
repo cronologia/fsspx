@@ -6,28 +6,44 @@ Read this and [`context.md`](context.md) before making changes.
 ## What this project is
 
 A **compiled static website** documenting the chronology of the **Fraternidade
-Sacerdotal São Pio X** (Society of Saint Pius X, founded 1970). A single JSON
-file is the source of truth; a zero-dependency Node script compiles it into
-static HTML served by GitHub Pages.
+Sacerdotal São Pio X** (Society of Saint Pius X, founded 1970) and its
+relationship with the Holy See. A single JSON file is the source of truth; a
+zero-dependency Node script compiles it into static HTML served by GitHub Pages.
 
-The architecture deliberately mirrors the sibling project
-[`cronologia/fsp`](https://github.com/cronologia/fsp) — its ADRs
+It is the largest dataset in the family: **50 events, 18 figures, 7
+organizations, 61 references**, plus an episcopal-genealogy section (four trees)
+and a divisions branch timeline (five branches).
+
+The repo consumes the shared machinery in
+[`cronologia/core`](https://github.com/cronologia/core) — the project template,
+the working method as skills, and agent-side tooling. The architecture also
+mirrors the older sibling project
+[`cronologia/fsp`](https://github.com/cronologia/fsp), whose ADRs
 (`fsp/docs/adrs/`) explain *why* things are built this way (zero dependencies,
 JSON as single source of truth, publish from `docs/`, Wayback archiving,
-sourcing policy). Follow them here too.
+sourcing policy). Follow them here too. This repo's own standing decisions are
+in [`adr/0001-project-scope-and-adopted-template.md`](adr/0001-project-scope-and-adopted-template.md).
 
 ## Repository map
 
 ```
-data/chronology.json     SOURCE OF TRUTH — facts, events, figures, organizations, references (hand-edited)
-data/archives.json       Wayback snapshot cache (GENERATED — do not hand-edit; not yet populated)
-src/styles.css           Stylesheet (copied into the build)
+data/chronology.json     SOURCE OF TRUTH — facts, events, figures, organizations,
+                         episcopalLineage, branchTimeline, disambiguation, references (hand-edited)
+data/archives.json       Wayback snapshot cache (GENERATED — do not hand-edit; 32 snapshots)
 data/glossary-terms.json VENDORED, PINNED list of cronologia/glossary term ids (written by scripts/sync-glossary-terms.js; committed) — validates [[term-id]] cross-links offline
+src/styles.css           Stylesheet (copied into the build)
 scripts/validate-data.js Schema check (runs in CI before the build) — also fails on unknown glossary [[term-id]] links
 scripts/sync-glossary-terms.js  Refresh data/glossary-terms.json from cronologia/glossary (out-of-band; needs network)
+scripts/archive-refs.js  Wayback preservation: references[] -> data/archives.json (out-of-band; needs network)
+scripts/check-links.js   Link-health checker: reports dead/SUSPECT/inconclusive refs (out-of-band; never edits data)
 build.js                 Compiler: data/chronology.json -> docs/
-test/                    node:test unit tests (helpers + data invariants + drift check)
-.github/workflows/deploy.yml  CI: validate, test, build, drift check, Pages deploy (opt-in)
+test/                    node:test unit tests (build helpers, data invariants + drift check,
+                         glossary links, viz renderers, link-health helpers)
+.github/workflows/deploy.yml        CI: validate, test, build, drift check, Pages deploy (opt-in)
+.github/workflows/wayback.yml       CI: weekly Wayback run, commits archives.json + docs/
+.github/workflows/link-health.yml   CI: weekly link check, opens/updates one "link health" issue
+.claude/skills/          VENDORED, PINNED copies of the cronologia/core skills (GENERATED — see below)
+adr/                     This repo's standing decisions (ADR-0001)
 docs/                    COMPILED OUTPUT, served by GitHub Pages (committed)
 ```
 
@@ -43,6 +59,20 @@ python3 -m http.server -d docs 8000 # local preview at http://localhost:8000
 There is **no `npm install`** — the toolchain is intentionally dependency-free
 (see fsp ADR-0001). Don't add runtime dependencies.
 
+## The operational loop
+
+Every change that touches data or the renderer runs the same gate, in order:
+
+```bash
+node scripts/validate-data.js   # 1. schema + sources[] + glossary ids
+node --test                     # 2. unit tests, including the docs/ drift check
+node build.js                   # 3. regenerate docs/
+git add data docs && git commit # 4. data + regenerated docs in ONE commit
+```
+
+Documentation-only changes must leave `docs/` byte-identical — if `git status`
+shows `docs/` after a docs-only edit, something is wrong.
+
 ## Working agreements
 
 1. **Edit data, not output.** Change `data/chronology.json`, then run
@@ -54,15 +84,29 @@ There is **no `npm install`** — the toolchain is intentionally dependency-free
 3. **Cite every fact.** Every `facts[]`, `events[]`, `figures[]` and
    `organizations[]` entry must carry a non-empty `sources[]` array of
    reference ids (the validator enforces this).
-4. **Archive new sources** (planned). The Wayback archiving pipeline from
-   `fsp` (`scripts/archive-refs.js` + `data/archives.json`) is not yet ported;
-   until it is, prefer stable URLs and note volatile ones. The build already
-   renders archived-fallback links whenever `data/archives.json` exists.
+4. **Archive new sources.** The Wayback pipeline from `fsp` is now ported:
+   `scripts/archive-refs.js` writes `data/archives.json`, `build.js` renders
+   archived-fallback links, and `wayback.yml` re-runs it weekly. Prefer stable
+   URLs anyway, and note volatile ones. `scripts/check-links.js` +
+   `link-health.yml` report rot; neither script ever edits
+   `data/chronology.json`.
+5. **Never hand-edit generated files** — `docs/`, `data/archives.json`,
+   `data/glossary-terms.json`, `.claude/skills/`.
+6. **One repo, one committer.** Exactly one agent owns this dataset at a time.
+   Serialize instead of racing.
 
 ## Data quality & sourcing rules (important)
 
 This is a reference work about a religiously and canonically contested subject.
 Accuracy and neutrality matter more than completeness.
+
+**The canonical rules are the `sourcing-rules` skill**, vendored here at
+[`.claude/skills/sourcing-rules/SKILL.md`](.claude/skills/sourcing-rules/SKILL.md)
+(canonical copy: `cronologia/core/skills/sourcing-rules/SKILL.md`). Load it
+before editing any data file or writing site copy. Its five rules — cite or
+flag; attribute, don't assert; sources span the spectrum by design; date
+time-sensitive statuses; testimony is a perspective, not a fact source — govern
+everything here. In addition, in this repo specifically:
 
 - **Never fabricate.** If a date or claim is uncertain, mark it unverified
   (`dateVerified: false`, `verified: false`) rather than guessing.
@@ -76,6 +120,72 @@ Accuracy and neutrality matter more than completeness.
 - **Stay neutral.** Describe; don't advocate or editorialize. Sources span
   official (vatican.va), the Society's own (sspx.org, fsspx.com.br), and
   independent/critical perspectives by design.
+
+## Which skills apply here, and when
+
+The skills are **vendored, pinned copies** under `.claude/skills/`. They are
+GENERATED: edit them in `cronologia/core/skills/` and re-sync — never in place.
+
+```bash
+python3 ../core/tools/sync-skills.py fsspx            # refresh the vendored copies
+python3 ../core/tools/sync-skills.py fsspx --check    # drift check, writes nothing, exit 1 if stale
+```
+
+| Skill | Load it when |
+|---|---|
+| `sourcing-rules` | **Always, first**, before any data edit or site copy. |
+| `data-edit` | Editing `data/chronology.json`: query first, then edit, then validate → test → build → commit data + `docs/` together. |
+| `ingest-report` | Turning a research report or dossier into dataset entries — only what was marked verified-with-a-source; keep the report's exact attribution language; unverified items stay out and are reported on the ticket. |
+| `net-access` | Any source that 403s, 406s or looks geoblocked (grupodepuebla.org, forodesaopaulo.org) or needs a desktop UA (sspx.org, fsspx.news, vatican.va). Check the local vault first; never route around the proxy. |
+| `preserve-sources` | Running `archive-refs.js` / `check-links.js`, triaging link rot, or deciding whether a source is vaulted centrally. |
+| `adopt-template` | Pulling a new renderer, validator rule or workflow down from `cronologia/core/template/`. |
+| `release-work` | Branching, fast-forwarding, committing, pushing, and reporting what shipped and what was deferred. |
+| `dossier-research` | Building a person dossier (the figures in `figures[]`). |
+| `mine-video` | Mining an interview/testimony video into a transcript and then into candidate entries. |
+| `bootstrap-project` | Only when standing up a *new* project repo — not for work here. |
+
+## Agent-side tooling (cronologia/core/tools)
+
+Python 3, stdlib only, read-only: these tools **never write anything in
+`data/`**. Query before reading whole files — `data/chronology.json` is ~67 KB.
+
+```bash
+python3 ../core/tools/dataset-query.py fsspx stats                # size and shape
+python3 ../core/tools/dataset-query.py fsspx find <keyword>       # locators, not a whole-file read
+python3 ../core/tools/dataset-query.py fsspx event 1988           # or a range: 1970-1976
+python3 ../core/tools/dataset-query.py fsspx figure "Lefebvre"
+python3 ../core/tools/dataset-query.py fsspx refs --unarchived    # preservation gaps
+python3 ../core/tools/dataset-query.py fsspx unverified           # the verification worklist
+python3 ../core/tools/unverified-report.py fsspx --markdown       # paste-ready ticket checklist
+python3 ../core/tools/mine-prep.py <transcript.txt> --lang pt     # transcript -> candidate sheet
+python3 ../core/tools/xref.py --repos fsspx,tariqa,perennialism   # cross-repo consistency
+```
+
+`xref.py` prints every entity present in 2+ repos side by side and flags
+`CONTRADICTION` / `DIFFERS`. Nothing is auto-resolved — the flags are review
+candidates, and resolving one is a sourcing decision backed by citations.
+
+## Where this repo sits in the family
+
+The family map is [`cronologia/core/DEPENDENCIES.md`](https://github.com/cronologia/core/blob/main/DEPENDENCIES.md).
+Read it before touching a shared entity. This repo's own boundaries:
+
+- **fsspx owns Catholic traditionalism** — the SSPX, its splits (FSSP, SSPV,
+  the Campos line, the "Resistance"), and the canonical-status story.
+- **fsspx ↔ `tariqa` / `perennialism`.** Keep the three "traditionalisms"
+  apart: Catholic traditionalism ≠ the Guénon–Schuon Traditionalist School
+  (`tariqa` = the Maryamiyya **order**; `perennialism` = the **ideas**) ≠
+  Evola's political Traditionalism. Where a figure or claim touches them — the
+  Coomaraswamy and Guérard des Lauriers threads are the live ones — **cross-link,
+  never duplicate**: the other repo owns its side of the material.
+- **fsspx ↔ `fsp` / `tl`.** Out of scope here. `fsp` is the architectural
+  ancestor, not a content dependency; CEBs and liberation theology belong to
+  `tl`.
+- **fsspx ↔ `glossary`.** A term more than one project needs is defined in the
+  glossary and linked with `[[term-id]]`, not re-explained here.
+- **fsspx ↔ `archive`.** A source cited by 2+ projects is vaulted centrally
+  (archive ADR-0001), not copied in here. The archive is private: reader-facing
+  citations are always the original URL plus its Wayback snapshot.
 
 ## Glossary cross-links (optional, off by default)
 
@@ -98,10 +208,10 @@ Link the first or most salient mention of a term, not every occurrence.
 **Validation is offline and deterministic.** `data/glossary-terms.json` is a
 *pinned, vendored* copy of the glossary's term-id list — the build never fetches
 it, matching this repo's no-network-in-build rule (only the out-of-band
-`archive-refs.js` / `sync-glossary-terms.js` scripts touch the network).
-`scripts/validate-data.js` scans every string field for `[[…]]` markers and
-**fails the build** on any id not in that pinned list. Refresh the list after
-the glossary changes and commit the diff:
+`archive-refs.js` / `check-links.js` / `sync-glossary-terms.js` scripts touch
+the network). `scripts/validate-data.js` scans every string field for `[[…]]`
+markers and **fails the build** on any id not in that pinned list. Refresh the
+list after the glossary changes and commit the diff:
 
 ```
 node scripts/sync-glossary-terms.js                       # sibling ../glossary or the published raw JSON
@@ -112,5 +222,8 @@ node scripts/sync-glossary-terms.js ../glossary/data/glossary.json   # explicit 
 
 - A merged PR is finished; never reuse its branch for new work — branch fresh
   from the default branch.
+- Bring a branch current with `git merge --ff-only origin/main`. If it cannot
+  fast-forward, **stop and report** — never reset, force or rebase published
+  history.
 - Keep `docs/` in sync with `data/` in every commit that touches data.
 - Write descriptive commit messages explaining the *why*.

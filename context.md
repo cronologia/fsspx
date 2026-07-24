@@ -1,8 +1,11 @@
 # Project context
 
 Domain background for anyone (human or AI) working on this repository. Pair this
-with [`AGENTS.md`](AGENTS.md) (how to work). The architecture rationale lives in
-the sibling project's ADRs (`cronologia/fsp` → `docs/adrs/`).
+with [`AGENTS.md`](AGENTS.md) (how to work) and
+[`adr/0001-project-scope-and-adopted-template.md`](adr/0001-project-scope-and-adopted-template.md)
+(what was decided). Shared architecture rationale lives in
+[`cronologia/core/adr/`](https://github.com/cronologia/core/tree/main/adr) and,
+historically, in the sibling project's ADRs (`cronologia/fsp` → `docs/adrs/`).
 
 ## The subject: Fraternidade Sacerdotal São Pio X (FSSPX / SSPX)
 
@@ -55,8 +58,8 @@ society of the traditionalist Catholic movement.
 Produce an **open, source-referenced chronology** as a static website:
 
 - Every key event 1970–present (founding, Écône, 1974 Declaration, 1975–76
-  sanctions, 1988 consecrations, 2000s rapprochement, 2021– developments),
-  cited to public sources.
+  sanctions, 1988 consecrations, 2000s rapprochement, 2021– developments,
+  the 2026 consecrations and decree), cited to public sources.
 - The key figures on **both sides** — the Society's superiors general and
   bishops, and the popes and Vatican officials who dealt with it.
 - Related organizations kept distinct (see disambiguation below).
@@ -67,6 +70,73 @@ The project values **verifiability and neutrality** over completeness. It must
 describe rather than advocate, and flag what is uncertain. Canonical
 characterizations are **attributed** ("the Holy See stated…", "the SSPX
 holds…"), never asserted in the site's own voice.
+
+**Audience:** Portuguese- and English-reading general readers, journalists and
+researchers looking for a dated, cited sequence of events — including the
+Society's Brazilian public, which is why the District of Brazil and the Campos
+story get first-class treatment. The site is a reference work, not an apologia
+and not an exposé.
+
+## State of the dataset (July 2026)
+
+`data/chronology.json` is the single source of truth and currently holds:
+
+- **7 facts** (identity card: what it is, founding, founder, headquarters,
+  self-reported scale, Brazil, canonical status),
+- **50 events**, spanning **1970–2026**,
+- **18 figures** (Lefebvre, the four 1988 and four 2026 consecrated bishops,
+  the superiors general, the Campos line — Castro Mayer, Rangel, Rifan — plus
+  the popes and Vatican officials on the other side of the story),
+- **7 organizations** (FSSP, the Institute of the Good Shepherd, SSPV, CMRI,
+  the "Resistance", the Campos union/Apostolic Administration, Casa Autônoma
+  do Brasil),
+- a **disambiguation** section for the contested points below,
+- **61 references**, cross-spectrum by design.
+
+It is a **work in progress**: uncertain dates carry `dateVerified: false` and
+render with a `?` flag; the standing verification worklist is
+`python3 ../core/tools/unverified-report.py fsspx --markdown`.
+
+### Visualizations
+
+Two data-driven sections sit above the chronology, reachable from the chips in
+the header:
+
+- **Divisions timeline** (`branchTimeline`) — a metro-map style diagram of the
+  SSPX trunk and five branches: SSPV (1983), FSSP (1988), the Campos union
+  (1988–2002, ending in the Apostolic Administration), the "Resistance" (2012)
+  and the 2026 rupture.
+- **Episcopal genealogy** (`episcopalLineage`) — four trees: the SSPX line from
+  Lefebvre (1988 and 2026), the Campos line from Castro Mayer, the Williamson
+  "Resistance" line, and — rendered **visually separate**, with typed
+  `indirect` edges and a legend, so it is never read as connected — the
+  Thục / Palmar de Troya line.
+
+Both are **optional top-level keys**: remove the key and the page renders
+byte-identically to a build without the feature.
+
+### Glossary cross-links
+
+Prose links into the shared [`cronologia/glossary`](https://github.com/cronologia/glossary)
+with `[[term-id]]` markers instead of re-explaining terms. Currently linked:
+`canonical-irregularity`, `cdf-ddf`, `excommunication`, `latae-sententiae`,
+`motu-proprio`, `pia-unio`, `schism`, `sedeprivationism`, `sedevacantism`,
+`suspension-a-divinis`. Validation is offline against the pinned
+`data/glossary-terms.json`.
+
+### Preservation pipeline
+
+Fully ported from `fsp` and running:
+
+- `scripts/archive-refs.js` → `data/archives.json` (**32 of 61** references
+  currently carry a Wayback snapshot), rendered by the build as "archived"
+  fallback links; `wayback.yml` re-runs it weekly.
+- `scripts/check-links.js` + `link-health.yml` report dead / SUSPECT /
+  inconclusive URLs weekly into a single tracking issue. 403/429/5xx and
+  timeouts are **inconclusive, never dead**. Neither script edits the dataset.
+
+Remaining planned work (deeper dossiers, a document vault for sources Wayback
+cannot capture) is tracked in GitHub issues.
 
 ## Important disambiguations
 
@@ -87,6 +157,12 @@ holds…"), never asserted in the site's own voice.
   2 July 2026 for the six bishops involved in the 2026 consecrations, with
   press summaries differing on how the decree treats priests and laity.
   Statements about status must be dated and attributed.
+- **Catholic traditionalism ≠ the Traditionalist School.** The Guénon–Schuon
+  perennialists (sibling repos `tariqa` and `perennialism`) and Evola's
+  political Traditionalism are different movements that share a word. Where a
+  figure or thread genuinely touches both worlds — the Coomaraswamy and
+  Guérard des Lauriers threads — this repo **cross-links** rather than
+  duplicating the other repo's material.
 
 ## Glossary
 
@@ -104,6 +180,10 @@ holds…"), never asserted in the site's own voice.
 - **Superior General** — head of the Society: Lefebvre (1970–1982), Franz
   Schmidberger (1982–1994), Bernard Fellay (1994–2018), Davide Pagliarani
   (elected 2018 for a 12-year term).
+- **Sedeprivationism (the "Thục thesis")** — the *materialiter/formaliter*
+  position associated with Guérard des Lauriers; distinct from both
+  sedevacantism proper and the SSPX's own position, and the reason the Thục
+  line is rendered as a separate tree.
 
 ## Primary / key sources
 
@@ -113,11 +193,15 @@ holds…"), never asserted in the site's own voice.
 - **The Holy See:** `vatican.va` — *Ecclesia Dei* (1988), the 2009 decree
   lifting the excommunications and Benedict XVI's letter of 10 March 2009,
   *Summorum Pontificum* (2007), *Misericordia et Misera* §12 (2016),
-  *Traditionis Custodes* (2021).
+  *Traditionis Custodes* (2021), the 2 July 2026 DDF decree.
 - **Cross-spectrum:** Wikipedia (EN/PT), mainstream and religious press
   (National Catholic Register/Reporter, Catholic News Agency, The Pillar,
   La Croix), academic work on Catholic traditionalism, and critical coverage
   (e.g. of the Williamson affair).
 
-All cited sources live in `data/chronology.json` → `references[]`. The Wayback
-archiving pipeline (as in `cronologia/fsp`) is planned — see GitHub issues.
+Several of these hosts filter by User-Agent (`sspx.org`, `fsspx.news`,
+`vatican.va` all return header artifacts or 406s to a default client) — the
+`net-access` skill and archive ADR-0002 hold the standing ladder for that.
+
+All cited sources live in `data/chronology.json` → `references[]`, with their
+Wayback snapshots in `data/archives.json`.
