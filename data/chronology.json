@@ -4,6 +4,7 @@
     "subtitle": "Chronology of the Society of Saint Pius X (1970–present)",
     "description": "An open, source-referenced chronology of the Fraternidade Sacerdotal São Pio X (Society of Saint Pius X, SSPX/FSSPX) — the traditionalist Catholic priestly society founded by Archbishop Marcel Lefebvre in 1970 — and its relationship with the Holy See.",
     "language": "en",
+    "siteUrl": "https://cronologia.github.io/fsspx/",
     "lastUpdated": "2026-07-25",
     "vizChips": [
       { "href": "#branch-timeline", "label": "🚇 Divisions timeline" },
@@ -145,6 +146,8 @@
     { "name": "Casa Autônoma do Brasil", "founded": "2017", "place": "São Paulo, Brazil", "relation": "The SSPX's Brazilian autonomous house ('district in formation'), erected in 2017 from the Argentina-based District of South America; priories reported in São Paulo and other states, with formation at La Reja, Argentina.", "url": "https://fsspx.com.br", "notes": "Exact founding dates of individual Brazilian priories are not yet verified — see GitHub issues.", "sources": ["fsspx-news-brazil", "fsspx-brasil"] }
   ],
   "episcopalLineage": {
+    "heading": "Episcopal genealogy",
+    "navLabel": "Genealogy",
     "note": "Who consecrated whom. Episcopal genealogy is the clearest way to keep the traditionalist groups distinct: the SSPX and 'Resistance' bishops all descend from Marcel Lefebvre, while the Palmar de Troya (Palmarian) bishops descend from Archbishop Ngô Đình Thục and have no lineage connection to Lefebvre or the SSPX — the two are often confused. Solid connectors are direct consecrations (by the principal consecrator); dashed connectors mark documented indirect links — co-consecration, organizational succession, or a personnel association — each labeled on the edge and cited. Validity/liceity characterizations are attributed: the Holy See holds these consecrations valid but illicit (gravely unlawful), except the Palmarian line after 1978, which it treats as outside the Church entirely.",
     "edgeLegend": {
       "direct": "Direct consecration (principal consecrator)",
