@@ -10,9 +10,10 @@ Sacerdotal São Pio X** (Society of Saint Pius X, founded 1970) and its
 relationship with the Holy See. A single JSON file is the source of truth; a
 zero-dependency Node script compiles it into static HTML served by GitHub Pages.
 
-It is the largest dataset in the family: **50 events, 18 figures, 7
-organizations, 61 references**, plus an episcopal-genealogy section (four trees)
-and a divisions branch timeline (five branches).
+It is the largest dataset in the family: **60 events, 21 figures, 7
+organizations, 85 references**, plus an episcopal-genealogy section (four trees),
+a divisions branch timeline (five branches), and **per-figure dossier pages** for
+the figures that clear the criterion below.
 
 The repo consumes the shared machinery in
 [`cronologia/core`](https://github.com/cronologia/core) — the project template,
@@ -22,8 +23,9 @@ mirrors the older sibling project
 (`fsp/docs/adrs/`) explain *why* things are built this way (zero dependencies,
 JSON as single source of truth, publish from `docs/`, Wayback archiving,
 sourcing policy). Follow them here too. This repo's own standing decisions are
-in [`adr/0001-project-scope-and-adopted-template.md`](adr/0001-project-scope-and-adopted-template.md)
-and [`adr/0002-multilingual-pt-es.md`](adr/0002-multilingual-pt-es.md).
+in [`adr/0001-project-scope-and-adopted-template.md`](adr/0001-project-scope-and-adopted-template.md),
+[`adr/0002-multilingual-pt-es.md`](adr/0002-multilingual-pt-es.md) and
+[`adr/0003-per-figure-pages.md`](adr/0003-per-figure-pages.md).
 
 ## Repository map
 
@@ -39,16 +41,18 @@ scripts/sync-glossary-terms.js  Refresh data/glossary-terms.json from cronologia
 scripts/archive-refs.js  Wayback preservation: references[] -> data/archives.json (out-of-band; needs network)
 scripts/check-links.js   Link-health checker: reports dead/SUSPECT/inconclusive refs (out-of-band; never edits data)
 scripts/translate.js     Translation-cache manager for data/i18n/*.json — `--stats` reports coverage (offline-safe no-op; no backend needed)
-build.js                 Compiler: data/chronology.json -> docs/{en,pt,es}/ + root redirect stub + sitemap.xml + robots.txt
+build.js                 Compiler: data/chronology.json -> docs/{en,pt,es}/ (index + figures/<id>.html)
+                         + root redirect stub + sitemap.xml + robots.txt
 test/                    node:test unit tests (build helpers, data invariants + drift check,
-                         glossary links, viz renderers, link-health helpers)
+                         glossary links, viz renderers, link-health helpers, figure pages)
 .github/workflows/deploy.yml        CI: validate, test, build, drift check, Pages deploy (opt-in)
 .github/workflows/wayback.yml       CI: weekly Wayback run, commits archives.json + docs/
 .github/workflows/link-health.yml   CI: weekly link check, opens/updates one "link health" issue
 .claude/skills/          VENDORED, PINNED copies of the cronologia/core skills (GENERATED — see below)
-adr/                     This repo's standing decisions (ADR-0001, ADR-0002)
+adr/                     This repo's standing decisions (ADR-0001, ADR-0002, ADR-0003)
 docs/                    COMPILED OUTPUT, served by GitHub Pages (committed) —
                          docs/index.html is a REDIRECT STUB; the real pages are docs/{en,pt,es}/index.html
+                         and docs/{en,pt,es}/figures/<id>.html (one per figure that has an id)
 ```
 
 ## Common commands
@@ -195,6 +199,44 @@ Read it before touching a shared entity. This repo's own boundaries:
 - **fsspx ↔ `archive`.** A source cited by 2+ projects is vaulted centrally
   (archive ADR-0001), not copied in here. The archive is private: reader-facing
   citations are always the original URL plus its Wayback snapshot.
+
+## Per-figure pages: who gets one, and what the id means
+
+Full rationale in [`adr/0003-per-figure-pages.md`](adr/0003-per-figure-pages.md).
+The short version, because **this rule is meant to be reused in the other repos**
+(`celam` presidencies, `tariqa` figures, `perennialism` lineage figures):
+
+> **The 3 × 3 rule.** A figure gets its own page — `figures/<id>.html`, emitted
+> in all three locales — only if it (1) denotes a **single person**, (2) is a
+> **subject of this chronology, not a counterparty** or an entity another repo
+> owns, (3) is linked to **≥ 3 dated events**, and (4) those events plus the
+> figure record cite **≥ 3 distinct references**. Everything below the bar stays
+> a card. A stub page for a figure with two sourced lines is worse than a card.
+
+Mechanics:
+
+- A page exists because the figure record carries `"id"`. **The id is data, not
+  derived from the name**, it matches the glossary slug grammar
+  (`[a-z0-9][a-z0-9-]*`), and once a page has been built the id is a
+  **permanent URL** — never rename it; retire it behind a redirect instead.
+- Linkage is evidentiary: add a figure id to `events[].figures` only when the
+  event's own text names the figure or the figure is its unambiguous actor, and
+  when a figure has a page, link **every** such event, not just enough to clear
+  the threshold.
+- `scripts/validate-data.js` **fails the build** on an `id` that misses a
+  threshold, on a duplicate id, and on an unknown id in `events[].figures` or an
+  `episcopalLineage` node's `figure`. Clauses 1 and 2 are editorial and live in
+  the ADR.
+- `allRoutes(data)` drives both the build loop and `sitemap.xml`, so a figure
+  page can never ship unindexable.
+- Verification flags render **on the page, above the dossier**: unverified
+  linked-event dates, an explicit `figures[].datesVerified: false`, and a
+  derived notice when the record rests on a single source. Clearing a flag needs
+  a citation — it is never a rendering decision.
+
+Today the rule selects 7 of 21 figures. Licínio Rangel and Fernando Arêas Rifan
+are the nearest misses (2 linked events each); a third and fourth dated event
+apiece from the Campos material promotes them with no renderer change.
 
 ## Glossary cross-links (optional, off by default)
 

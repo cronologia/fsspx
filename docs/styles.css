@@ -187,6 +187,47 @@ figure.branch-timeline figcaption { margin-top: .75rem; }
 ol.branch-notes { margin: 0; padding-left: 1.25rem; font-size: .88rem; }
 ol.branch-notes li { margin-bottom: .35rem; }
 
+/* Per-figure dossier pages (ADR-0003) --------------------------------------
+   One page per figure at /{locale}/figures/<id>.html. The verification panel
+   comes FIRST and is styled to be read, not skipped: a dedicated page gives a
+   claim more prominence than a card did, so the doubt has to be as visible. */
+.party-link { margin: .6rem 0 0 !important; font-size: .82rem; }
+.party-link a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.party-link a:hover { text-decoration: underline; }
+
+.figure-breadcrumb { margin: 0 0 .35rem; font-size: .82rem; }
+.figure-breadcrumb a { color: #dce6f4; text-decoration: none; }
+.figure-breadcrumb a:hover { text-decoration: underline; }
+.figure-page .figure-role { max-width: 70ch; }
+
+/* Verification flags: amber, like the attribution notice — a caution, not an error */
+ul.figure-flags { list-style: none; margin: .75rem 0 0; padding: 0; }
+.figure-flag {
+  background: #fff7e6; border-left: 4px solid #c47f17; border-radius: 0 4px 4px 0;
+  padding: .55rem .8rem; margin-bottom: .5rem; font-size: .9rem;
+}
+.figure-flag .flag { margin-right: .35rem; color: #c47f17; }
+.figure-flag strong { color: var(--accent-dark); }
+.notice-clear { background: var(--surface); border-left-color: var(--muted); color: var(--muted); }
+
+/* Genealogy position: one block per branch the figure appears in */
+.figure-lineage-branch {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+  padding: .9rem 1rem; margin-bottom: .75rem;
+}
+.figure-lineage-branch h3 { margin: 0 0 .35rem; font-size: 1rem; }
+.figure-lineage-branch > p.muted { margin: 0 0 .6rem; font-size: .88rem; }
+dl.figure-lineage-facts { margin: 0; }
+dl.figure-lineage-facts dt { font-weight: 600; color: var(--accent); font-size: .85rem; margin-top: .5rem; }
+dl.figure-lineage-facts dd { margin: .15rem 0 0; font-size: .9rem; }
+ul.figure-consecrated { margin: .2rem 0 0; padding-left: 1.15rem; }
+ul.figure-consecrated li { margin-bottom: .25rem; }
+.figure-status { color: var(--ink); }
+
+@media (max-width: 560px) {
+  .figure-lineage-branch { padding: .75rem .8rem; }
+}
+
 /* Print baseline (book series): every visualization is a static figure that
    fits a book page — no scroll containers, no navigation chrome */
 @media print {
@@ -199,6 +240,13 @@ ol.branch-notes li { margin-bottom: .35rem; }
   table.meetings thead th { position: static; }
   /* Figures must not split across pages */
   .lineage-branch, figure.branch-timeline, .party-card, .related-card, .cp-card { break-inside: avoid; page-break-inside: avoid; }
+  /* Per-figure dossier pages print as a book chapter: the breadcrumb and the
+     "back to the chronology" footer link are screen navigation, so they go;
+     the verification flags stay, and no flag or genealogy block is split. */
+  .figure-breadcrumb, .party-link, .figure-backlink { display: none; }
+  .figure-flag, .figure-lineage-branch { break-inside: avoid; page-break-inside: avoid; }
+  .figure-page section#verification { break-after: avoid; page-break-after: avoid; }
+  .figure-page h1 { break-after: avoid; page-break-after: avoid; }
   /* Trees are static HTML/CSS and print as-is (no scroll containment); the
      subway SVG scales to the page width via its viewBox instead of scrolling */
   .viz-scroll { overflow: visible; }

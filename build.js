@@ -42,8 +42,10 @@ const OUT_DIR = path.join(ROOT, 'docs');
 
 const LOCALES = ['en', 'es', 'pt'];
 const OG_LOCALE = { en: 'en_US', es: 'es_ES', pt: 'pt_BR' };
-// Page paths (relative to a locale root) the site emits. fsspx is a single-page
-// site; detail-page routes would be pushed here so sitemap/hreflang stay complete.
+// Page paths (relative to a locale root) the site emits. This is the STATIC
+// base; `allRoutes(data)` appends the data-derived per-figure routes. Both the
+// build loop and renderSitemap() take their list from allRoutes(), so a page
+// can never be emitted without a sitemap entry (ADR-0003 §4).
 const ROUTES = [''];
 
 // Data fields whose string values are prose to translate. Reference titles/
@@ -75,6 +77,26 @@ const UI = {
     footer: 'Compiled static site generated from <code>data/chronology.json</code> by <code>build.js</code>. Open data — corrections welcome via pull request.\n      Part of the Cronologia project family.',
     refsIntro: (n, a) => `${n} sources${a ? ` · ${a} with an Internet Archive fallback` : ''}. Sources span the\n      spectrum of perspectives by design; contested claims are attributed to their authors.`,
     disclaimer: null,
+    // --- per-figure pages (ADR-0003) ---------------------------------------
+    figureCardLink: 'Full page',
+    figureBacklink: '← Back to the chronology',
+    figureScopeNote: 'This page gathers what this chronology records about one figure — the role summary, the events linked to them, and their position in the episcopal genealogy — with every claim carrying its source. It is a dossier page, not a full biography.',
+    figureDossierHeading: 'Dossier',
+    figureEventsHeading: 'Recorded events',
+    figureEventsIntro: (n) => `${n} dated events in this chronology name this figure or have them as their unambiguous actor. A <span class="flag">?</span> flag marks\n      a date not yet verified against a primary source.`,
+    figureLineageHeading: 'Position in the episcopal genealogy',
+    figureLineageConsecrator: 'Consecrated by',
+    figureLineageConsecrated: 'Consecrated',
+    figureLineageStatus: 'Canonical status as recorded here',
+    figureLineageAttrNote: 'Status characterizations are attributed to whoever made them, with their date; this site does not adjudicate them.',
+    figureFlagsHeading: 'Open verification flags',
+    figureFlagsIntro: 'Items on this page that are not yet verified against a primary source. They are shown, not hidden: a dedicated page gives a claim more prominence than a card did, and the doubt has to travel with it.',
+    figureFlagsNone: 'No item on this page carries an open verification flag. That means no flag has been raised — not that every date has been independently confirmed.',
+    figureFlagDates: 'Biographical dates: recorded in this dataset as not settled. See the linked events for the conflicting readings.',
+    figureFlagSingleSource: 'This figure record rests on a single source. Its biographical dates have not been corroborated against a second, independent source.',
+    figureFlagEventDate: 'Date not yet verified against a primary source.',
+    figureRefsHeading: 'Sources cited on this page',
+    figureRefsIntro: (n, a) => `${n} sources${a ? ` · ${a} with an Internet Archive fallback` : ''}, numbered for this page. Sources span the\n      spectrum of perspectives by design; contested claims are attributed to their authors.`,
   },
   es: {
     about: 'Acerca de', chronology: 'Cronología', figures: 'Figuras clave',
@@ -90,6 +112,26 @@ const UI = {
     footer: 'Sitio estático compilado a partir de <code>data/chronology.json</code> por <code>build.js</code>. Datos abiertos — correcciones bienvenidas mediante pull request.\n      Parte de la familia de proyectos Cronologia.',
     refsIntro: (n, a) => `${n} fuentes${a ? ` · ${a} con copia en Internet Archive` : ''}. Las fuentes abarcan el\n      espectro de perspectivas de forma deliberada; las afirmaciones controvertidas se atribuyen a sus autores.`,
     disclaimer: 'Traducción automática del inglés; la página en inglés es la versión de referencia.',
+    // --- páginas por figura (ADR-0003) -------------------------------------
+    figureCardLink: 'Página completa',
+    figureBacklink: '← Volver a la cronología',
+    figureScopeNote: 'Esta página reúne lo que esta cronología registra sobre una figura — el resumen de su papel, los acontecimientos vinculados a ella y su posición en la genealogía episcopal — con cada afirmación acompañada de su fuente. Es una página de dosier, no una biografía completa.',
+    figureDossierHeading: 'Dosier',
+    figureEventsHeading: 'Acontecimientos registrados',
+    figureEventsIntro: (n) => `${n} acontecimientos fechados de esta cronología nombran a esta figura o la tienen como agente inequívoco. Una marca <span class="flag">?</span> indica\n      una fecha aún no verificada con una fuente primaria.`,
+    figureLineageHeading: 'Posición en la genealogía episcopal',
+    figureLineageConsecrator: 'Consagrado por',
+    figureLineageConsecrated: 'Consagró a',
+    figureLineageStatus: 'Situación canónica según se registra aquí',
+    figureLineageAttrNote: 'Las caracterizaciones de la situación canónica se atribuyen a quien las formuló, con su fecha; este sitio no las dirime.',
+    figureFlagsHeading: 'Marcas de verificación abiertas',
+    figureFlagsIntro: 'Elementos de esta página que aún no han sido verificados con una fuente primaria. Se muestran, no se ocultan: una página dedicada da a una afirmación más relieve del que le daba una ficha, y la duda tiene que acompañarla.',
+    figureFlagsNone: 'Ningún elemento de esta página lleva una marca de verificación abierta. Eso significa que no se ha levantado ninguna marca — no que todas las fechas hayan sido confirmadas de forma independiente.',
+    figureFlagDates: 'Fechas biográficas: registradas en este conjunto de datos como no asentadas. Véanse los acontecimientos vinculados para las lecturas discrepantes.',
+    figureFlagSingleSource: 'Este registro de figura se apoya en una sola fuente. Sus fechas biográficas no han sido corroboradas con una segunda fuente independiente.',
+    figureFlagEventDate: 'Fecha aún no verificada con una fuente primaria.',
+    figureRefsHeading: 'Fuentes citadas en esta página',
+    figureRefsIntro: (n, a) => `${n} fuentes${a ? ` · ${a} con copia en Internet Archive` : ''}, numeradas para esta página. Las fuentes abarcan el\n      espectro de perspectivas de forma deliberada; las afirmaciones controvertidas se atribuyen a sus autores.`,
   },
   pt: {
     about: 'Sobre', chronology: 'Cronologia', figures: 'Figuras-chave',
@@ -105,6 +147,26 @@ const UI = {
     footer: 'Site estático compilado a partir de <code>data/chronology.json</code> por <code>build.js</code>. Dados abertos — correções bem-vindas via pull request.\n      Parte da família de projetos Cronologia.',
     refsIntro: (n, a) => `${n} fontes${a ? ` · ${a} com cópia no Internet Archive` : ''}. As fontes abrangem o\n      espectro de perspectivas de forma deliberada; afirmações controversas são atribuídas aos seus autores.`,
     disclaimer: 'Tradução automática do inglês; a página em inglês é a versão de referência.',
+    // --- páginas por figura (ADR-0003) -------------------------------------
+    figureCardLink: 'Página completa',
+    figureBacklink: '← Voltar à cronologia',
+    figureScopeNote: 'Esta página reúne o que esta cronologia registra sobre uma figura — o resumo do seu papel, os acontecimentos a ela vinculados e a sua posição na genealogia episcopal — com cada afirmação acompanhada da sua fonte. É uma página de dossiê, não uma biografia completa.',
+    figureDossierHeading: 'Dossiê',
+    figureEventsHeading: 'Acontecimentos registrados',
+    figureEventsIntro: (n) => `${n} acontecimentos datados desta cronologia nomeiam esta figura ou a têm como agente inequívoco. Uma marca <span class="flag">?</span> indica\n      uma data ainda não verificada com uma fonte primária.`,
+    figureLineageHeading: 'Posição na genealogia episcopal',
+    figureLineageConsecrator: 'Sagrado por',
+    figureLineageConsecrated: 'Sagrou',
+    figureLineageStatus: 'Situação canônica conforme registrada aqui',
+    figureLineageAttrNote: 'As caracterizações da situação canônica são atribuídas a quem as formulou, com a respectiva data; este site não as julga.',
+    figureFlagsHeading: 'Sinalizações de verificação em aberto',
+    figureFlagsIntro: 'Itens desta página que ainda não foram verificados com uma fonte primária. Eles são exibidos, não ocultados: uma página dedicada dá a uma afirmação mais destaque do que um cartão dava, e a dúvida tem de acompanhá-la.',
+    figureFlagsNone: 'Nenhum item desta página tem sinalização de verificação em aberto. Isso significa que nenhuma sinalização foi levantada — não que todas as datas tenham sido confirmadas de forma independente.',
+    figureFlagDates: 'Datas biográficas: registradas neste conjunto de dados como não assentadas. Veja os acontecimentos vinculados para as leituras discordantes.',
+    figureFlagSingleSource: 'Este registro de figura apoia-se numa única fonte. As suas datas biográficas não foram corroboradas por uma segunda fonte independente.',
+    figureFlagEventDate: 'Data ainda não verificada com uma fonte primária.',
+    figureRefsHeading: 'Fontes citadas nesta página',
+    figureRefsIntro: (n, a) => `${n} fontes${a ? ` · ${a} com cópia no Internet Archive` : ''}, numeradas para esta página. As fontes abrangem o\n      espectro de perspectivas de forma deliberada; afirmações controversas são atribuídas aos seus autores.`,
   },
 };
 
@@ -162,15 +224,24 @@ function alternates(base, route, lang) {
   return `  <link rel="canonical" href="${esc(url(lang))}">\n${links}\n  <link rel="alternate" hreflang="x-default" href="${esc(base)}">`;
 }
 
-/** Localized <head> SEO block (canonical/hreflang/OG/Twitter/JSON-LD). */
-function seoHead(meta, base, route, lang) {
+/**
+ * Localized <head> SEO block (canonical/hreflang/OG/Twitter/JSON-LD).
+ *
+ * `opts` is optional and additive, for detail pages that are not the site root:
+ *   opts.siteName — og:site_name (defaults to meta.title, the index behaviour)
+ *   opts.jsonLd   — replaces the JSON-LD object wholesale
+ * Called without `opts` the output is byte-identical to the template's.
+ */
+function seoHead(meta, base, route, lang, opts) {
   const title = meta.title;
   const description = meta.description;
   const pageUrl = `${base}${lang}/${route}`;
-  const jsonLd = { '@context': 'https://schema.org', '@type': 'WebSite', name: title, description, url: pageUrl, inLanguage: lang };
+  const siteName = (opts && opts.siteName) || title;
+  const jsonLd = (opts && opts.jsonLd)
+    || { '@context': 'https://schema.org', '@type': 'WebSite', name: title, description, url: pageUrl, inLanguage: lang };
   return `${alternates(base, route, lang)}
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="${esc(title)}">
+  <meta property="og:site_name" content="${esc(siteName)}">
   <meta property="og:locale" content="${OG_LOCALE[lang] || 'en_US'}">
   <meta property="og:title" content="${esc(title)}">
   <meta property="og:description" content="${esc(description)}">
@@ -183,11 +254,26 @@ ${JSON.stringify(jsonLd, null, 2).split('\n').map((l) => '  ' + l).join('\n')}
   </script>`;
 }
 
+/**
+ * How many directory levels a route sits below its locale root:
+ * '' -> 0, 'figures/x.html' -> 1. `upTo` is the matching '../' prefix that
+ * climbs to the SITE root (one extra level for the locale segment itself), so
+ * relative links work identically at any depth. At depth 0 it returns '../',
+ * exactly what the single-page build emitted before.
+ */
+function routeDepth(route) {
+  return String(route || '').split('/').length - 1;
+}
+function upTo(route) {
+  return '../'.repeat(routeDepth(route) + 1);
+}
+
 /** Path-preserving language switcher (swap only the locale segment). */
 function langSwitcher(route, lang, ui) {
+  const up = upTo(route);
   const links = LOCALES.map((l) => (l === lang
     ? `<span class="lang-current" aria-current="true">${l.toUpperCase()}</span>`
-    : `<a href="../${l}/${route}" hreflang="${l}">${l.toUpperCase()}</a>`)).join('');
+    : `<a href="${up}${l}/${route}" hreflang="${l}">${l.toUpperCase()}</a>`)).join('');
   return `<nav class="lang-switch" aria-label="${esc(ui.language)}">${links}</nav>`;
 }
 
@@ -632,13 +718,21 @@ function renderEventRow(ev, refNumById, ui) {
         </tr>`;
 }
 
-function renderFigureCard(fig, refNumById) {
+/**
+ * A figure card. When the figure has an `id` it also has a per-figure page
+ * (ADR-0003), and the card links to it; cards for figures without an id render
+ * exactly as they did before the feature.
+ */
+function renderFigureCard(fig, refNumById, ui) {
   const meta = [fig.dates, fig.country].filter(Boolean).map(esc).join(' · ');
+  const link = fig.id
+    ? `\n        <p class="party-link"><a href="${esc(figureRoute(fig.id))}">${esc((ui || UI.en).figureCardLink)} →</a></p>`
+    : '';
   return `      <div class="party-card">
         <h3>${esc(fig.name)}</h3>
         ${meta ? `<p class="country">${meta}</p>` : ''}
         <p class="figures">${renderText(fig.role)}${renderCites(fig.sources, refNumById)}</p>
-        ${fig.notes ? `<p class="party-notes">${renderText(fig.notes)}</p>` : ''}
+        ${fig.notes ? `<p class="party-notes">${renderText(fig.notes)}</p>` : ''}${link}
       </div>`;
 }
 
@@ -663,6 +757,333 @@ function renderReference(r, n, archives) {
           <a href="${esc(r.url)}" rel="noopener noreferrer" target="_blank">${esc(r.title)}</a>${archived}
           <span class="ref-meta">${esc(r.publisher)} · ${esc(r.type)}</span>
         </li>`;
+}
+
+/* ---------------------------------------------------------------------------
+ * Per-figure pages (optional, off by default) — ADR-0003, ticket #50.
+ *
+ * A figure gets its own page at `figures/<id>.html` in every locale iff its
+ * record carries an explicit `id`. An `id` may only be assigned when the figure
+ * clears the "3 × 3 rule" (ADR-0003 §1), which scripts/validate-data.js
+ * enforces so the criterion cannot quietly erode:
+ *
+ *   1. single subject          (one person per record)
+ *   2. subject, not counterparty  (editorial gate, recorded in the ADR)
+ *   3. >= 3 linked dated events   (events[].figures contains the id)
+ *   4. >= 3 distinct references   (figure record + its linked events)
+ *
+ * The id is DATA, never derived from the display name: once a page is built the
+ * URL is permanent, and deriving it would put every published link at the mercy
+ * of a prose edit.
+ *
+ * With no `figures[].id` present anywhere, figurePages() returns [] and
+ * allRoutes() collapses to ROUTES, so the build output is byte-identical to one
+ * without the feature — the optional-renderer contract of core ADR-0001.
+ * ------------------------------------------------------------------------- */
+
+const FIGURE_ID_RE = /^[a-z0-9][a-z0-9-]*$/;
+const FIGURE_PAGE_MIN_EVENTS = 3;
+const FIGURE_PAGE_MIN_SOURCES = 3;
+
+/** Route (relative to the locale root) for a figure page. */
+function figureRoute(id) {
+  return `figures/${id}.html`;
+}
+
+/** Every occurrence of a figure in the genealogy trees, with its parent node. */
+function lineageOccurrences(lineage, id) {
+  const out = [];
+  if (!lineage || !Array.isArray(lineage.trees)) return out;
+  const walk = (node, parent, tree) => {
+    if (!node) return;
+    if (node.figure === id) out.push({ tree, node, parent });
+    for (const child of node.children || []) walk(child, node, tree);
+  };
+  for (const tree of lineage.trees) walk(tree && tree.root, null, tree);
+  return out;
+}
+
+/** Events linked to a figure id, in chronological order. */
+function figureEvents(data, id) {
+  return ((data && data.events) || [])
+    .filter((ev) => Array.isArray(ev.figures) && ev.figures.indexOf(id) !== -1)
+    .sort((a, b) => a.year - b.year || String(a.date || '').localeCompare(String(b.date || '')));
+}
+
+/** Distinct reference ids a figure page cites, in first-appearance order. */
+function figurePageSourceIds(page) {
+  const ids = [];
+  const add = (arr) => {
+    for (const s of arr || []) if (ids.indexOf(s) === -1) ids.push(s);
+  };
+  add(page.figure.sources);
+  for (const ev of page.events) add(ev.sources);
+  for (const occ of page.lineage) {
+    add(occ.tree && occ.tree.sources);
+    add(occ.node.sources);
+    if (occ.parent) add(occ.parent.sources);
+    for (const child of occ.node.children || []) add(child.sources);
+  }
+  return ids;
+}
+
+/**
+ * The substance measurements the criterion is scored on. Pure and exported so
+ * the validator and the tests read the same numbers the ADR table quotes.
+ */
+function figurePageMetrics(data, figure) {
+  const events = figureEvents(data, figure.id);
+  const refs = figurePageSourceIds({
+    figure,
+    events,
+    lineage: lineageOccurrences((data && (data.lineage || data.episcopalLineage)), figure.id),
+  });
+  // Only the figure record and its linked events count toward source breadth:
+  // genealogy trees are shared scaffolding, not evidence about this person.
+  const own = new Set(figure.sources || []);
+  for (const ev of events) for (const s of ev.sources || []) own.add(s);
+  return { events: events.length, sources: own.size, citedRefs: refs.length };
+}
+
+/** Reasons a figure with an `id` fails the criterion ([] when it qualifies). */
+function figurePageFailures(data, figure) {
+  const out = [];
+  if (!FIGURE_ID_RE.test(figure.id)) {
+    out.push(`id "${figure.id}" is not a valid slug (${FIGURE_ID_RE})`);
+    return out;
+  }
+  const m = figurePageMetrics(data, figure);
+  if (m.events < FIGURE_PAGE_MIN_EVENTS) {
+    out.push(`only ${m.events} linked event(s), the criterion needs ${FIGURE_PAGE_MIN_EVENTS} (ADR-0003 §1.3)`);
+  }
+  if (m.sources < FIGURE_PAGE_MIN_SOURCES) {
+    out.push(`only ${m.sources} distinct source(s), the criterion needs ${FIGURE_PAGE_MIN_SOURCES} (ADR-0003 §1.4)`);
+  }
+  return out;
+}
+
+/** The figures that get a page, each with the material its page renders. */
+function figurePages(data) {
+  const figures = (data && data.figures) || [];
+  const lineage = data && (data.lineage || data.episcopalLineage);
+  return figures
+    .filter((f) => typeof f.id === 'string' && f.id)
+    .map((figure) => ({
+      id: figure.id,
+      figure,
+      events: figureEvents(data, figure.id),
+      lineage: lineageOccurrences(lineage, figure.id),
+    }));
+}
+
+/** The static routes plus one per figure page — what the build AND the sitemap use. */
+function allRoutes(data) {
+  return ROUTES.concat(figurePages(data).map((p) => figureRoute(p.id)));
+}
+
+/** Plain-text form of a prose field: glossary markers reduced to their label. */
+function stripGlossaryMarkers(value) {
+  if (typeof value !== 'string' || value.indexOf('[[') === -1) return value || '';
+  return value.replace(new RegExp(GLOSSARY_MARKER.source, 'g'), (_m, id, label) => (label && label.trim() ? label : id));
+}
+
+/** Collapse prose to a single-line meta description, cut on a word boundary. */
+function metaSummary(value, limit = 240) {
+  const flat = stripGlossaryMarkers(value).replace(/\s+/g, ' ').trim();
+  if (flat.length <= limit) return flat;
+  const cut = flat.slice(0, limit);
+  const sp = cut.lastIndexOf(' ');
+  return `${(sp > limit * 0.6 ? cut.slice(0, sp) : cut).replace(/[,;:.\-—\s]+$/, '')}…`;
+}
+
+/**
+ * The open verification flags for one figure page, in descending authority:
+ * an explicit editorial flag on the record, then the derived single-source
+ * notice, then every linked event whose date is unverified. Nothing here
+ * asserts a new claim — each entry reports the dataset's own state.
+ */
+function figurePageFlags(page, ui) {
+  const flags = [];
+  const fig = page.figure;
+  if (fig.datesVerified === false) {
+    flags.push({ kind: 'dates', text: ui.figureFlagDates, sources: fig.sources });
+  }
+  if (Array.isArray(fig.sources) && fig.sources.length === 1) {
+    flags.push({ kind: 'single-source', text: ui.figureFlagSingleSource, sources: fig.sources });
+  }
+  for (const ev of page.events) {
+    if (ev.dateVerified === false) {
+      flags.push({ kind: 'event-date', text: ui.figureFlagEventDate, event: ev, sources: ev.sources });
+    }
+  }
+  return flags;
+}
+
+/** One genealogy occurrence: where the figure sits, who consecrated whom, status. */
+function renderFigureLineageOccurrence(occ, refNumById, ui) {
+  const rows = [];
+  if (occ.parent) {
+    rows.push(`          <dt>${esc(ui.figureLineageConsecrator)}</dt>
+          <dd>${esc(occ.parent.name)}${renderCites(occ.parent.sources, refNumById)}</dd>`);
+  }
+  const children = occ.node.children || [];
+  if (children.length) {
+    const list = children
+      .map((c) => `<li>${esc(c.name)}${c.detail ? ` <span class="muted">— ${renderText(c.detail)}</span>` : ''}${renderCites(c.sources, refNumById)}</li>`)
+      .join('\n              ');
+    rows.push(`          <dt>${esc(ui.figureLineageConsecrated)}</dt>
+          <dd><ul class="figure-consecrated">
+              ${list}
+            </ul></dd>`);
+  }
+  if (occ.node.status) {
+    rows.push(`          <dt>${esc(ui.figureLineageStatus)}</dt>
+          <dd class="figure-status">${renderText(occ.node.status)}${renderCites(occ.node.sources, refNumById)}</dd>`);
+  }
+  return `        <div class="figure-lineage-branch">
+          <h3>${esc(occ.tree && occ.tree.title || '')}</h3>
+          ${occ.node.detail ? `<p class="muted">${renderText(occ.node.detail)}</p>` : ''}
+          <dl class="figure-lineage-facts">
+${rows.join('\n')}
+          </dl>
+        </div>`;
+}
+
+/**
+ * A per-figure dossier page. Reference numbering is PAGE-LOCAL: the page is
+ * standalone, so [1] is its own first source, not the index's.
+ */
+function renderFigurePage(page, data, archives, opts = {}) {
+  const { meta, references } = data;
+  const lang = opts.lang || (meta && meta.language) || 'en';
+  const ui = UI[lang] || UI.en;
+  const base = opts.base || siteBase(meta);
+  const route = figureRoute(page.id);
+  const up = upTo(route);
+  const fig = page.figure;
+
+  // Page-local citation numbering, in references[] file order.
+  const cited = new Set(figurePageSourceIds(page));
+  const pageRefs = references.filter((r) => cited.has(r.id));
+  const refNumById = new Map(pageRefs.map((r, i) => [r.id, i + 1]));
+  const archivedRefs = pageRefs.filter((r) => archives[r.url] && archives[r.url].archiveUrl).length;
+
+  const pageTitle = `${fig.name} — ${meta.title}`;
+  const pageDesc = metaSummary(`${fig.name}${fig.dates ? ` (${fig.dates})` : ''} — ${fig.role}`);
+  const pageUrl = `${base}${lang}/${route}`;
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: pageTitle,
+    description: pageDesc,
+    url: pageUrl,
+    inLanguage: lang,
+    isPartOf: { '@type': 'WebSite', name: meta.title, url: `${base}${lang}/` },
+  };
+
+  const flags = figurePageFlags(page, ui);
+  const flagItems = flags.map((f) => {
+    const head = f.event
+      ? `<strong>${esc(f.event.year)}${f.event.date ? ` · ${esc(f.event.date)}` : ''} — ${esc(f.event.title)}</strong> `
+      : '';
+    return `        <li class="figure-flag figure-flag-${esc(f.kind)}"><span class="flag" aria-hidden="true">?</span> ${head}${esc(f.text)}${renderCites(f.sources, refNumById)}</li>`;
+  }).join('\n');
+
+  const meta2 = [fig.dates, fig.country].filter(Boolean).map(esc).join(' · ');
+  const datesFlag = fig.datesVerified === false
+    ? ` <span class="flag" title="${esc(ui.figureFlagDates)}">?</span>`
+    : '';
+
+  const eventRows = page.events.map((ev) => renderEventRow(ev, refNumById, ui)).join('\n');
+  const lineageHtml = page.lineage.map((occ) => renderFigureLineageOccurrence(occ, refNumById, ui)).join('\n');
+
+  return `<!DOCTYPE html>
+<html lang="${esc(meta.language || 'en')}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${esc(pageTitle)}</title>
+  <meta name="description" content="${esc(pageDesc)}">
+${ANALYTICS}
+  <link rel="stylesheet" href="${up}styles.css">
+${seoHead({ title: pageTitle, description: pageDesc }, base, route, lang, { siteName: meta.title, jsonLd })}
+</head>
+<body class="figure-page">
+  <header class="site-header">
+    <div class="wrap">
+      ${langSwitcher(route, lang, ui)}
+      <p class="figure-breadcrumb"><a href="${up}${lang}/">${esc(meta.title)}</a></p>
+      <h1>${esc(fig.name)}</h1>
+      ${meta2 ? `<p class="subtitle">${meta2}${datesFlag}</p>` : ''}
+      <p class="updated">${esc(ui.lastUpdated)} ${esc(meta.lastUpdated)}</p>
+    </div>
+  </header>${ui.disclaimer ? `\n  <div class="i18n-disclaimer" role="note">🌐 ${esc(ui.disclaimer)}</div>` : ''}
+
+  <nav class="site-nav">
+    <div class="wrap">
+      <a href="${up}${lang}/">${esc(ui.figureBacklink)}</a>
+      <a href="#verification">${esc(ui.figureFlagsHeading)}</a>
+      <a href="#dossier">${esc(ui.figureDossierHeading)}</a>${lineageHtml ? `\n      <a href="#lineage">${esc(ui.figureLineageHeading)}</a>` : ''}
+      <a href="#events">${esc(ui.figureEventsHeading)}</a>
+      <a href="#references">${esc(ui.references)}</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section id="verification">
+      <h2>${esc(ui.figureFlagsHeading)}</h2>
+${flags.length ? `      <p class="section-intro">${esc(ui.figureFlagsIntro)}</p>
+      <ul class="figure-flags">
+${flagItems}
+      </ul>` : `      <p class="notice notice-clear">${esc(ui.figureFlagsNone)}</p>`}
+    </section>
+
+    <section id="dossier">
+      <h2>${esc(ui.figureDossierHeading)}</h2>
+      <p class="notice">${esc(ui.figureScopeNote)}</p>
+      <p class="figure-role">${renderText(fig.role)}${renderCites(fig.sources, refNumById)}</p>
+      ${fig.notes ? `<p class="party-notes">${renderText(fig.notes)}</p>` : ''}
+    </section>
+
+${lineageHtml ? `    <section id="lineage">
+      <h2>${esc(ui.figureLineageHeading)}</h2>
+      <p class="notice notice-attribution">${esc(ui.figureLineageAttrNote)}</p>
+${lineageHtml}
+    </section>
+
+` : ''}    <section id="events">
+      <h2>${esc(ui.figureEventsHeading)}</h2>
+      <p class="section-intro">${ui.figureEventsIntro(page.events.length)}</p>
+      <div class="table-scroll">
+      <table class="meetings">
+        <thead>
+          <tr><th>${esc(ui.thYear)}</th><th>${esc(ui.thDate)}</th><th>${esc(ui.thPlace)}</th><th>${esc(ui.thEvent)}</th></tr>
+        </thead>
+        <tbody>
+${eventRows}
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section id="references">
+      <h2>${esc(ui.figureRefsHeading)}</h2>
+      <p class="section-intro">${ui.figureRefsIntro(pageRefs.length, archivedRefs)}</p>
+      <ol class="references">
+${pageRefs.map((r, i) => renderReference(r, i + 1, archives)).join('\n')}
+      </ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p class="figure-backlink"><a href="${up}${lang}/">${esc(ui.figureBacklink)}</a></p>
+      <p>${ui.footer}</p>
+    </div>
+  </footer>
+</body>
+</html>
+`;
 }
 
 function renderPage(data, archives, opts = {}) {
@@ -725,7 +1146,7 @@ function renderPage(data, archives, opts = {}) {
   <title>${esc(meta.title)}</title>
   <meta name="description" content="${esc(meta.description)}">
 ${ANALYTICS}
-  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="${upTo(route)}styles.css">
 ${seoHead(meta, base, route, lang)}
 </head>
 <body>
@@ -777,7 +1198,7 @@ ${eventRows}
 ${lineageHtml}    <section id="figures">
       <h2>${esc(ui.figuresHeading)}</h2>
       <div class="party-grid">
-${figures.map((f) => renderFigureCard(f, refNumById)).join('\n')}
+${figures.map((f) => renderFigureCard(f, refNumById, ui)).join('\n')}
       </div>
     </section>
 
@@ -820,24 +1241,35 @@ function main() {
   const archives = loadArchives();
   const base = siteBase(data.meta);
 
+  const routes = allRoutes(data);
+
   fs.mkdirSync(OUT_DIR, { recursive: true });
   for (const lang of LOCALES) {
     const localized = localizeData(data, loadDict(lang), lang);
     const dir = path.join(OUT_DIR, lang);
     fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(path.join(dir, 'index.html'), renderPage(localized, archives, { lang, base, route: '' }));
+    // Per-figure pages, emitted from the LOCALIZED data so the dossier prose,
+    // the genealogy detail and the status lines are all in-locale (ADR-0003).
+    const pages = figurePages(localized);
+    if (pages.length) fs.mkdirSync(path.join(dir, 'figures'), { recursive: true });
+    for (const page of pages) {
+      fs.writeFileSync(path.join(dir, figureRoute(page.id)), renderFigurePage(page, localized, archives, { lang, base }));
+    }
   }
   fs.writeFileSync(path.join(OUT_DIR, 'index.html'), renderRootStub(base));
-  fs.writeFileSync(path.join(OUT_DIR, 'sitemap.xml'), renderSitemap(base, ROUTES));
+  fs.writeFileSync(path.join(OUT_DIR, 'sitemap.xml'), renderSitemap(base, routes));
   fs.writeFileSync(path.join(OUT_DIR, 'robots.txt'), renderRobots(base));
   fs.copyFileSync(path.join(SRC_DIR, 'styles.css'), path.join(OUT_DIR, 'styles.css'));
   // Disable Jekyll processing on GitHub Pages.
   fs.writeFileSync(path.join(OUT_DIR, '.nojekyll'), '');
 
   const archivedRefs = data.references.filter((r) => archives[r.url] && archives[r.url].archiveUrl).length;
+  const figPages = allRoutes(data).length - ROUTES.length;
   console.log(
-    `Built ${LOCALES.length} locales (${LOCALES.join(', ')}) × ${ROUTES.length} route(s) + root redirect, sitemap, robots — ` +
-    `${data.events.length} events, ${data.figures.length} figures, ` +
+    `Built ${LOCALES.length} locales (${LOCALES.join(', ')}) × ${routes.length} route(s) + root redirect, sitemap, robots — ` +
+    `${data.events.length} events, ${data.figures.length} figures ` +
+    `(${figPages} with a page → ${figPages * LOCALES.length} figure pages), ` +
     `${data.references.length} references, ${archivedRefs} with archive fallback.`
   );
 }
@@ -851,7 +1283,11 @@ module.exports = {
   GLOSSARY_BASE, GLOSSARY_MARKER, glossaryMarkerIds, renderGlossaryLinks, renderText,
   renderLineageNode, lineageHasIndirectEdges, renderLineageLegend, renderLineageSection,
   layoutBranchTimeline, renderBranchTimeline, BT_GEOM,
-  renderPage,
+  renderPage, renderFigureCard,
+  FIGURE_ID_RE, FIGURE_PAGE_MIN_EVENTS, FIGURE_PAGE_MIN_SOURCES,
+  figureRoute, figureEvents, lineageOccurrences, figurePageSourceIds, figurePageMetrics,
+  figurePageFailures, figurePages, allRoutes, figurePageFlags, renderFigurePage,
+  stripGlossaryMarkers, metaSummary, routeDepth, upTo,
   LOCALES, ROUTES, OG_LOCALE, UI, TRANSLATABLE_KEYS, loadDict, siteBase, translator, localizeData,
   alternates, seoHead, langSwitcher, renderRootStub, renderSitemap, renderRobots,
 };
