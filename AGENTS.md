@@ -49,6 +49,10 @@ test/                    node:test unit tests (build helpers, data invariants + 
 .github/workflows/wayback.yml       CI: weekly Wayback run, commits archives.json + docs/
 .github/workflows/link-health.yml   CI: weekly link check, opens/updates one "link health" issue
 .claude/skills/          VENDORED, PINNED copies of the cronologia/core skills (GENERATED — see below)
+KEYWORDS.md              SEARCH FINDING AID — what to grep for, and which obvious terms are dead
+                         ends. Mechanical sections are GENERATED (core/tools/build-keywords.py,
+                         between the markers); the hand-written "## Search traps" section outside
+                         them survives regeneration. Documentation only — never affects the build.
 adr/                     This repo's standing decisions (ADR-0001, ADR-0002, ADR-0003)
 docs/                    COMPILED OUTPUT, served by GitHub Pages (committed) —
                          docs/index.html is a REDIRECT STUB; the real pages are docs/{en,pt,es}/index.html
@@ -172,7 +176,20 @@ python3 ../core/tools/dataset-query.py fsspx unverified           # the verifica
 python3 ../core/tools/unverified-report.py fsspx --markdown       # paste-ready ticket checklist
 python3 ../core/tools/mine-prep.py <transcript.txt> --lang pt     # transcript -> candidate sheet
 python3 ../core/tools/xref.py --repos fsspx,tariqa,perennialism   # cross-repo consistency
+python3 ../core/tools/build-keywords.py fsspx --out KEYWORDS.md   # refresh the search finding aid
 ```
+
+**Before searching a corpus, mining a transcript or opening a dossier, read
+[`KEYWORDS.md`](KEYWORDS.md)** — especially its hand-written `## Search traps`
+section. The obvious term is frequently the wrong one here: `FSSPX` returns
+**zero** hits across the 7.16M-word COF corpus (which writes *Sociedade de São
+Pio X*), the correct spelling `Lefebvre` appears in only 2 of the 121 vaulted
+auto-caption transcripts, and the Latin terms of art must not be translated.
+When a mining session turns up a new dead term, naming variant, ASR mangling or
+false friend, **add it to `## Search traps`** rather than leaving it in a closed
+ticket — that section is outside the generated markers and survives
+`build-keywords.py`. Never invent a variant: list only spellings you actually
+observed, and say where.
 
 `xref.py` prints every entity present in 2+ repos side by side and flags
 `CONTRADICTION` / `DIFFERS`. Nothing is auto-resolved — the flags are review
