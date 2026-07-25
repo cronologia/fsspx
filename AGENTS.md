@@ -22,7 +22,8 @@ mirrors the older sibling project
 (`fsp/docs/adrs/`) explain *why* things are built this way (zero dependencies,
 JSON as single source of truth, publish from `docs/`, Wayback archiving,
 sourcing policy). Follow them here too. This repo's own standing decisions are
-in [`adr/0001-project-scope-and-adopted-template.md`](adr/0001-project-scope-and-adopted-template.md).
+in [`adr/0001-project-scope-and-adopted-template.md`](adr/0001-project-scope-and-adopted-template.md)
+and [`adr/0002-multilingual-pt-es.md`](adr/0002-multilingual-pt-es.md).
 
 ## Repository map
 
@@ -31,26 +32,30 @@ data/chronology.json     SOURCE OF TRUTH — facts, events, figures, organizatio
                          episcopalLineage, branchTimeline, disambiguation, references (hand-edited)
 data/archives.json       Wayback snapshot cache (GENERATED — do not hand-edit; 32 snapshots)
 data/glossary-terms.json VENDORED, PINNED list of cronologia/glossary term ids (written by scripts/sync-glossary-terms.js; committed) — validates [[term-id]] cross-links offline
+data/i18n/{pt,es}.json   Machine-translation caches, English source string -> translation (GENERATED — do not hand-edit; managed by scripts/translate.js; 302/302 each)
 src/styles.css           Stylesheet (copied into the build)
 scripts/validate-data.js Schema check (runs in CI before the build) — also fails on unknown glossary [[term-id]] links
 scripts/sync-glossary-terms.js  Refresh data/glossary-terms.json from cronologia/glossary (out-of-band; needs network)
 scripts/archive-refs.js  Wayback preservation: references[] -> data/archives.json (out-of-band; needs network)
 scripts/check-links.js   Link-health checker: reports dead/SUSPECT/inconclusive refs (out-of-band; never edits data)
-build.js                 Compiler: data/chronology.json -> docs/
+scripts/translate.js     Translation-cache manager for data/i18n/*.json — `--stats` reports coverage (offline-safe no-op; no backend needed)
+build.js                 Compiler: data/chronology.json -> docs/{en,pt,es}/ + root redirect stub + sitemap.xml + robots.txt
 test/                    node:test unit tests (build helpers, data invariants + drift check,
                          glossary links, viz renderers, link-health helpers)
 .github/workflows/deploy.yml        CI: validate, test, build, drift check, Pages deploy (opt-in)
 .github/workflows/wayback.yml       CI: weekly Wayback run, commits archives.json + docs/
 .github/workflows/link-health.yml   CI: weekly link check, opens/updates one "link health" issue
 .claude/skills/          VENDORED, PINNED copies of the cronologia/core skills (GENERATED — see below)
-adr/                     This repo's standing decisions (ADR-0001)
-docs/                    COMPILED OUTPUT, served by GitHub Pages (committed)
+adr/                     This repo's standing decisions (ADR-0001, ADR-0002)
+docs/                    COMPILED OUTPUT, served by GitHub Pages (committed) —
+                         docs/index.html is a REDIRECT STUB; the real pages are docs/{en,pt,es}/index.html
 ```
 
 ## Common commands
 
 ```bash
-node build.js                       # compile data/chronology.json -> docs/
+node build.js                       # compile data/chronology.json -> docs/{en,pt,es}/ (+ stub, sitemap, robots)
+node scripts/translate.js --stats   # i18n coverage: which strings still need a pt/es translation
 node scripts/validate-data.js       # schema check (runs in CI before the build)
 node --test                         # unit tests
 python3 -m http.server -d docs 8000 # local preview at http://localhost:8000
@@ -91,7 +96,11 @@ shows `docs/` after a docs-only edit, something is wrong.
    `link-health.yml` report rot; neither script ever edits
    `data/chronology.json`.
 5. **Never hand-edit generated files** — `docs/`, `data/archives.json`,
-   `data/glossary-terms.json`, `.claude/skills/`.
+   `data/glossary-terms.json`, `data/i18n/*.json`, `.claude/skills/`.
+   When English prose changes, re-author the affected `pt`/`es` strings
+   (`node scripts/translate.js --stats` shows what is missing) so a locale does
+   not drift stale. English is authoritative; translations never add, drop or
+   change a claim, an attribution or a `[[term-id]]` marker (ADR-0002).
 6. **One repo, one committer.** Exactly one agent owns this dataset at a time.
    Serialize instead of racing.
 

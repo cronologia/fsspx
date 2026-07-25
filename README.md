@@ -24,19 +24,22 @@ compiles it into plain HTML/CSS that can be hosted anywhere.
 fsspx/
 ├── data/
 │   ├── chronology.json       # SINGLE SOURCE OF TRUTH — facts, events, figures, references
-│   └── archives.json         # machine-generated Wayback snapshot cache (committed)
+│   ├── archives.json         # machine-generated Wayback snapshot cache (committed)
+│   └── i18n/{pt,es}.json     # machine-translation caches (generated; English is authoritative)
 ├── src/
 │   └── styles.css            # stylesheet (copied into the build)
 ├── scripts/
 │   ├── validate-data.js      # schema check (runs in CI before the build)
 │   ├── archive-refs.js       # Wayback preservation: references[] -> data/archives.json
-│   └── check-links.js        # link-health report (out-of-band; never edits data)
+│   ├── check-links.js        # link-health report (out-of-band; never edits data)
+│   └── translate.js          # translation-cache manager (`--stats` reports coverage)
 ├── .github/workflows/
 │   ├── deploy.yml            # CI: validate, test, build, drift check, deploy
 │   ├── wayback.yml           # CI: weekly Wayback run, commits archives.json + docs/
 │   └── link-health.yml       # CI: weekly link check -> single tracking issue
-├── build.js                  # compiler: data/chronology.json -> docs/
-├── docs/                     # COMPILED OUTPUT (served by GitHub Pages)
+├── build.js                  # compiler: data/chronology.json -> docs/{en,pt,es}/
+├── docs/                     # COMPILED OUTPUT (served by GitHub Pages);
+│                             #   index.html is a redirect stub -> {en,pt,es}/
 ├── adr/                      # this repo's standing decisions
 ├── .claude/skills/           # vendored copies of the cronologia/core skills (generated)
 ├── AGENTS.md                 # how AI agents/humans should work in this repo
@@ -50,11 +53,15 @@ fsspx/
 node build.js
 ```
 
-This regenerates `docs/index.html` and copies static assets. No `npm install` needed.
+This regenerates `docs/{en,pt,es}/index.html`, the `docs/index.html` redirect
+stub, `sitemap.xml`, `robots.txt`, and copies static assets. No `npm install`
+needed. English is authoritative and hand-written; the Portuguese and Spanish
+pages are machine-translated from the committed caches in `data/i18n/` and
+carry a visible disclaimer (see `adr/0002-multilingual-pt-es.md`).
 
 ### Preview
 
-Open `docs/index.html` directly in a browser, or serve the folder:
+Open `docs/en/index.html` directly in a browser, or serve the folder:
 
 ```bash
 python3 -m http.server -d docs 8000   # then visit http://localhost:8000
