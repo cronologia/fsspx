@@ -7,7 +7,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {
   renderPage, renderRootStub, renderSitemap, renderRobots,
-  siteBase, localizeData, loadDict, LOCALES, ROUTES,
+  siteBase, localizeData, loadDict, LOCALES, allRoutes,
 } = require('../build.js');
 
 const ROOT = path.join(__dirname, '..');
@@ -100,10 +100,11 @@ test('pt and es caches cover every translatable string and keep glossary markers
 
 test('sitemap lists every route × locale with alternates; robots points to it', () => {
   const base = siteBase(data.meta);
-  const sitemap = renderSitemap(base, ROUTES);
+  const routes = allRoutes(data);
+  const sitemap = renderSitemap(base, routes);
   assert.match(sitemap, /<\?xml/);
   assert.match(sitemap, /xmlns:xhtml=/);
-  for (const route of ROUTES) for (const lang of LOCALES) {
+  for (const route of routes) for (const lang of LOCALES) {
     assert.ok(sitemap.includes(`<loc>${base}${lang}/${route}</loc>`), `sitemap missing ${lang}/${route}`);
   }
   assert.ok(renderRobots(base).includes(`Sitemap: ${base}sitemap.xml`));
@@ -120,7 +121,7 @@ test('committed docs/ is the current render for every locale (no drift)', () => 
   const docs = path.join(ROOT, 'docs');
   const base = siteBase(data.meta);
   assert.equal(fs.readFileSync(path.join(docs, 'index.html'), 'utf8'), renderRootStub(base), 'root stub drift — run node build.js');
-  assert.equal(fs.readFileSync(path.join(docs, 'sitemap.xml'), 'utf8'), renderSitemap(base, ROUTES), 'sitemap drift — run node build.js');
+  assert.equal(fs.readFileSync(path.join(docs, 'sitemap.xml'), 'utf8'), renderSitemap(base, allRoutes(data)), 'sitemap drift — run node build.js');
   assert.equal(fs.readFileSync(path.join(docs, 'robots.txt'), 'utf8'), renderRobots(base), 'robots drift — run node build.js');
   for (const lang of LOCALES) {
     const f = path.join(docs, lang, 'index.html');

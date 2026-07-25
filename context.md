@@ -205,3 +205,16 @@ Several of these hosts filter by User-Agent (`sspx.org`, `fsspx.news`,
 
 All cited sources live in `data/chronology.json` → `references[]`, with their
 Wayback snapshots in `data/archives.json`.
+
+**Before you search any of them, read [`KEYWORDS.md`](KEYWORDS.md).** It is the
+project's finding aid: what the subject is called in each source family, and —
+in the hand-written `## Search traps` section — which obvious searches come back
+empty anyway. The naming is genuinely treacherous. The Portuguese lecture corpus
+in `cronologia/archive` never writes `FSSPX` or `SSPX` at all (it says
+*Sociedade de São Pio X* and *Monsenhor Lefebvre*); the Brazilian sources say
+*Dom Marcel*; the French ones say *Mgr Lefebvre*; the auto-caption transcripts
+spell the founder's name correctly in 2 files out of 121; and the Latin terms of
+art (*latae sententiae*, *motu proprio*, *pia unio*, *a divinis*) find the
+Vatican documents while their Portuguese renderings find the commentary — search
+both, substitute neither. `KEYWORDS.md` makes no claims about the subject; it
+only records strings worth typing.

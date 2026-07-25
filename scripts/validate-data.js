@@ -12,7 +12,10 @@
 
 const fs = require('fs');
 const path = require('path');
-const { glossaryMarkerIds } = require('../build.js');
+const {
+  glossaryMarkerIds, FIGURE_ID_RE, FIGURE_PAGE_MIN_EVENTS, FIGURE_PAGE_MIN_SOURCES,
+  figurePageFailures,
+} = require('../build.js');
 
 const ROOT = path.join(__dirname, '..');
 const FILE = 'data/chronology.json';
@@ -106,6 +109,12 @@ else {
     if (!isStr(ev.title)) err(`${at}.title missing`);
     if (ev.date !== undefined && !isStr(ev.date)) err(`${at}.date must be a string`);
     if (typeof ev.dateVerified !== 'boolean') err(`${at}.dateVerified must be boolean`);
+    if (ev.figures !== undefined) {
+      if (!isArr(ev.figures) || ev.figures.length === 0) err(`${at}.figures must be a non-empty array of figure ids`);
+      else ev.figures.forEach((fid, j) => {
+        if (!isStr(fid)) err(`${at}.figures[${j}] must be a figure id string`);
+      });
+    }
     checkSources(at, ev.sources, true);
   });
 }
@@ -113,12 +122,63 @@ else {
 // ---- figures --------------------------------------------------------------
 if (!isArr(d.figures) || d.figures.length === 0) err('figures[] missing or empty');
 else {
+  const figureIds = new Set();
   d.figures.forEach((f, i) => {
     const at = `figures[${i}]`;
     if (!isStr(f.name)) err(`${at}.name missing`);
     if (!isStr(f.role)) err(`${at}.role missing`);
+    if (f.datesVerified !== undefined && typeof f.datesVerified !== 'boolean') {
+      err(`${at}.datesVerified must be boolean`);
+    }
+    if (f.id !== undefined) {
+      if (!isStr(f.id) || !FIGURE_ID_RE.test(f.id)) {
+        err(`${at}.id "${f.id}" must match ${FIGURE_ID_RE} (the glossary slug grammar; ADR-0003 §3)`);
+      } else if (figureIds.has(f.id)) {
+        err(`${at}.id "${f.id}" is a duplicate — figure ids are permanent URLs and must be unique`);
+      } else {
+        figureIds.add(f.id);
+      }
+    }
     checkSources(at, f.sources, true);
   });
+
+  // ---- per-figure pages: the criterion (ADR-0003 §1) ----------------------
+  // An `id` is what publishes a page at figures/<id>.html, so an id is only
+  // allowed on a figure that clears the substance threshold. The editorial
+  // clauses (single subject; subject, not counterparty) are recorded in the
+  // ADR; the two countable ones are enforced here so the rule cannot erode
+  // one convenient exception at a time.
+  d.figures.forEach((f, i) => {
+    if (!isStr(f.id)) return;
+    for (const why of figurePageFailures(d, f)) {
+      err(`figures[${i}] ("${f.name}") carries id "${f.id}" but does not meet the per-figure-page criterion: ${why}. ` +
+          `Remove the id to keep it a card, or deepen the dossier — thresholds are ` +
+          `${FIGURE_PAGE_MIN_EVENTS} linked events and ${FIGURE_PAGE_MIN_SOURCES} distinct sources.`);
+    }
+  });
+
+  // Every figure id referenced from events[] / the genealogy must resolve.
+  d.events.forEach((ev, i) => {
+    for (const fid of ev.figures || []) {
+      if (typeof fid === 'string' && !figureIds.has(fid)) {
+        err(`events[${i}].figures references unknown figure id "${fid}"`);
+      }
+    }
+  });
+  (function checkLineageFigureRefs() {
+    const lineage = d.lineage || d.episcopalLineage;
+    if (!lineage || !isArr(lineage.trees)) return;
+    const walk = (node, at) => {
+      if (!node) return;
+      if (node.figure !== undefined) {
+        if (!isStr(node.figure) || !figureIds.has(node.figure)) {
+          err(`${at}.figure references unknown figure id "${node.figure}"`);
+        }
+      }
+      (node.children || []).forEach((c, j) => walk(c, `${at}.children[${j}]`));
+    };
+    lineage.trees.forEach((t, i) => walk(t && t.root, `lineage.trees[${i}].root`));
+  })();
 }
 
 // ---- organizations --------------------------------------------------------
