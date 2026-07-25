@@ -1,18 +1,54 @@
 {
   "generatedBy": "scripts/archive-refs.js",
-  "updatedAt": "2026-07-19",
+  "updatedAt": "2026-07-25",
   "snapshots": {
+    "http://chiesaepostconcilio.blogspot.com/2020/09/lesperienza-della-tradizione-o-la.html": {
+      "refId": "chiesaepostconcilio-citati-2020",
+      "archiveUrl": "https://web.archive.org/web/20250907042551/https://chiesaepostconcilio.blogspot.com/2020/09/lesperienza-della-tradizione-o-la.html",
+      "timestamp": "20250907042551",
+      "checkedAt": "2026-07-25"
+    },
+    "http://www.religioperennis.org/documents/stoddart/On_Rama_Coomaraswamy-by_Stoddart_and_de_Azevedo.pdf": {
+      "refId": "religioperennis-rama",
+      "archiveUrl": "https://web.archive.org/web/20260214024350/http://www.religioperennis.org/documents/stoddart/On_Rama_Coomaraswamy-by_Stoddart_and_de_Azevedo.pdf",
+      "timestamp": "20260214024350",
+      "checkedAt": "2026-07-25"
+    },
+    "https://en-academic.com/dic.nsf/enwiki/548402": {
+      "refId": "en-academic-rama",
+      "archiveUrl": "https://web.archive.org/web/20260306100627/https://en-academic.com/dic.nsf/enwiki/548402",
+      "timestamp": "20260306100627",
+      "checkedAt": "2026-07-25"
+    },
     "https://en.wikipedia.org/wiki/2026_%C3%89c%C3%B4ne_consecrations": {
       "refId": "wikipedia-2026",
       "archiveUrl": "https://web.archive.org/web/20260708015710/https://en.wikipedia.org/wiki/2026_%C3%89c%C3%B4ne_consecrations",
       "timestamp": "20260708015710",
       "checkedAt": "2026-07-19"
     },
+    "https://en.wikipedia.org/wiki/Ant%C3%B4nio_de_Castro_Mayer": {
+      "refId": "wikipedia-castro-mayer",
+      "archiveUrl": "https://web.archive.org/web/20260702144704/https://en.wikipedia.org/wiki/Ant%C3%B4nio_de_Castro_Mayer",
+      "timestamp": "20260702144704",
+      "checkedAt": "2026-07-25"
+    },
+    "https://en.wikipedia.org/wiki/Bernard_Tissier_de_Mallerais": {
+      "refId": "wikipedia-tissier",
+      "archiveUrl": "https://web.archive.org/web/20260610040537/https://en.wikipedia.org/wiki/Bernard_Tissier_de_Mallerais",
+      "timestamp": "20260610040537",
+      "checkedAt": "2026-07-25"
+    },
     "https://en.wikipedia.org/wiki/Congregation_of_Mary_Immaculate_Queen": {
       "refId": "wikipedia-cmri",
       "archiveUrl": "https://web.archive.org/web/20260704013357/https://en.wikipedia.org/wiki/Congregation_of_Mary_Immaculate_Queen",
       "timestamp": "20260704013357",
       "checkedAt": "2026-07-19"
+    },
+    "https://en.wikipedia.org/wiki/Davide_Pagliarani": {
+      "refId": "wikipedia-pagliarani",
+      "archiveUrl": "https://web.archive.org/web/20260710014550/https://en.wikipedia.org/wiki/Davide_Pagliarani",
+      "timestamp": "20260710014550",
+      "checkedAt": "2026-07-25"
     },
     "https://en.wikipedia.org/wiki/Dialogue_between_the_Holy_See_and_the_Society_of_Saint_Pius_X": {
       "refId": "wikipedia-dialogue",
@@ -56,6 +92,12 @@
       "timestamp": "20260702202703",
       "checkedAt": "2026-07-19"
     },
+    "https://en.wikipedia.org/wiki/Priestly_Fraternity_of_Saint_Peter": {
+      "refId": "wikipedia-fssp",
+      "archiveUrl": "https://web.archive.org/web/20260703104829/https://en.wikipedia.org/wiki/Priestly_Fraternity_of_Saint_Peter",
+      "timestamp": "20260703104829",
+      "checkedAt": "2026-07-25"
+    },
     "https://en.wikipedia.org/wiki/Richard_Williamson_(bishop)": {
       "refId": "wikipedia-williamson",
       "archiveUrl": "https://web.archive.org/web/20260708152255/https://en.wikipedia.org/wiki/Richard_Williamson_(bishop)",
@@ -86,6 +128,24 @@
       "timestamp": "20260520042216",
       "checkedAt": "2026-07-19"
     },
+    "https://fsspx.news/en/news/bishop-vitus-huonder-and-sspx-43977": {
+      "refId": "fsspx-huonder",
+      "archiveUrl": "https://web.archive.org/web/20251016181108/https://fsspx.news/en/news/bishop-vitus-huonder-and-sspx-43977",
+      "timestamp": "20251016181108",
+      "checkedAt": "2026-07-25"
+    },
+    "https://fsspx.news/en/news/death-bishop-bernard-tissier-mallerais-47993": {
+      "refId": "fsspx-news-tissier-obit",
+      "archiveUrl": "https://web.archive.org/web/20251026144028/https://fsspx.news/en/news/death-bishop-bernard-tissier-mallerais-47993",
+      "timestamp": "20251026144028",
+      "checkedAt": "2026-07-25"
+    },
+    "https://fsspx.news/en/news/general-house-communique-society-files-recourse-against-decree-2-july-2026-60112": {
+      "refId": "fsspx-news-recourse",
+      "archiveUrl": "https://web.archive.org/web/20260719214818/https://fsspx.news/en/news/general-house-communique-society-files-recourse-against-decree-2-july-2026-60112",
+      "timestamp": "20260719214818",
+      "checkedAt": "2026-07-25"
+    },
     "https://fsspx.news/en/news/sspx-brazil-becomes-autonomous-house-16213": {
       "refId": "fsspx-news-brazil",
       "archiveUrl": "https://web.archive.org/web/20260719203554/https://fsspx.news/en/news/sspx-brazil-becomes-autonomous-house-16213",
@@ -98,11 +158,47 @@
       "timestamp": "20240531072540",
       "checkedAt": "2026-07-19"
     },
+    "https://fsspx.org/en/1974-declaration-archbishop-lefebvre-31164": {
+      "refId": "fsspx-1974-declaration",
+      "archiveUrl": "https://web.archive.org/web/20260723120159/https://fsspx.org/en/1974-declaration-archbishop-lefebvre-31164",
+      "timestamp": "20260723120159",
+      "checkedAt": "2026-07-25"
+    },
+    "https://j3news.com/2026/01/12/bispo-dom-fernando-rifan-anuncia-que-deixara-o-cargo-em-2027/": {
+      "refId": "j3news-rifan-2026",
+      "archiveUrl": "https://web.archive.org/web/20260214010243/https://j3news.com/2026/01/12/bispo-dom-fernando-rifan-anuncia-que-deixara-o-cargo-em-2027/",
+      "timestamp": "20260214010243",
+      "checkedAt": "2026-07-25"
+    },
+    "https://laportelatine.org/formation/mgr-lefebvre/sermons-historiques/lille-29-aout-1976": {
+      "refId": "laportelatine-lille-1976",
+      "archiveUrl": "https://web.archive.org/web/20260309094230/https://laportelatine.org/formation/mgr-lefebvre/sermons-historiques/lille-29-aout-1976",
+      "timestamp": "20260309094230",
+      "checkedAt": "2026-07-25"
+    },
     "https://magnuslundberg.net/2016/04/30/chronological-outline-of-the-palmarian-church/": {
       "refId": "lundberg-palmar",
       "archiveUrl": "https://web.archive.org/web/20260330121247/https://magnuslundberg.net/2016/04/30/chronological-outline-of-the-palmarian-church/",
       "timestamp": "20260330121247",
       "checkedAt": "2026-07-19"
+    },
+    "https://magnuslundberg.net/wp-content/uploads/2020/06/palmar-second-edition.pdf": {
+      "refId": "lundberg-book",
+      "archiveUrl": "https://web.archive.org/web/20260219140116/https://magnuslundberg.net/wp-content/uploads/2020/06/palmar-second-edition.pdf",
+      "timestamp": "20260219140116",
+      "checkedAt": "2026-07-25"
+    },
+    "https://onepeterfive.com/the-sspx-meets-with-the-vatican/": {
+      "refId": "onepeterfive-ddf-statement-2026",
+      "archiveUrl": "https://web.archive.org/web/20260702192319/https://onepeterfive.com/the-sspx-meets-with-the-vatican/",
+      "timestamp": "20260702192319",
+      "checkedAt": "2026-07-25"
+    },
+    "https://onepeterfive.com/two-paths-of-catholic-traditionalism-campos-the-sspx-and-the-debate-over-communion-with-rome/": {
+      "refId": "onepeterfive-campos",
+      "archiveUrl": "https://web.archive.org/web/20260702143508/https://onepeterfive.com/two-paths-of-catholic-traditionalism-campos-the-sspx-and-the-debate-over-communion-with-rome/",
+      "timestamp": "20260702143508",
+      "checkedAt": "2026-07-25"
     },
     "https://pt.wikipedia.org/wiki/Fraternidade_Sacerdotal_de_S%C3%A3o_Pio_X": {
       "refId": "wikipedia-pt",
@@ -110,11 +206,65 @@
       "timestamp": "20260703180432",
       "checkedAt": "2026-07-19"
     },
+    "https://rorate-caeli.blogspot.com/2015/03/breaking-exclusive-former-sspx-bishop.html": {
+      "refId": "rorate-faure-2015",
+      "archiveUrl": "https://web.archive.org/web/20260417212032/https://rorate-caeli.blogspot.com/2015/03/breaking-exclusive-former-sspx-bishop.html",
+      "timestamp": "20260417212032",
+      "checkedAt": "2026-07-25"
+    },
+    "https://sspx.org/en/1988-episcopal-consecrations-sermon-30926": {
+      "refId": "sspx-1988-sermon",
+      "archiveUrl": "https://web.archive.org/web/20260523105239/https://sspx.org/en/1988-episcopal-consecrations-sermon-30926",
+      "timestamp": "20260523105239",
+      "checkedAt": "2026-07-25"
+    },
+    "https://sspx.org/en/news/funeral-bishop-bernard-tissier-mallerais-48150": {
+      "refId": "sspx-tissier-funeral",
+      "archiveUrl": "https://web.archive.org/web/20260221034208/https://sspx.org/en/news/funeral-bishop-bernard-tissier-mallerais-48150",
+      "timestamp": "20260221034208",
+      "checkedAt": "2026-07-25"
+    },
     "https://sspx.org/en/news/timeline-society-saint-pius-xs-july-1-2026-episcopal-consecrations-60126": {
       "refId": "sspx-org",
       "archiveUrl": "https://web.archive.org/web/20260715072715/https://sspx.org/en/news/timeline-society-saint-pius-xs-july-1-2026-episcopal-consecrations-60126",
       "timestamp": "20260715072715",
       "checkedAt": "2026-07-19"
+    },
+    "https://sspxasia.com/Documents/Archbishop-Lefebvre/Archbishop_Lefebvre_and_the_Vatican/Part_I/1988-05-06.htm": {
+      "refId": "sspxasia-1988-letter",
+      "archiveUrl": "https://web.archive.org/web/20260719220459/https://www.sspxasia.com/Documents/Archbishop-Lefebvre/Archbishop_Lefebvre_and_the_Vatican/Part_I/1988-05-06.htm",
+      "timestamp": "20260719220459",
+      "checkedAt": "2026-07-25"
+    },
+    "https://stas.org/en/news/saying-good-bye-our-alma-mater-7546": {
+      "refId": "stas-seminary-history",
+      "archiveUrl": "https://web.archive.org/web/20260129173546/https://stas.org/en/news/saying-good-bye-our-alma-mater-7546",
+      "timestamp": "20260129173546",
+      "checkedAt": "2026-07-25"
+    },
+    "https://traditionalistblog.blogspot.com/2022/01/Olavodeath.html": {
+      "refId": "sedgwick-blog-olavo-death",
+      "archiveUrl": "https://web.archive.org/web/20251207023853/https://traditionalistblog.blogspot.com/2022/01/Olavodeath.html",
+      "timestamp": "20251207023853",
+      "checkedAt": "2026-07-25"
+    },
+    "https://truerestoration.org/an-interview-with-fr-anthony-cekada-regarding-archbishop-lefebvre-and-the-1983-split-with-the-sspx/": {
+      "refId": "truerestoration-cekada-1983",
+      "archiveUrl": "https://web.archive.org/web/20250418133033/https://truerestoration.org/an-interview-with-fr-anthony-cekada-regarding-archbishop-lefebvre-and-the-1983-split-with-the-sspx/",
+      "timestamp": "20250418133033",
+      "checkedAt": "2026-07-25"
+    },
+    "https://ttu-files.s3.us-east-2.amazonaws.com/Life-of-Mgr-Guerard-des-Lauriers-OP.pdf": {
+      "refId": "imbc-murro-guerard",
+      "archiveUrl": "https://web.archive.org/web/20250801213515/https://ttu-files.s3.us-east-2.amazonaws.com/Life-of-Mgr-Guerard-des-Lauriers-OP.pdf",
+      "timestamp": "20250801213515",
+      "checkedAt": "2026-07-25"
+    },
+    "https://www.acidigital.com/noticia/65569/leao-xiv-pede-para-dom-rifan-seguir-como-bispo-da-prelazia-que-mantem-liturgia-tradicional-em-campos": {
+      "refId": "acidigital-rifan-2025",
+      "archiveUrl": "https://web.archive.org/web/20251203112407/https://www.acidigital.com/noticia/65569/leao-xiv-pede-para-dom-rifan-seguir-como-bispo-da-prelazia-que-mantem-liturgia-tradicional-em-campos",
+      "timestamp": "20251203112407",
+      "checkedAt": "2026-07-25"
     },
     "https://www.americamagazine.org/vatican-dispatch/2026/07/01/sspx-ordains-four-new-bishops-in-defiance-of-pope-leo-and-the-vatican/": {
       "refId": "america-2026",
@@ -127,6 +277,24 @@
       "archiveUrl": "https://web.archive.org/web/20251009194953/https://www.arlingtondiocese.org/2017/05/08/statement-from-most-reverend-michael-f-burbidge-on-the-consecration-of-father-gerardo-zendejas-member-of-an-independent-church/",
       "timestamp": "20251009194953",
       "checkedAt": "2026-07-19"
+    },
+    "https://www.catholic-hierarchy.org/bishop/bcasmay.html": {
+      "refId": "catholic-hierarchy-castro-mayer",
+      "archiveUrl": "https://web.archive.org/web/20260314083855/https://catholic-hierarchy.org/bishop/bcasmay.html",
+      "timestamp": "20260314083855",
+      "checkedAt": "2026-07-25"
+    },
+    "https://www.catholicculture.org/culture/library/view.cfm?recnum=1224": {
+      "refId": "pclt-note-1996",
+      "archiveUrl": "https://web.archive.org/web/20260217214001/https://www.catholicculture.org/culture/library/view.cfm?recnum=1224",
+      "timestamp": "20260217214001",
+      "checkedAt": "2026-07-25"
+    },
+    "https://www.catholicworldreport.com/2018/11/26/doctrine-remains-problem-in-relations-sspx-affirms-after-vatican-meeting/": {
+      "refId": "cwr-sspx-2018",
+      "archiveUrl": "https://web.archive.org/web/20250720001956/https://www.catholicworldreport.com/2018/11/26/doctrine-remains-problem-in-relations-sspx-affirms-after-vatican-meeting/",
+      "timestamp": "20250720001956",
+      "checkedAt": "2026-07-25"
     },
     "https://www.cnnbrasil.com.br/internacional/excomungado-pelo-vaticano-conheca-grupo-ultraconservador-alvo-de-punicao/": {
       "refId": "cnn-brasil-2026",
@@ -146,11 +314,47 @@
       "timestamp": "20260717043152",
       "checkedAt": "2026-07-19"
     },
+    "https://www.osvnews.com/excommunicated-bishop-williamson-dies-at-84/": {
+      "refId": "osv-williamson-obit",
+      "archiveUrl": "https://web.archive.org/web/20260218041305/https://www.osvnews.com/excommunicated-bishop-williamson-dies-at-84/",
+      "timestamp": "20260218041305",
+      "checkedAt": "2026-07-25"
+    },
+    "https://www.pillarcatholic.com/p/the-sspxs-unappealing-canonical-prospects": {
+      "refId": "pillar-recourse",
+      "archiveUrl": "https://web.archive.org/web/20260719214847/https://www.pillarcatholic.com/p/the-sspxs-unappealing-canonical-prospects",
+      "timestamp": "20260719214847",
+      "checkedAt": "2026-07-25"
+    },
     "https://www.pillarcatholic.com/p/vatican-confirms-six-sspx-bishops": {
       "refId": "pillar-2026",
       "archiveUrl": "https://web.archive.org/web/20260703130717/https://www.pillarcatholic.com/p/vatican-confirms-six-sspx-bishops",
       "timestamp": "20260703130717",
       "checkedAt": "2026-07-19"
+    },
+    "https://www.sspxasia.com/Documents/SiSiNoNo/1998_November/Meet_the_Sedevacantist_Priests.htm": {
+      "refId": "sisinono-sedevacantist-priests",
+      "archiveUrl": "https://web.archive.org/web/20251016053955/http://www.sspxasia.com/Documents/SiSiNoNo/1998_November/Meet_the_Sedevacantist_Priests.htm",
+      "timestamp": "20251016053955",
+      "checkedAt": "2026-07-25"
+    },
+    "https://www.swissinfo.ch/eng/history/former-bishop-of-chur-vitus-huonder-dies-aged-81/75027696": {
+      "refId": "swissinfo-huonder-obit",
+      "archiveUrl": "https://web.archive.org/web/20240419135859/https://www.swissinfo.ch/eng/history/former-bishop-of-chur-vitus-huonder-dies-aged-81/75027696",
+      "timestamp": "20240419135859",
+      "checkedAt": "2026-07-25"
+    },
+    "https://www.trueorfalsepope.com/": {
+      "refId": "salza-siscoe-tofp",
+      "archiveUrl": "https://web.archive.org/web/20260719215502/https://www.trueorfalsepope.com/",
+      "timestamp": "20260719215502",
+      "checkedAt": "2026-07-25"
+    },
+    "https://www.usccb.org/news/2026/archives-paul-vi-accused-archbishop-lefebvre-acting-antipope": {
+      "refId": "cns-antipope-1976",
+      "archiveUrl": "https://web.archive.org/web/20260720204413/https://www.usccb.org/news/2026/archives-paul-vi-accused-archbishop-lefebvre-acting-antipope",
+      "timestamp": "20260720204413",
+      "checkedAt": "2026-07-25"
     },
     "https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html": {
       "refId": "summorum-pontificum",
@@ -176,6 +380,12 @@
       "timestamp": "20260703125137",
       "checkedAt": "2026-07-19"
     },
+    "https://www.vatican.va/content/paul-vi/it/audiences/1969/documents/hf_p-vi_aud_19691119.html": {
+      "refId": "vatican-audience-19691119",
+      "archiveUrl": "https://web.archive.org/web/20260712042951/https://www.vatican.va/content/paul-vi/it/audiences/1969/documents/hf_p-vi_aud_19691119.html",
+      "timestamp": "20260712042951",
+      "checkedAt": "2026-07-25"
+    },
     "https://www.vatican.va/roman_curia/congregations/cbishops/documents/rc_con_cbishops_doc_20090121_remissione-scomunica_en.html": {
       "refId": "decree-2009",
       "archiveUrl": "https://web.archive.org/web/20260716213732/https://www.vatican.va/roman_curia/congregations/cbishops/documents/rc_con_cbishops_doc_20090121_remissione-scomunica_en.html",
@@ -193,6 +403,30 @@
       "archiveUrl": "https://web.archive.org/web/20251010230714/https://www.washingtonpost.com/obituaries/2025/01/31/bishop-richard-williamson-dead/",
       "timestamp": "20251010230714",
       "checkedAt": "2026-07-19"
+    },
+    "https://www.youtube.com/live/6Nol3aGbdjk": {
+      "refId": "kuster-affonseca-catecismos",
+      "archiveUrl": "https://web.archive.org/web/20260719215405/https://www.youtube.com/live/6Nol3aGbdjk",
+      "timestamp": "20260719215405",
+      "checkedAt": "2026-07-25"
+    },
+    "https://www.youtube.com/live/JhDL_VUpTIo": {
+      "refId": "santoflow-437",
+      "archiveUrl": "https://web.archive.org/web/20260719214950/https://www.youtube.com/live/JhDL_VUpTIo",
+      "timestamp": "20260719214950",
+      "checkedAt": "2026-07-25"
+    },
+    "https://www.youtube.com/live/baBrpIz6BLw": {
+      "refId": "nobarco-191",
+      "archiveUrl": "https://web.archive.org/web/20260719215336/https://www.youtube.com/live/baBrpIz6BLw",
+      "timestamp": "20260719215336",
+      "checkedAt": "2026-07-25"
+    },
+    "https://www.youtube.com/live/gd0OhVy1JtM": {
+      "refId": "fradd-salza-2023",
+      "archiveUrl": "https://web.archive.org/web/20260719215244/https://www.youtube.com/live/gd0OhVy1JtM",
+      "timestamp": "20260719215244",
+      "checkedAt": "2026-07-25"
     }
   }
 }
