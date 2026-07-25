@@ -1,9 +1,12 @@
 {
   "_meta": {
-    "generatedBy": "scripts/translate.js",
-    "note": "GENERATED machine-translation cache — do not hand-edit. English is authoritative.",
     "targetLang": "es",
-    "coverage": "302/302"
+    "coverage": "302/302",
+    "generatedBy": "LLM translation (Claude, model claude-opus-5) during an agent session, 2026-07-25",
+    "method": "No TRANSLATE_ENDPOINT backend is configured for this project. scripts/translate.js normalizes this cache and reports coverage, but it did NOT author these strings — an LLM did. Re-running translate.js against a configured MT backend would REPLACE them with different (and for this subject matter, likely weaker) output. See cronologia/core#9.",
+    "note": "GENERATED machine-translation cache — do not hand-edit; regenerate instead. English is authoritative and every non-English page carries a visible machine-translated disclaimer.",
+    "translationRule": "Attribution and hedging are preserved verbatim: an attributed claim must not change strength in translation, [[term-id]] glossary markers keep their ids untranslated, and proper names, reference titles, URLs, dates and Latin terms of art are not translated.",
+    "humanReviewed": false
   },
   "strings": {
     "'Ecclesia Dei'": "'Ecclesia Dei'",
