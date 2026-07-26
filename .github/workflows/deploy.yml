@@ -3,7 +3,8 @@ name: Build & deploy
 # Validates the data, rebuilds the site, checks that committed docs/ is in sync,
 # and (on the default branch) deploys docs/ to GitHub Pages.
 #
-# The `build` job (validate + test + build + drift check) always runs and gates
+# The `build` job (validate + test + build + docs-sync + template-drift) always
+# runs and gates
 # every push/PR. The `deploy` job is opt-in: it only runs once GitHub Pages is
 # enabled AND the repo variable ENABLE_PAGES is set to "true". This keeps the
 # default branch green until Pages is turned on, instead of failing on a 404
@@ -55,6 +56,19 @@ jobs:
             exit 1
           fi
           echo "docs/ is in sync."
+
+      # Vendored template scripts drift silently: headerSafe() was added to the
+      # template in cronologia/core#12 and reached exactly one repo, leaving two
+      # repos' link-health runs reporting every reference as inconclusive for
+      # months while looking healthy. cronologia/core#21.
+      - name: Check out cronologia/core (for the template drift check)
+        uses: actions/checkout@v4
+        with:
+          repository: cronologia/core
+          path: .core-template
+
+      - name: Template drift check
+        run: python3 .core-template/tools/template-drift.py --scripts scripts --label fsspx
 
       - name: Upload Pages artifact
         if: github.ref == 'refs/heads/main' && vars.ENABLE_PAGES == 'true'
