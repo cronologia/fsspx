@@ -2,7 +2,7 @@
  "_comment": "GENERATED — vendored copies of cronologia/core skills/. Do not edit here; edit in cronologia/core and re-run core/tools/sync-skills.py. Verify with --check.",
  "source": "cronologia/core",
  "sourcePath": "skills/",
- "syncedAt": "2026-07-25",
+ "syncedAt": "2026-07-26",
  "tool": "core/tools/sync-skills.py",
  "skills": [
   {
@@ -12,8 +12,8 @@
   },
   {
    "name": "bootstrap-project",
-   "sha256": "5c6853654b2e5a99d0ac26ddcc93b279324307d0d9e12426b051c7d9437d4206",
-   "bytes": 2590
+   "sha256": "72b7edebc32d8e8f52c54a81f92aa6e8137e07f7289ad39a03060d301cc36d6d",
+   "bytes": 3298
   },
   {
    "name": "data-edit",
@@ -22,8 +22,8 @@
   },
   {
    "name": "dossier-research",
-   "sha256": "4d41fb106c517595f2eb75932a562c14aa99b8fdc54410ffc1af27e21aaba212",
-   "bytes": 1686
+   "sha256": "a984e11ce041ba4e7ac8779983266acf1b2e1b8ef2c120fdf91ee124144fc509",
+   "bytes": 2012
   },
   {
    "name": "ingest-report",
@@ -32,8 +32,8 @@
   },
   {
    "name": "mine-video",
-   "sha256": "916fbb2375b07a9976d077592b8f55a68ae31c97534a88f354819ad2bdaea248",
-   "bytes": 1745
+   "sha256": "10cb6049ea518ed724b96d0da65e412a9d39b660770c58447947fa52dc5a7786",
+   "bytes": 2220
   },
   {
    "name": "net-access",
@@ -42,8 +42,8 @@
   },
   {
    "name": "preserve-sources",
-   "sha256": "63216e87d346d5aeced1c07f3daf975b41716b5aa495866aae14eec1a622cc81",
-   "bytes": 2267
+   "sha256": "1002d608f9837b5e8ef0931eedaadf92b15089f5a2496276f09bcc9176fcc9c9",
+   "bytes": 3938
   },
   {
    "name": "release-work",
@@ -52,8 +52,8 @@
   },
   {
    "name": "sourcing-rules",
-   "sha256": "47dcd50b35b4202683c947796b492b096662ee801de8d743597ccecb54a00582",
-   "bytes": 2038
+   "sha256": "a1993372c35639c5a798f42c243674cd23060bfcea67f3d29fe662da373a342d",
+   "bytes": 2255
   }
  ]
 }
