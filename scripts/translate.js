@@ -40,10 +40,15 @@ const path = require('path');
 const https = require('https');
 
 const ROOT = path.join(__dirname, '..');
+// >>> ADOPT: dataset
+// A repo points this at its own source of truth (chronology.json, glossary.json).
 const DATA_FILE = path.join(ROOT, 'data', 'chronology.json');
+// <<< ADOPT
 const I18N_DIR = path.join(ROOT, 'data', 'i18n');
 const DEFAULT_LOCALES = ['es', 'pt'];
 
+// >>> ADOPT: translatable-keys
+// A repo adds the keys its own build.js renders. It MUST mirror build.js's set.
 // Mirrors build.js's TRANSLATABLE_KEYS (kept in sync by test/i18n.test.js,
 // which asserts the two sets are identical). `direct`/`indirect` are this
 // site's typed-edge legend labels (episcopalLineage.edgeLegend).
@@ -53,6 +58,7 @@ const TRANSLATABLE_KEYS = new Set([
   'detail', 'status', 'relation', 'unitNote', 'sourceLabel', 'display', 'unit', 'edgeLabel',
   'direct', 'indirect',
 ]);
+// <<< ADOPT
 
 /** Collect the unique translatable strings from the dataset, in a stable order. */
 function collectStrings(data) {
