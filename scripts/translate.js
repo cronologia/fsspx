@@ -165,7 +165,7 @@ async function run() {
       if (e.code === 'NO_BACKEND') {
         console.log(`[${lang}] no translation backend configured — cache left as-is (${Object.keys(cache).length}/${sources.length}). ` +
           `Set TRANSLATE_ENDPOINT (+ TRANSLATE_API_KEY) to fill ${missing.length} missing string(s).`);
-        writeCache(lang, cache, sources.length);
+        writeCache(lang, cache, sources.length, false);
       } else {
         console.error(`[${lang}] translation failed:`, e.message);
         process.exitCode = 1;
