@@ -1116,6 +1116,16 @@
       "sources": [
         "infovaticana-schneider-2026"
       ]
+    },
+    {
+      "name": "Achille Liénart",
+      "role": "Bishop of Lille 1928–1968 and cardinal from 1930; the prelate who ordained Marcel Lefebvre a priest (21 September 1929) and consecrated him a bishop (18 September 1947) — so the root of the episcopal lineage from which every SSPX and 'Resistance' bishop descends. Ordained deacon 21 December 1906 and priest 29 June 1907 for Cambrai, incardinated at Lille 25 October 1913; appointed Bishop of Lille 6 October 1928 and consecrated 8 December 1928 by Charles-Albert-Joseph Lecomte, Bishop of Amiens, with Palmyre-Georges Jansoone (titular bishop of Nilopolis) and Maurice Feltin (Troyes) as co-consecrators; created cardinal 30 June 1930, Cardinal-Priest of San Sisto from 3 July 1930; retired 14 March 1968; died 15 February 1973. A social-Catholic of the interwar years — supporter of Christian trade unionism and later of the worker-priest experiment — and at the Second Vatican Council a member of the Board of Presidency and one of the leading progressive voices, which is the reason traditionalist and sedevacantist polemic has concentrated on him. A long-running allegation holds that he was a Freemason; it is recorded in this dataset as an attributed and unproven claim, and is treated at length in the disambiguation section, because the inference usually drawn from it — that Lefebvre's orders were therefore invalid — does not follow even if the allegation were true.",
+      "dates": "1884–1973",
+      "country": "France",
+      "sources": [
+        "catholic-hierarchy-lienart",
+        "angelus-1978-validity-orders"
+      ]
     }
   ],
   "organizations": [
@@ -1211,9 +1221,11 @@
         "root": {
           "name": "Marcel Lefebvre",
           "figure": "marcel-lefebvre",
-          "detail": "consecrated bishop 1947; Archbishop of Dakar; founder of the SSPX",
+          "detail": "consecrated bishop 18 September 1947 by Cardinal Achille Liénart, Bishop of Lille, who had also ordained him priest on 21 September 1929; Archbishop of Dakar; founder of the SSPX",
           "sources": [
-            "wikipedia-lefebvre"
+            "wikipedia-lefebvre",
+            "catholic-hierarchy-lienart",
+            "angelus-1978-validity-orders"
           ],
           "children": [
             {
@@ -1626,6 +1638,17 @@
           "olavo-cof-090",
           "olavo-cof-261",
           "sedgwick-blog-olavo-death"
+        ]
+      },
+      {
+        "title": "The Liénart objection — what it claims, where it comes from, and why the conclusion does not follow",
+        "text": "Cardinal Achille Liénart ordained Marcel Lefebvre a priest in 1929 and consecrated him a bishop in 1947. A polemic of long standing holds that Liénart was a Freemason and that Lefebvre's orders — and therefore every ordination in the SSPX line — are consequently doubtful. Three things have to be kept apart. **Where the allegation comes from.** The documentary basis usually offered is a list of clerics said to belong to secret societies. Its published trail runs from the French Bulletin de l'Occident Chrétien no. 12 (July 1976) to the Italian magazine Panorama (10 August 1976) and, two years later, to Mino Pecorelli's Osservatore Politico of 12 September 1978, which is why it circulates as 'the Pecorelli list'. The version reproduced on sedevacantist sites reaches English through Piers Compton's The Broken Cross, quoting Georges Virebeau on a 1976 item in Il Borghese. Two observations belong beside it and neither is a refutation: Pecorelli's own name appeared on the P2 membership roll seized in 1980, and he was murdered in March 1979; and Liénart died in February 1973, three to five years before any of these publications. No peer-reviewed scholarship establishing the list's reliability was located. **Who has repeated it.** This is not only an attack from outside. Lefebvre himself is reported to have described Liénart as a Freemason in 1976, citing a photograph published in the traditionalist review Chiesa Viva. Rama P. Coomaraswamy — who taught at the Society's own US seminary — argued in 'Cracks in the Masonry' that this recollection rests on a demonstrably mistaken memory of that photograph. The allegation has never been proven. **Why the conclusion does not follow.** The inference from 'the minister was a Freemason' to 'the sacrament was invalid' is the error the Church condemned as Donatism. A sacrament requires proper matter, proper form, and in the minister the intention to do what the Church does; where the Catholic rite is used publicly and no contrary intention is manifested, that intention is presumed. Private belief, moral state or secret affiliation does not touch it. Talleyrand was a Freemason bishop who ordained many priests, and those ordinations were never repeated. The Society's own answer, Fr. Douglas Laudenschlager's study in The Angelus of February 1978, argues exactly this — and notably it does not deny the allegation, it grants it for the sake of argument and denies the consequence. A separate June 2026 post on a French priest's personal blog extends masonic-affiliation claims to Lefebvre himself. It is a self-published source and is recorded here as an attributed claim, not adopted.",
+        "sources": [
+          "tcw-lienart-freemason-list",
+          "angelus-1978-validity-orders",
+          "quicumque-lienart-lettre",
+          "praedicatho-2026-lefebvre-affiliations",
+          "catholic-hierarchy-lienart"
         ]
       }
     ]
@@ -2286,6 +2309,41 @@
       "url": "https://youtu.be/HPj3GsWuImU",
       "publisher": "Ecclesiam Catholica clip channel (YouTube) — Brazilian conservative-Catholic commentary, non-polemical in intent by the speaker's own statement ('não estou canonizando a Sociedade São Pio X, também não estou demonizando'). The dating bracket must travel with the citation: the content post-dates the remission of the excommunications of 21 January 2009 and speaks of Benedict XVI as reigning, so it pre-dates the vacancy of the See he declared with effect from 28 February 2013 at 20:00; it is therefore not commentary on the events of 2026, although the clip was re-uploaded in 2019. Listed here as an attributed perspective; no statement in this dataset rests on it.",
       "type": "analysis"
+    },
+    {
+      "id": "catholic-hierarchy-lienart",
+      "title": "Achille Cardinal Liénart — episcopal record (dates, offices, consecrators)",
+      "url": "https://www.catholic-hierarchy.org/bishop/blienart.html",
+      "publisher": "catholic-hierarchy.org — a compiled episcopal database, not an official Holy See source; used here for dates and consecration lineage, which is what it is reliable for",
+      "type": "reference"
+    },
+    {
+      "id": "angelus-1978-validity-orders",
+      "title": "Fr. Douglas Laudenschlager, 'The validity of holy orders', The Angelus, February 1978",
+      "url": "https://sspx.org/en/validity-holy-orders-31796",
+      "publisher": "The Angelus / sspx.org — the Society's own position, republished by its US District. Preserved in cronologia/archive as webcaptures/sspx-validity-holy-orders.html",
+      "type": "analysis"
+    },
+    {
+      "id": "tcw-lienart-freemason-list",
+      "title": "'Achille Liénart Documented As Freemason On 1976 Italian Registry List' — excerpt from Piers Compton, The Broken Cross",
+      "url": "https://www.todayscatholicworld.com/1976-doc.htm",
+      "publisher": "todayscatholicworld.com — sedevacantist/conclavist site; the allegation in its own words, quoting Piers Compton citing Georges Virebeau. Attributed allegation source, not a finding. Preserved in cronologia/archive as webcaptures/lienart-1976-doc.html",
+      "type": "allegation"
+    },
+    {
+      "id": "quicumque-lienart-lettre",
+      "title": "Lettre du Cardinal Achille Liénart à Mgr Marcel Lefebvre (published by Abbé Hervé Belmont)",
+      "url": "https://quicumque.over-blog.com/article-du-cardinal-achille-lienart-a-mgr-marcel-lefebvre-114158626.html",
+      "publisher": "quicumque.over-blog.com (Abbé Hervé Belmont, sedevacantist) — a primary Liénart–Lefebvre document published in a hostile frame; the document and the framing are separable. Preserved in cronologia/archive as webcaptures/lienart-quicumque-lettre.html",
+      "type": "primary"
+    },
+    {
+      "id": "praedicatho-2026-lefebvre-affiliations",
+      "title": "'Les affiliations franc-maçonniques de Mgr Lefebvre' — Praedicatho blog, June 2026",
+      "url": "https://www.homelie.biz/",
+      "publisher": "Praedicatho / homelie.biz — a personal blog kept by a diocesan priest since 2006. SELF-PUBLISHED: an attributed claim from an individual, not an institutional or scholarly source. Preserved in cronologia/archive as webcaptures/lefebvre-homelie-affiliations-maconniques.html",
+      "type": "commentary"
     }
   ]
 }
