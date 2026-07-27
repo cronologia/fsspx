@@ -1,6 +1,6 @@
 {
   "generatedBy": "scripts/archive-refs.js",
-  "updatedAt": "2026-07-25",
+  "updatedAt": "2026-07-27",
   "snapshots": {
     "http://chiesaepostconcilio.blogspot.com/2020/09/lesperienza-della-tradizione-o-la.html": {
       "refId": "chiesaepostconcilio-citati-2020",
@@ -206,6 +206,12 @@
       "timestamp": "20260703180432",
       "checkedAt": "2026-07-19"
     },
+    "https://quicumque.over-blog.com/article-du-cardinal-achille-lienart-a-mgr-marcel-lefebvre-114158626.html": {
+      "refId": "quicumque-lienart-lettre",
+      "archiveUrl": "https://web.archive.org/web/20260726062545/https://quicumque.over-blog.com/article-du-cardinal-achille-lienart-a-mgr-marcel-lefebvre-114158626.html",
+      "timestamp": "20260726062545",
+      "checkedAt": "2026-07-27"
+    },
     "https://rorate-caeli.blogspot.com/2015/03/breaking-exclusive-former-sspx-bishop.html": {
       "refId": "rorate-faure-2015",
       "archiveUrl": "https://web.archive.org/web/20260417212032/https://rorate-caeli.blogspot.com/2015/03/breaking-exclusive-former-sspx-bishop.html",
@@ -229,6 +235,12 @@
       "archiveUrl": "https://web.archive.org/web/20260715072715/https://sspx.org/en/news/timeline-society-saint-pius-xs-july-1-2026-episcopal-consecrations-60126",
       "timestamp": "20260715072715",
       "checkedAt": "2026-07-19"
+    },
+    "https://sspx.org/en/validity-holy-orders-31796": {
+      "refId": "angelus-1978-validity-orders",
+      "archiveUrl": "https://web.archive.org/web/20260726062657/https://sspx.org/en/validity-holy-orders-31796",
+      "timestamp": "20260726062657",
+      "checkedAt": "2026-07-27"
     },
     "https://sspxasia.com/Documents/Archbishop-Lefebvre/Archbishop_Lefebvre_and_the_Vatican/Part_I/1988-05-06.htm": {
       "refId": "sspxasia-1988-letter",
@@ -284,6 +296,12 @@
       "timestamp": "20260314083855",
       "checkedAt": "2026-07-25"
     },
+    "https://www.catholic-hierarchy.org/bishop/blienart.html": {
+      "refId": "catholic-hierarchy-lienart",
+      "archiveUrl": "https://web.archive.org/web/20260707142128/https://www.catholic-hierarchy.org/bishop/blienart.html",
+      "timestamp": "20260707142128",
+      "checkedAt": "2026-07-27"
+    },
     "https://www.catholicculture.org/culture/library/view.cfm?recnum=1224": {
       "refId": "pclt-note-1996",
       "archiveUrl": "https://web.archive.org/web/20260217214001/https://www.catholicculture.org/culture/library/view.cfm?recnum=1224",
@@ -307,6 +325,12 @@
       "archiveUrl": "https://web.archive.org/web/20260714044858/https://www.ewtnnews.com/vatican/sspx-rejects-vatican-s-excommunication-calls-it-objectively-unjust-and-invalid",
       "timestamp": "20260714044858",
       "checkedAt": "2026-07-19"
+    },
+    "https://www.homelie.biz/": {
+      "refId": "praedicatho-2026-lefebvre-affiliations",
+      "archiveUrl": "https://web.archive.org/web/20260411015754/https://www.homelie.biz/",
+      "timestamp": "20260411015754",
+      "checkedAt": "2026-07-27"
     },
     "https://www.ncronline.org/vatican-declares-sspx-bishops-priests-schismatic-says-lay-faithful-risk-excommunication": {
       "refId": "ncr-2026",
@@ -344,6 +368,12 @@
       "timestamp": "20240419135859",
       "checkedAt": "2026-07-25"
     },
+    "https://www.todayscatholicworld.com/1976-doc.htm": {
+      "refId": "tcw-lienart-freemason-list",
+      "archiveUrl": "https://web.archive.org/web/20260726062518/https://www.todayscatholicworld.com/1976-doc.htm",
+      "timestamp": "20260726062518",
+      "checkedAt": "2026-07-27"
+    },
     "https://www.trueorfalsepope.com/": {
       "refId": "salza-siscoe-tofp",
       "archiveUrl": "https://web.archive.org/web/20260719215502/https://www.trueorfalsepope.com/",
@@ -358,9 +388,9 @@
     },
     "https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html": {
       "refId": "summorum-pontificum",
-      "archiveUrl": "https://web.archive.org/web/20260715001935/https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html",
-      "timestamp": "20260715001935",
-      "checkedAt": "2026-07-19"
+      "archiveUrl": "https://web.archive.org/web/20260727100943/https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html",
+      "timestamp": "20260727100943",
+      "checkedAt": "2026-07-27"
     },
     "https://www.vatican.va/content/francesco/en/apost_letters/documents/papa-francesco-lettera-ap_20161120_misericordia-et-misera.html": {
       "refId": "misericordia-et-misera",
@@ -376,9 +406,9 @@
     },
     "https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html": {
       "refId": "ecclesia-dei",
-      "archiveUrl": "https://web.archive.org/web/20260703125137/https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html",
-      "timestamp": "20260703125137",
-      "checkedAt": "2026-07-19"
+      "archiveUrl": "https://web.archive.org/web/20260722212754/https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html",
+      "timestamp": "20260722212754",
+      "checkedAt": "2026-07-27"
     },
     "https://www.vatican.va/content/paul-vi/it/audiences/1969/documents/hf_p-vi_aud_19691119.html": {
       "refId": "vatican-audience-19691119",
@@ -388,9 +418,9 @@
     },
     "https://www.vatican.va/roman_curia/congregations/cbishops/documents/rc_con_cbishops_doc_20090121_remissione-scomunica_en.html": {
       "refId": "decree-2009",
-      "archiveUrl": "https://web.archive.org/web/20260716213732/https://www.vatican.va/roman_curia/congregations/cbishops/documents/rc_con_cbishops_doc_20090121_remissione-scomunica_en.html",
-      "timestamp": "20260716213732",
-      "checkedAt": "2026-07-19"
+      "archiveUrl": "https://web.archive.org/web/20260727101015/https://www.vatican.va/roman_curia/congregations/cbishops/documents/rc_con_cbishops_doc_20090121_remissione-scomunica_en.html",
+      "timestamp": "20260727101015",
+      "checkedAt": "2026-07-27"
     },
     "https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html": {
       "refId": "ecclesia-dei-marriages",
