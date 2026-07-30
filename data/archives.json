@@ -1,6 +1,6 @@
 {
   "generatedBy": "scripts/archive-refs.js",
-  "updatedAt": "2026-07-27",
+  "updatedAt": "2026-07-30",
   "snapshots": {
     "http://chiesaepostconcilio.blogspot.com/2020/09/lesperienza-della-tradizione-o-la.html": {
       "refId": "chiesaepostconcilio-citati-2020",
@@ -157,6 +157,12 @@
       "archiveUrl": "https://web.archive.org/web/20240531072540/https://fsspx.org/",
       "timestamp": "20240531072540",
       "checkedAt": "2026-07-19"
+    },
+    "https://fsspx.org/en": {
+      "refId": "fsspx-org",
+      "archiveUrl": "https://web.archive.org/web/20260706132245/https://fsspx.org/en",
+      "timestamp": "20260706132245",
+      "checkedAt": "2026-07-30"
     },
     "https://fsspx.org/en/1974-declaration-archbishop-lefebvre-31164": {
       "refId": "fsspx-1974-declaration",
