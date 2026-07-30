@@ -57,6 +57,8 @@ const TRANSLATABLE_KEYS = new Set([
   'place', 'role', 'country', 'notes', 'note', 'heading', 'navLabel', 'summary',
   'detail', 'status', 'relation', 'unitNote', 'sourceLabel', 'display', 'unit', 'edgeLabel',
   'direct', 'indirect',
+  // Lane bases render on the page via renderSwimlanes, so they are prose.
+  'basis', 'intro',
 ]);
 // <<< ADOPT
 
