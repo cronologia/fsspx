@@ -1797,10 +1797,11 @@
     },
     {
       "id": "fsspx-org",
-      "title": "SSPX General House",
-      "url": "https://fsspx.org",
+      "title": "SSPX General House (Maison Générale) — official site",
+      "url": "https://fsspx.org/en",
       "publisher": "SSPX (official)",
-      "type": "official-site"
+      "type": "official-site",
+      "official": true
     },
     {
       "id": "fsspx-brasil",
@@ -2322,7 +2323,8 @@
       "title": "Fr. Douglas Laudenschlager, 'The validity of holy orders', The Angelus, February 1978",
       "url": "https://sspx.org/en/validity-holy-orders-31796",
       "publisher": "The Angelus / sspx.org — the Society's own position, republished by its US District. Preserved in cronologia/archive as webcaptures/sspx-validity-holy-orders.html",
-      "type": "analysis"
+      "type": "analysis",
+      "official": true
     },
     {
       "id": "tcw-lienart-freemason-list",
