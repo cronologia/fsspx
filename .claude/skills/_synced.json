@@ -2,7 +2,7 @@
  "_comment": "GENERATED — vendored copies of cronologia/core skills/. Do not edit here; edit in cronologia/core and re-run core/tools/sync-skills.py. Verify with --check.",
  "source": "cronologia/core",
  "sourcePath": "skills/",
- "syncedAt": "2026-07-26",
+ "syncedAt": "2026-07-30",
  "tool": "core/tools/sync-skills.py",
  "skills": [
   {
@@ -52,8 +52,8 @@
   },
   {
    "name": "sourcing-rules",
-   "sha256": "a1993372c35639c5a798f42c243674cd23060bfcea67f3d29fe662da373a342d",
-   "bytes": 2255
+   "sha256": "83ee9035f2153b4a3a224efe9c76ab0fa21251d402383c44879960406ae07589",
+   "bytes": 4032
   }
  ]
 }
