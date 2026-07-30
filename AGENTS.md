@@ -31,10 +31,13 @@ in [`adr/0001-project-scope-and-adopted-template.md`](adr/0001-project-scope-and
 
 ```
 data/chronology.json     SOURCE OF TRUTH — facts, events, figures, organizations,
-                         episcopalLineage, branchTimeline, disambiguation, references (hand-edited)
+                         episcopalLineage, branchTimeline, chronologySpine, disambiguation,
+                         meta.threads + events[].threads (the lane taxonomy decided in #62 — an
+                         EDITORIAL READING, not a neutral index; read meta.threads.note and the
+                         lane bases before tagging a new event), references (hand-edited)
 data/archives.json       Wayback snapshot cache (GENERATED — do not hand-edit; 32 snapshots)
 data/glossary-terms.json VENDORED, PINNED list of cronologia/glossary term ids (written by scripts/sync-glossary-terms.js; committed) — validates [[term-id]] cross-links offline
-data/i18n/{pt,es}.json   Machine-translation caches, English source string -> translation (GENERATED — do not hand-edit; managed by scripts/translate.js; 302/302 each)
+data/i18n/{pt,es}.json   Machine-translation caches, English source string -> translation (GENERATED — do not hand-edit; managed by scripts/translate.js; 314/314 each)
 src/styles.css           Stylesheet (copied into the build)
 scripts/validate-data.js Schema check (runs in CI before the build) — also fails on unknown glossary [[term-id]] links
 scripts/sync-glossary-terms.js  Refresh data/glossary-terms.json from cronologia/glossary (out-of-band; needs network)
