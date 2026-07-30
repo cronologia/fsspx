@@ -6,6 +6,48 @@
     "language": "en",
     "siteUrl": "https://cronologia.github.io/fsspx/",
     "lastUpdated": "2026-07-25",
+    "threads": {
+      "note": "These lanes are an editorial reading of this chronology, not a neutral index. They group events by the KIND of act — dealings with the Holy See, consecrations without pontifical mandate, internal divisions, the Society's own governance, the liturgical and doctrinal question, and how others received the Society — and deliberately not by whose account one follows: separate lanes for 'the Society's account' and 'Rome's account' would imply a parity the sources do not support. Most events belong to more than one lane; 30 June 1988 is at once a consecration, a rupture with Rome and the origin of a division. Each lane states what grounds it; what was considered and left out, and why, is recorded on issue #62.",
+      "lanes": [
+        {
+          "id": "rome-relations",
+          "label": "Relations with the Holy See",
+          "basis": "The documented sequence of canonical dealings this dataset already tracks — visitation, withdrawal of approval, suspension, protocol, excommunication and remission, faculties, doctrinal talks, recourse — together with the Society's canonical standing at each point. Both parties treat this relationship as the through-line of the Society's history. The lane groups the dealings; it does not adjudicate them, and the contested statuses stay attributed in each event."
+        },
+        {
+          "id": "consecrations",
+          "label": "Consecrations without pontifical mandate",
+          "basis": "Episcopal consecration without a pontifical mandate as a distinct act-type — the category the Holy See's own decrees use in 1988 and 2026. Kept separate from 'Relations with the Holy See' on the evidence: several consecrations in this record (the Resistance line, 2015–2022) drew no located Holy See statement on the individuals at all, so filing them inside a relationship they are not part of would misdescribe them.",
+          "sources": [
+            "ecclesia-dei",
+            "onepeterfive-ddf-statement-2026"
+          ]
+        },
+        {
+          "id": "divisions",
+          "label": "Divisions and offshoots",
+          "basis": "Departures, expulsions and successor bodies, following the structures this dataset already carries in its episcopal genealogy and branch timeline (SSPV 1983, FSSP 1988, the Campos line, the Resistance) rather than introducing a new grouping. Includes the 1976 Palmar personnel link, which the genealogy deliberately marks as a separate branch and not a continuation."
+        },
+        {
+          "id": "governance",
+          "label": "Governance and succession",
+          "basis": "The Society's own institutional record — superiors general, general chapters, seminaries and districts — plus the deaths of principals whose offices or roles changed hands as a result."
+        },
+        {
+          "id": "liturgy-doctrine",
+          "label": "The liturgical and doctrinal question",
+          "basis": "The subject matter of the dispute — the reformed liturgy and the doctrinal questions of Vatican II — taken BY SUBJECT and not by actor, so that Paul VI's 1969 presentation of the new Order of Mass, Lefebvre's 1974 Declaration and 2021's Traditionis Custodes sit in one lane. Grouping by subject rather than by party is what keeps this lane from becoming an 'SSPX position' lane.",
+          "sources": [
+            "fsspx-1974-declaration"
+          ]
+        },
+        {
+          "id": "reception",
+          "label": "Reception and controversy",
+          "basis": "How parties outside the Society's own governance positioned themselves toward it: an outside bishop's appeal, a departing member's published critique, a retired diocesan bishop's residence and burial, a controversy that broke internationally. Small as an events lane by design — most of this dataset's reception material lives in the disambiguation entries and in perspective-labelled references rather than in dated events, and that is a fact about the record, not a gap in the lane."
+        }
+      ]
+    },
     "vizChips": [
       {
         "href": "#branch-timeline",
@@ -87,6 +129,9 @@
       "text": "At his general audience days before the reformed Order of Mass takes effect, Paul VI tells the faithful that “nulla è mutato nella sostanza della nostra Messa tradizionale” (“nothing has been changed in the substance of our traditional Mass”), and that “il rito e la rubrica relativa non sono di per sé una definizione dogmatica” (“the rite and its rubric are not of themselves a dogmatic definition”). Both sentences are quoted on opposing sides of the later argument over the reform.",
       "sources": [
         "vatican-audience-19691119"
+      ],
+      "threads": [
+        "liturgy-doctrine"
       ]
     },
     {
@@ -101,6 +146,10 @@
       ],
       "sources": [
         "wikipedia-en"
+      ],
+      "threads": [
+        "governance",
+        "rome-relations"
       ]
     },
     {
@@ -112,6 +161,9 @@
       "text": "The International Seminary of Saint Pius X receives its first cohort of 24 candidates; 32 more enter in October 1972.",
       "sources": [
         "wikipedia-en"
+      ],
+      "threads": [
+        "governance"
       ]
     },
     {
@@ -123,6 +175,9 @@
       "text": "Two Belgian priests inspect the seminary on behalf of a commission of cardinals.",
       "sources": [
         "wikipedia-en"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     },
     {
@@ -138,6 +193,10 @@
       "sources": [
         "fsspx-1974-declaration",
         "wikipedia-en"
+      ],
+      "threads": [
+        "liturgy-doctrine",
+        "rome-relations"
       ]
     },
     {
@@ -149,6 +208,9 @@
       "text": "Bishop Pierre Mamie withdraws the Society's pia unio status with the approval of the Congregation for Religious and Paul VI; the SSPX disputes the legality of the procedure.",
       "sources": [
         "wikipedia-en"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     },
     {
@@ -162,6 +224,10 @@
         "lundberg-book",
         "lundberg-palmar",
         "wikipedia-thuc"
+      ],
+      "threads": [
+        "consecrations",
+        "divisions"
       ]
     },
     {
@@ -176,6 +242,9 @@
       ],
       "sources": [
         "wikipedia-en"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     },
     {
@@ -190,6 +259,9 @@
       ],
       "sources": [
         "wikipedia-en"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     },
     {
@@ -204,6 +276,9 @@
       ],
       "sources": [
         "laportelatine-lille-1976"
+      ],
+      "threads": [
+        "liturgy-doctrine"
       ]
     },
     {
@@ -218,6 +293,9 @@
       ],
       "sources": [
         "cns-antipope-1976"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     },
     {
@@ -233,6 +311,9 @@
       "sources": [
         "sisinono-sedevacantist-priests",
         "imbc-murro-guerard"
+      ],
+      "threads": [
+        "divisions"
       ]
     },
     {
@@ -247,6 +328,9 @@
       ],
       "sources": [
         "wikipedia-lefebvre"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     },
     {
@@ -258,6 +342,9 @@
       "text": "The Seminario Nuestra Señora Corredentora is founded in the Buenos Aires priory and moves to La Reja in 1981 — the formation house for Latin America, including Brazil.",
       "sources": [
         "wikipedia-lareja"
+      ],
+      "threads": [
+        "governance"
       ]
     },
     {
@@ -272,6 +359,9 @@
       ],
       "sources": [
         "wikipedia-en"
+      ],
+      "threads": [
+        "governance"
       ]
     },
     {
@@ -286,6 +376,9 @@
         "truerestoration-cekada-1983",
         "angelus-1983-clarification",
         "stas-seminary-history"
+      ],
+      "threads": [
+        "divisions"
       ]
     },
     {
@@ -300,6 +393,10 @@
       ],
       "sources": [
         "wikipedia-en"
+      ],
+      "threads": [
+        "consecrations",
+        "rome-relations"
       ]
     },
     {
@@ -316,6 +413,10 @@
         "wikipedia-en",
         "sspxasia-1988-letter",
         "ecclesia-dei"
+      ],
+      "threads": [
+        "rome-relations",
+        "consecrations"
       ]
     },
     {
@@ -335,6 +436,9 @@
       ],
       "sources": [
         "wikipedia-en"
+      ],
+      "threads": [
+        "consecrations"
       ]
     },
     {
@@ -355,6 +459,10 @@
       "sources": [
         "wikipedia-en",
         "ecclesia-dei"
+      ],
+      "threads": [
+        "rome-relations",
+        "consecrations"
       ]
     },
     {
@@ -366,6 +474,10 @@
       "text": "John Paul II's [[motu-proprio|motu proprio]] calls the consecrations 'a schismatic act' and establishes the Ecclesia Dei Commission for faithful attached to the traditional liturgy.",
       "sources": [
         "ecclesia-dei"
+      ],
+      "threads": [
+        "rome-relations",
+        "liturgy-doctrine"
       ]
     },
     {
@@ -377,6 +489,9 @@
       "text": "Twelve former SSPX priests led by Fr. Josef Bisig found the Priestly Fraternity of Saint Peter in full communion with Rome.",
       "sources": [
         "wikipedia-fssp"
+      ],
+      "threads": [
+        "divisions"
       ]
     },
     {
@@ -391,6 +506,9 @@
       ],
       "sources": [
         "wikipedia-campos-aa"
+      ],
+      "threads": [
+        "divisions"
       ]
     },
     {
@@ -405,6 +523,9 @@
       ],
       "sources": [
         "wikipedia-lefebvre"
+      ],
+      "threads": [
+        "governance"
       ]
     },
     {
@@ -420,6 +541,9 @@
       "sources": [
         "wikipedia-castro-mayer",
         "catholic-hierarchy-castro-mayer"
+      ],
+      "threads": [
+        "governance"
       ]
     },
     {
@@ -438,6 +562,10 @@
       "sources": [
         "wikipedia-rangel",
         "wikipedia-campos-aa"
+      ],
+      "threads": [
+        "consecrations",
+        "divisions"
       ]
     },
     {
@@ -452,6 +580,9 @@
       ],
       "sources": [
         "wikipedia-en"
+      ],
+      "threads": [
+        "governance"
       ]
     },
     {
@@ -467,6 +598,9 @@
       "sources": [
         "pclt-note-1996",
         "onepeterfive-ddf-statement-2026"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     },
     {
@@ -478,6 +612,9 @@
       "text": "Over 5,000 SSPX pilgrims visit the major basilicas; Cardinal Castrillón Hoyos opens contacts, reportedly offering a personal prelature or apostolic administration.",
       "sources": [
         "wikipedia-en"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     },
     {
@@ -493,6 +630,10 @@
       "sources": [
         "wikipedia-campos-aa",
         "onepeterfive-campos"
+      ],
+      "threads": [
+        "rome-relations",
+        "divisions"
       ]
     },
     {
@@ -504,6 +645,10 @@
       "text": "Benedict XVI liberalizes the 1962 Missal as the 'extraordinary form', meeting one of the SSPX's two stated preconditions for talks.",
       "sources": [
         "summorum-pontificum"
+      ],
+      "threads": [
+        "liturgy-doctrine",
+        "rome-relations"
       ]
     },
     {
@@ -521,6 +666,9 @@
       ],
       "sources": [
         "decree-2009"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     },
     {
@@ -535,6 +683,10 @@
       ],
       "sources": [
         "wikipedia-williamson"
+      ],
+      "threads": [
+        "reception",
+        "governance"
       ]
     },
     {
@@ -546,6 +698,10 @@
       "text": "Discussions between the CDF and the SSPX on Vatican II (religious liberty, ecumenism, collegiality) run until 2012 without producing an agreement.",
       "sources": [
         "wikipedia-dialogue"
+      ],
+      "threads": [
+        "rome-relations",
+        "liturgy-doctrine"
       ]
     },
     {
@@ -560,6 +716,10 @@
       ],
       "sources": [
         "wikipedia-williamson"
+      ],
+      "threads": [
+        "divisions",
+        "governance"
       ]
     },
     {
@@ -575,6 +735,10 @@
       "sources": [
         "wikipedia-williamson",
         "rorate-faure-2015"
+      ],
+      "threads": [
+        "consecrations",
+        "divisions"
       ]
     },
     {
@@ -589,6 +753,10 @@
       ],
       "sources": [
         "novusordowatch-aquino"
+      ],
+      "threads": [
+        "consecrations",
+        "divisions"
       ]
     },
     {
@@ -603,6 +771,10 @@
       ],
       "sources": [
         "arlington-zendejas"
+      ],
+      "threads": [
+        "consecrations",
+        "divisions"
       ]
     },
     {
@@ -617,6 +789,10 @@
       ],
       "sources": [
         "wikipedia-williamson"
+      ],
+      "threads": [
+        "consecrations",
+        "divisions"
       ]
     },
     {
@@ -628,6 +804,9 @@
       "text": "Pope Francis grants that the faithful can validly and licitly receive absolution from SSPX priests during the Year of Mercy.",
       "sources": [
         "misericordia-et-misera"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     },
     {
@@ -639,6 +818,9 @@
       "text": "In 'Misericordia et misera' §12 Francis extends the SSPX confession faculty 'until further provisions are made'.",
       "sources": [
         "misericordia-et-misera"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     },
     {
@@ -651,6 +833,9 @@
       "sources": [
         "fsspx-news-brazil",
         "fsspx-brasil"
+      ],
+      "threads": [
+        "governance"
       ]
     },
     {
@@ -662,6 +847,9 @@
       "text": "An Ecclesia Dei Commission letter (signed Cardinal Müller) allows local ordinaries to grant faculties so that marriages in the SSPX milieu are celebrated validly.",
       "sources": [
         "ecclesia-dei-marriages"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     },
     {
@@ -677,6 +865,9 @@
       ],
       "sources": [
         "wikipedia-pagliarani"
+      ],
+      "threads": [
+        "governance"
       ]
     },
     {
@@ -691,6 +882,9 @@
       ],
       "sources": [
         "cwr-sspx-2018"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     },
     {
@@ -702,6 +896,10 @@
       "text": "Don Angelo Citati, ordained in the SSPX in 2016, makes public an essay — «L'esperienza della Tradizione o la ‘Tradizione integrale’?» — which he had submitted to the General House in April 2020. He writes that he was told “le posizioni espresse in questo documento non sono compatibili… con l'esercizio di un apostolato all'interno della Fraternità”, and that he therefore decided “di lasciare la Fraternità San Pio X e di rivolgermi alla Fraternità Sacerdotale San Pietro”. His criticism of the Society's direction after the 2018 General Chapter is his own published account as a departing member, recorded here as such and not as a finding about the Society.",
       "sources": [
         "chiesaepostconcilio-citati-2020"
+      ],
+      "threads": [
+        "liturgy-doctrine",
+        "reception"
       ]
     },
     {
@@ -714,6 +912,9 @@
       "sources": [
         "traditionis-custodes",
         "wikipedia-en"
+      ],
+      "threads": [
+        "liturgy-doctrine"
       ]
     },
     {
@@ -726,6 +927,9 @@
       "sources": [
         "swissinfo-huonder-obit",
         "fsspx-huonder"
+      ],
+      "threads": [
+        "reception"
       ]
     },
     {
@@ -742,6 +946,9 @@
         "wikipedia-tissier",
         "fsspx-news-tissier-obit",
         "sspx-tissier-funeral"
+      ],
+      "threads": [
+        "governance"
       ]
     },
     {
@@ -756,6 +963,10 @@
       ],
       "sources": [
         "wapo-williamson-obit"
+      ],
+      "threads": [
+        "governance",
+        "divisions"
       ]
     },
     {
@@ -767,6 +978,9 @@
       "text": "After the death of Francis (21 April 2025), Robert Prevost is elected pope; his pontificate presides over the 2026 rupture with the SSPX.",
       "sources": [
         "wikipedia-2026"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     },
     {
@@ -778,6 +992,9 @@
       "text": "The SSPX holds a worldwide pilgrimage to Rome for the 2025 Jubilee.",
       "sources": [
         "wikipedia-en"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     },
     {
@@ -791,6 +1008,10 @@
         "acidigital-rifan-2025",
         "j3news-rifan-2026",
         "infovaticana-rifan-2026"
+      ],
+      "threads": [
+        "rome-relations",
+        "divisions"
       ]
     },
     {
@@ -806,6 +1027,10 @@
       "sources": [
         "wikipedia-2026",
         "america-2026"
+      ],
+      "threads": [
+        "consecrations",
+        "rome-relations"
       ]
     },
     {
@@ -820,6 +1045,9 @@
       ],
       "sources": [
         "onepeterfive-ddf-statement-2026"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     },
     {
@@ -831,6 +1059,10 @@
       "text": "Athanasius Schneider, auxiliary bishop of Astana, publishes ‘A Fraternal Appeal to Pope Leo XIV to Build a Bridge with the Priestly Society of St. Pius X’, released first by the journalist Diane Montagna. He asks the Pope to grant the Apostolic Mandate for the episcopal consecrations of the FSSPX. The appeal is a personal initiative and carries no official standing; he is not a member of the Society.",
       "sources": [
         "infovaticana-schneider-2026"
+      ],
+      "threads": [
+        "reception",
+        "consecrations"
       ]
     },
     {
@@ -843,6 +1075,10 @@
       "sources": [
         "wikipedia-2026",
         "america-2026"
+      ],
+      "threads": [
+        "rome-relations",
+        "consecrations"
       ]
     },
     {
@@ -859,6 +1095,9 @@
       "sources": [
         "wikipedia-2026",
         "america-2026"
+      ],
+      "threads": [
+        "consecrations"
       ]
     },
     {
@@ -876,6 +1115,10 @@
         "ncr-2026",
         "pillar-2026",
         "ewtn-2026"
+      ],
+      "threads": [
+        "rome-relations",
+        "consecrations"
       ]
     },
     {
@@ -888,6 +1131,9 @@
       "sources": [
         "fsspx-news-recourse",
         "pillar-recourse"
+      ],
+      "threads": [
+        "rome-relations"
       ]
     }
   ],
