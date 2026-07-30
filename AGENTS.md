@@ -10,10 +10,11 @@ Sacerdotal São Pio X** (Society of Saint Pius X, founded 1970) and its
 relationship with the Holy See. A single JSON file is the source of truth; a
 zero-dependency Node script compiles it into static HTML served by GitHub Pages.
 
-It is the largest dataset in the family: **60 events, 21 figures, 7
-organizations, 85 references**, plus an episcopal-genealogy section (four trees),
-a divisions branch timeline (five branches), and **per-figure dossier pages** for
-the figures that clear the criterion below.
+It is the largest dataset in the family: **60 events, 22 figures, 7
+organizations, 96 references**, plus an episcopal-genealogy section (four trees),
+a divisions branch timeline (five branches), a chronology density spine, a
+six-lane thread taxonomy rendered as swimlanes (#62), and **per-figure dossier
+pages** for the figures that clear the criterion below.
 
 The repo consumes the shared machinery in
 [`cronologia/core`](https://github.com/cronologia/core) — the project template,
