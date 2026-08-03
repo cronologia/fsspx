@@ -1,6 +1,6 @@
 {
   "generatedBy": "scripts/archive-refs.js",
-  "updatedAt": "2026-07-30",
+  "updatedAt": "2026-08-03",
   "snapshots": {
     "http://chiesaepostconcilio.blogspot.com/2020/09/lesperienza-della-tradizione-o-la.html": {
       "refId": "chiesaepostconcilio-citati-2020",
@@ -226,9 +226,9 @@
     },
     "https://sspx.org/en/1988-episcopal-consecrations-sermon-30926": {
       "refId": "sspx-1988-sermon",
-      "archiveUrl": "https://web.archive.org/web/20260523105239/https://sspx.org/en/1988-episcopal-consecrations-sermon-30926",
-      "timestamp": "20260523105239",
-      "checkedAt": "2026-07-25"
+      "archiveUrl": "https://web.archive.org/web/20260803101507/https://sspx.org/en/1988-episcopal-consecrations-sermon-30926",
+      "timestamp": "20260803101507",
+      "checkedAt": "2026-08-03"
     },
     "https://sspx.org/en/news/funeral-bishop-bernard-tissier-mallerais-48150": {
       "refId": "sspx-tissier-funeral",
@@ -400,21 +400,21 @@
     },
     "https://www.vatican.va/content/francesco/en/apost_letters/documents/papa-francesco-lettera-ap_20161120_misericordia-et-misera.html": {
       "refId": "misericordia-et-misera",
-      "archiveUrl": "https://web.archive.org/web/20260714064543/https://www.vatican.va/content/francesco/en/apost_letters/documents/papa-francesco-lettera-ap_20161120_misericordia-et-misera.html",
-      "timestamp": "20260714064543",
-      "checkedAt": "2026-07-19"
+      "archiveUrl": "https://web.archive.org/web/20260803100604/https://www.vatican.va/content/francesco/en/apost_letters/documents/papa-francesco-lettera-ap_20161120_misericordia-et-misera.html",
+      "timestamp": "20260803100604",
+      "checkedAt": "2026-08-03"
     },
     "https://www.vatican.va/content/francesco/en/motu_proprio/documents/20210716-motu-proprio-traditionis-custodes.html": {
       "refId": "traditionis-custodes",
-      "archiveUrl": "https://web.archive.org/web/20260719203921/https://www.vatican.va/content/francesco/en/motu_proprio/documents/20210716-motu-proprio-traditionis-custodes.html",
-      "timestamp": "20260719203921",
-      "checkedAt": "2026-07-19"
+      "archiveUrl": "https://web.archive.org/web/20260731190114/https://www.vatican.va/content/francesco/en/motu_proprio/documents/20210716-motu-proprio-traditionis-custodes.html",
+      "timestamp": "20260731190114",
+      "checkedAt": "2026-08-03"
     },
     "https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html": {
       "refId": "ecclesia-dei",
-      "archiveUrl": "https://web.archive.org/web/20260722212754/https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html",
-      "timestamp": "20260722212754",
-      "checkedAt": "2026-07-27"
+      "archiveUrl": "https://web.archive.org/web/20260803100534/https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html",
+      "timestamp": "20260803100534",
+      "checkedAt": "2026-08-03"
     },
     "https://www.vatican.va/content/paul-vi/it/audiences/1969/documents/hf_p-vi_aud_19691119.html": {
       "refId": "vatican-audience-19691119",
@@ -430,9 +430,9 @@
     },
     "https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html": {
       "refId": "ecclesia-dei-marriages",
-      "archiveUrl": "https://web.archive.org/web/20260702232448/https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html",
-      "timestamp": "20260702232448",
-      "checkedAt": "2026-07-19"
+      "archiveUrl": "https://web.archive.org/web/20260720093433/https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html",
+      "timestamp": "20260720093433",
+      "checkedAt": "2026-08-03"
     },
     "https://www.washingtonpost.com/obituaries/2025/01/31/bishop-richard-williamson-dead/": {
       "refId": "wapo-williamson-obit",
@@ -463,6 +463,18 @@
       "archiveUrl": "https://web.archive.org/web/20260719215244/https://www.youtube.com/live/gd0OhVy1JtM",
       "timestamp": "20260719215244",
       "checkedAt": "2026-07-25"
+    },
+    "https://youtu.be/tEg0PmpbK7I": {
+      "refId": "santoflow-kuster-fsspx",
+      "archiveUrl": "https://web.archive.org/web/20260803101029/https://www.youtube.com/watch?v=tEg0PmpbK7I&feature=youtu.be",
+      "timestamp": "20260803101029",
+      "checkedAt": "2026-08-03"
+    },
+    "https://youtu.be/viI_TXPzhBo": {
+      "refId": "fradd-phillips-2026",
+      "archiveUrl": "https://web.archive.org/web/20260803101103/https://www.youtube.com/watch?v=viI_TXPzhBo&feature=youtu.be",
+      "timestamp": "20260803101103",
+      "checkedAt": "2026-08-03"
     }
   }
 }
