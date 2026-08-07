@@ -59,9 +59,61 @@ the five rules above apply to the taxonomy itself:
   the visible statement that the lanes are an editorial reading; any UI that
   renders lanes must render it.
 
+## Absence is a claim, and needs its own evidence
+
 Before searching a corpus or a source for a name, read the project's
 `KEYWORDS.md`: the naming variants and the terms known to return nothing live
 there, and it is a finding aid — listing a term is not asserting it.
+
+- **Verify every zero before reporting it.** A zero is a claim about the
+  corpus, and most false zeros are produced by the search rather than by the
+  source: an accented string matched with a wildcard, a phrase broken across a
+  hard-wrapped line, a glob that covered one file extension of two.
+- **Pair every zero with a positive control.** A sweep reporting "PSB: 0" is
+  credible only alongside "PSDB: 82" from the same corpus by the same method.
+- **A positive control proves the SEARCH worked. It does not prove the CORPUS
+  is entire.** For an absence claim the control must test the property the
+  claim depends on. Legibility is not completeness. A term found in all
+  nineteen files says the reader can read them; it says nothing about whether
+  each file is the whole document — and a corpus that was 20% of itself,
+  every document truncated at page one, answered "never" to a question whose
+  real answer was 2013. Where the corpus is derived from binaries, the
+  property is asserted by a test beside it, not by a probe: see
+  `core/adr/0006-derived-corpora-ship-an-integrity-test.md`.
+- **Say which was checked.** When a finding rests on an absence, write down the
+  corpus, the method, the control, and what established completeness. An
+  unqualified "never says X" is not publishable.
+
+## An approval is an act about an object
+
+Applies to every repo with an `approvalLadder`. The full reasoning, the
+citations and the four worked counterexamples are in
+`core/adr/0007-approval-is-an-act-about-an-object.md`; the working rules are:
+
+- **Name the object before choosing the status.** A rung records one
+  authority's act about one thing, at one date, citing the document. The first
+  review question on any rung is "about *what*?", not "favourable or not?".
+- **Honours are not findings.** Coronations, feasts, basilicas, indulgences,
+  patronages, faculties, imprimaturs and papal consecrations regulate or honour
+  worship — they presuppose the devotion rather than adjudicating the event, and
+  they get `adjacent` with the object named in the label. The Church grants the
+  same acts to devotions with no apparition behind them at all.
+- **A judgment about a person is its own rung.** A seer's canonization judges
+  holiness of life, not what they reported seeing.
+- **`not-found` is about the evidence reached; `not-reached` is a claim about
+  the case** and needs positive evidence the case was never referred.
+- **Where a bishop ruled on the apparition, say so and quote him.** This is not
+  a policy of withholding approval. It is a policy of locating it.
+- **Suspect any "the pope approved it" claim, and go to the document.** Four
+  were checked in one session and all four were real papal acts describing
+  something else — two coronations, a basilica elevation, and a bishop's
+  pronouncement credited to Pius IX. The relabelling only runs one way.
+
+The Church states the distinction itself: DDF, *Norms for Proceeding in the
+Discernment of Alleged Supernatural Phenomena* (17 May 2024), art. 23 — "as a
+rule, neither the Diocesan Bishop, nor the Episcopal Conferences, nor the
+Dicastery will declare that these phenomena are of supernatural origin". Cite
+it as `ddf-norms-2024`.
 
 Operationally: after any data edit run `node scripts/validate-data.js`,
 `node --test`, `node build.js`, and commit the regenerated `docs/` in the same

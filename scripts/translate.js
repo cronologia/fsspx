@@ -31,7 +31,8 @@
  *   node scripts/translate.js es           # a single locale
  *
  * NOT translated: proper names, reference titles/publishers, URLs, dates, ids.
- * The translatable-key set mirrors build.js's TRANSLATABLE_KEYS.
+ * The translatable-key set is build.js's TRANSLATABLE_KEYS — imported, not
+ * mirrored, so the coverage report and the renderer cannot disagree.
  */
 'use strict';
 
@@ -47,35 +48,23 @@ const DATA_FILE = path.join(ROOT, 'data', 'chronology.json');
 const I18N_DIR = path.join(ROOT, 'data', 'i18n');
 const DEFAULT_LOCALES = ['es', 'pt'];
 
-// >>> ADOPT: translatable-keys
-// A repo adds the keys its own build.js renders. It MUST mirror build.js's set.
-// Mirrors build.js's TRANSLATABLE_KEYS (kept in sync by test/i18n.test.js,
-// which asserts the two sets are identical). `direct`/`indirect` are this
-// site's typed-edge legend labels (episcopalLineage.edgeLegend).
-const TRANSLATABLE_KEYS = new Set([
-  'title', 'subtitle', 'description', 'dataQualityNote', 'label', 'value', 'text',
-  'place', 'role', 'country', 'notes', 'note', 'heading', 'navLabel', 'summary',
-  'detail', 'status', 'relation', 'unitNote', 'sourceLabel', 'display', 'unit', 'edgeLabel',
-  'direct', 'indirect',
-  // Lane bases render on the page via renderSwimlanes, so they are prose.
-  'basis', 'intro',
-]);
-// <<< ADOPT
-
-/** Collect the unique translatable strings from the dataset, in a stable order. */
-function collectStrings(data) {
-  const out = [];
-  const seen = new Set();
-  const add = (s) => { if (typeof s === 'string' && s.trim() && !seen.has(s)) { seen.add(s); out.push(s); } };
-  const walk = (val, key) => {
-    if (key === 'references') return;               // bibliographic data, never translated
-    if (Array.isArray(val)) { val.forEach((v) => walk(v, key)); return; }
-    if (val && typeof val === 'object') { for (const k of Object.keys(val)) walk(val[k], k); return; }
-    if (typeof val === 'string' && TRANSLATABLE_KEYS.has(key)) add(val);
-  };
-  walk(data, null);
-  return out;
-}
+/**
+ * The one walk, imported from the renderer.
+ *
+ * This file used to keep its own copy of TRANSLATABLE_KEYS and its own walk.
+ * The key list was genuinely pinned to build.js's by a test, and it held — but
+ * nothing pinned the two WALKS, and the walk is the half that went wrong
+ * elsewhere: the copy skipped `references` wholesale, so the coverage number
+ * omitted every `publisherNote` the localized pages actually render. That
+ * matters beyond reporting, because `--stats` is the safe invocation and every
+ * other one PRUNES against whatever set this file believes in; a single
+ * mistyped flag deleted 44 committed Spanish translations in a sibling repo.
+ * So the walk is imported rather than mirrored, and a test asserts it visits
+ * exactly the strings localizeData translates (cronologia/core#81, #82;
+ * ADR-0008). Requiring build.js is safe — it runs main() only under
+ * `require.main === module`.
+ */
+const { collectTranslatable: collectStrings } = require(path.join(ROOT, 'build.js'));
 
 function loadCache(lang) {
   try {

@@ -7,6 +7,7 @@ const path = require('node:path');
 const {
   esc, formatArchiveTs, renderCites, renderVizChips, decadeOf,
   translator, siteBase, alternates, localizeData, langSwitcher, TRANSLATABLE_KEYS, UI, LOCALES,
+  collectTranslatable,
 } = require('../build.js');
 
 test('esc escapes HTML metacharacters', () => {
@@ -100,12 +101,42 @@ test('localizeData translates whitelisted prose, sets lang, and never touches re
   assert.equal(JSON.stringify(en.events), JSON.stringify(data.events));
 });
 
-test('scripts/translate.js collects exactly build.js TRANSLATABLE_KEYS', () => {
-  // The cache generator duplicates the key set (template shape); a drift there
-  // would silently leave strings out of the caches.
-  const src = fs.readFileSync(path.join(__dirname, '..', 'scripts', 'translate.js'), 'utf8');
-  const block = src.match(/const TRANSLATABLE_KEYS = new Set\(\[([\s\S]*?)\]\);/);
-  assert.ok(block, 'translate.js TRANSLATABLE_KEYS literal not found');
-  const keys = [...block[1].matchAll(/'([^']+)'/g)].map((m) => m[1]).sort();
-  assert.deepEqual(keys, [...TRANSLATABLE_KEYS].sort());
+// The test that used to sit here read translate.js's own TRANSLATABLE_KEYS
+// literal and asserted it matched build.js's. It was a real guard, and it did
+// hold — but it pinned the two KEY LISTS while leaving the two WALKS free to
+// disagree, which is the half that actually went wrong elsewhere (the copy
+// skipped `references` wholesale and mis-handled subtree enums). translate.js
+// no longer has a literal to read: it imports collectTranslatable. The test
+// below replaces it and is strictly stronger, comparing the strings the two
+// code paths really visit rather than the keys they claim to. ADR-0008.
+
+/**
+ * Every string localizeData actually hands to the translator.
+ *
+ * The lookup is `Object.prototype.hasOwnProperty.call(dict, s)`, which on a
+ * Proxy fires `getOwnPropertyDescriptor` -- not `has`, and not `get`. Trapping
+ * the wrong one yields an empty list and the comparison would pass for the
+ * wrong reason, so the trap is asserted to have fired. Empty strings are
+ * dropped: localizeData passes them through harmlessly while
+ * collectTranslatable filters them, because listing "" as awaiting translation
+ * is noise in a coverage report.
+ */
+function stringsSeenByLocalize(data) {
+  const seen = [];
+  const dict = new Proxy({}, {
+    getOwnPropertyDescriptor: (_t, k) => { if (typeof k === 'string') seen.push(k); return undefined; },
+  });
+  localizeData(data, dict, 'es');
+  assert.ok(seen.length > 0, 'instrumentation failed: the translator lookup was never observed');
+  return seen.filter((s) => s.trim());
+}
+
+test('collectTranslatable returns exactly the strings localizeData translates', () => {
+  const data = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'chronology.json'), 'utf8'));
+  const collected = collectTranslatable(data);
+  const localized = stringsSeenByLocalize(data);
+  assert.deepEqual(new Set(collected), new Set(localized),
+    'the coverage walk and the render walk disagree - one of them is lying about what gets translated');
+  assert.equal(collected.length, new Set(collected).size, 'collectTranslatable must deduplicate');
+  assert.ok(collected.length > 0, 'the dataset has translatable prose');
 });
