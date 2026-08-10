@@ -1,6 +1,6 @@
 {
   "generatedBy": "scripts/archive-refs.js",
-  "updatedAt": "2026-08-03",
+  "updatedAt": "2026-08-10",
   "snapshots": {
     "http://chiesaepostconcilio.blogspot.com/2020/09/lesperienza-della-tradizione-o-la.html": {
       "refId": "chiesaepostconcilio-citati-2020",
@@ -124,9 +124,9 @@
     },
     "https://fsspx.com.br": {
       "refId": "fsspx-brasil",
-      "archiveUrl": "https://web.archive.org/web/20260520042216/http://www.fsspx.com.br/",
-      "timestamp": "20260520042216",
-      "checkedAt": "2026-07-19"
+      "archiveUrl": "https://web.archive.org/web/20260720093530/https://fsspx.com.br/pt",
+      "timestamp": "20260720093530",
+      "checkedAt": "2026-08-10"
     },
     "https://fsspx.news/en/news/bishop-vitus-huonder-and-sspx-43977": {
       "refId": "fsspx-huonder",
@@ -150,7 +150,7 @@
       "refId": "fsspx-news-brazil",
       "archiveUrl": "https://web.archive.org/web/20260719203554/https://fsspx.news/en/news/sspx-brazil-becomes-autonomous-house-16213",
       "timestamp": "20260719203554",
-      "checkedAt": "2026-07-19"
+      "checkedAt": "2026-08-10"
     },
     "https://fsspx.org": {
       "refId": "fsspx-org",
@@ -256,9 +256,9 @@
     },
     "https://stas.org/en/news/saying-good-bye-our-alma-mater-7546": {
       "refId": "stas-seminary-history",
-      "archiveUrl": "https://web.archive.org/web/20260129173546/https://stas.org/en/news/saying-good-bye-our-alma-mater-7546",
-      "timestamp": "20260129173546",
-      "checkedAt": "2026-07-25"
+      "archiveUrl": "https://web.archive.org/web/20260810081650/https://stas.org/en/news/saying-good-bye-our-alma-mater-7546",
+      "timestamp": "20260810081650",
+      "checkedAt": "2026-08-10"
     },
     "https://traditionalistblog.blogspot.com/2022/01/Olavodeath.html": {
       "refId": "sedgwick-blog-olavo-death",
@@ -394,9 +394,9 @@
     },
     "https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html": {
       "refId": "summorum-pontificum",
-      "archiveUrl": "https://web.archive.org/web/20260727100943/https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html",
-      "timestamp": "20260727100943",
-      "checkedAt": "2026-07-27"
+      "archiveUrl": "https://web.archive.org/web/20260801064320/https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html",
+      "timestamp": "20260801064320",
+      "checkedAt": "2026-08-10"
     },
     "https://www.vatican.va/content/francesco/en/apost_letters/documents/papa-francesco-lettera-ap_20161120_misericordia-et-misera.html": {
       "refId": "misericordia-et-misera",
@@ -424,15 +424,15 @@
     },
     "https://www.vatican.va/roman_curia/congregations/cbishops/documents/rc_con_cbishops_doc_20090121_remissione-scomunica_en.html": {
       "refId": "decree-2009",
-      "archiveUrl": "https://web.archive.org/web/20260727101015/https://www.vatican.va/roman_curia/congregations/cbishops/documents/rc_con_cbishops_doc_20090121_remissione-scomunica_en.html",
-      "timestamp": "20260727101015",
-      "checkedAt": "2026-07-27"
+      "archiveUrl": "https://web.archive.org/web/20260810080430/https://www.vatican.va/roman_curia/congregations/cbishops/documents/rc_con_cbishops_doc_20090121_remissione-scomunica_en.html",
+      "timestamp": "20260810080430",
+      "checkedAt": "2026-08-10"
     },
     "https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html": {
       "refId": "ecclesia-dei-marriages",
-      "archiveUrl": "https://web.archive.org/web/20260720093433/https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html",
-      "timestamp": "20260720093433",
-      "checkedAt": "2026-08-03"
+      "archiveUrl": "https://web.archive.org/web/20260803100637/https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html",
+      "timestamp": "20260803100637",
+      "checkedAt": "2026-08-10"
     },
     "https://www.washingtonpost.com/obituaries/2025/01/31/bishop-richard-williamson-dead/": {
       "refId": "wapo-williamson-obit",
