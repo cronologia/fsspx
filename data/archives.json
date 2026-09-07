@@ -1,6 +1,6 @@
 {
   "generatedBy": "scripts/archive-refs.js",
-  "updatedAt": "2026-08-31",
+  "updatedAt": "2026-09-07",
   "snapshots": {
     "http://chiesaepostconcilio.blogspot.com/2020/09/lesperienza-della-tradizione-o-la.html": {
       "refId": "chiesaepostconcilio-citati-2020",
@@ -170,6 +170,12 @@
       "timestamp": "20260824072557",
       "checkedAt": "2026-08-24"
     },
+    "https://infovaticana.com/en/2026/01/15/the-pope-grants-an-extension-to-mons-rifan-for-18-months-to-prepare-his-succession/": {
+      "refId": "infovaticana-rifan-2026",
+      "archiveUrl": "https://web.archive.org/web/20260907124015/https://infovaticana.com/en/2026/01/15/the-pope-grants-an-extension-to-mons-rifan-for-18-months-to-prepare-his-succession/",
+      "timestamp": "20260907124015",
+      "checkedAt": "2026-09-07"
+    },
     "https://j3news.com/2026/01/12/bispo-dom-fernando-rifan-anuncia-que-deixara-o-cargo-em-2027/": {
       "refId": "j3news-rifan-2026",
       "archiveUrl": "https://web.archive.org/web/20260214010243/https://j3news.com/2026/01/12/bispo-dom-fernando-rifan-anuncia-que-deixara-o-cargo-em-2027/",
@@ -338,6 +344,12 @@
       "timestamp": "20260714044858",
       "checkedAt": "2026-07-19"
     },
+    "https://www.facebook.com/story.php?story_fbid=819118661573543&id=100044256738255": {
+      "refId": "olavo-fb-2017-rama",
+      "archiveUrl": "https://web.archive.org/web/20260907124054/https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2Fstory.php%3Fstory_fbid%3D819118661573543%26id%3D100044256738255",
+      "timestamp": "20260907124054",
+      "checkedAt": "2026-09-07"
+    },
     "https://www.homelie.biz/": {
       "refId": "praedicatho-2026-lefebvre-affiliations",
       "archiveUrl": "https://web.archive.org/web/20260411015754/https://www.homelie.biz/",
@@ -400,9 +412,9 @@
     },
     "https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html": {
       "refId": "summorum-pontificum",
-      "archiveUrl": "https://web.archive.org/web/20260830013301/https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html",
-      "timestamp": "20260830013301",
-      "checkedAt": "2026-08-31"
+      "archiveUrl": "https://web.archive.org/web/20260903172557/https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html",
+      "timestamp": "20260903172557",
+      "checkedAt": "2026-09-07"
     },
     "https://www.vatican.va/content/francesco/en/apost_letters/documents/papa-francesco-lettera-ap_20161120_misericordia-et-misera.html": {
       "refId": "misericordia-et-misera",
@@ -412,15 +424,15 @@
     },
     "https://www.vatican.va/content/francesco/en/motu_proprio/documents/20210716-motu-proprio-traditionis-custodes.html": {
       "refId": "traditionis-custodes",
-      "archiveUrl": "https://web.archive.org/web/20260731190114/https://www.vatican.va/content/francesco/en/motu_proprio/documents/20210716-motu-proprio-traditionis-custodes.html",
-      "timestamp": "20260731190114",
-      "checkedAt": "2026-08-03"
+      "archiveUrl": "https://web.archive.org/web/20260904171645/https://www.vatican.va/content/francesco/en/motu_proprio/documents/20210716-motu-proprio-traditionis-custodes.html",
+      "timestamp": "20260904171645",
+      "checkedAt": "2026-09-07"
     },
     "https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html": {
       "refId": "ecclesia-dei",
-      "archiveUrl": "https://web.archive.org/web/20260824071900/https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html",
-      "timestamp": "20260824071900",
-      "checkedAt": "2026-08-31"
+      "archiveUrl": "https://web.archive.org/web/20260907122844/https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html",
+      "timestamp": "20260907122844",
+      "checkedAt": "2026-09-07"
     },
     "https://www.vatican.va/content/paul-vi/it/audiences/1969/documents/hf_p-vi_aud_19691119.html": {
       "refId": "vatican-audience-19691119",
@@ -436,9 +448,9 @@
     },
     "https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html": {
       "refId": "ecclesia-dei-marriages",
-      "archiveUrl": "https://web.archive.org/web/20260803100637/https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html",
-      "timestamp": "20260803100637",
-      "checkedAt": "2026-08-10"
+      "archiveUrl": "https://web.archive.org/web/20260831134830/https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html",
+      "timestamp": "20260831134830",
+      "checkedAt": "2026-09-07"
     },
     "https://www.washingtonpost.com/obituaries/2025/01/31/bishop-richard-williamson-dead/": {
       "refId": "wapo-williamson-obit",
@@ -469,6 +481,12 @@
       "archiveUrl": "https://web.archive.org/web/20260719215244/https://www.youtube.com/live/gd0OhVy1JtM",
       "timestamp": "20260719215244",
       "checkedAt": "2026-07-25"
+    },
+    "https://youtu.be/HPj3GsWuImU": {
+      "refId": "paulo-ricardo-fsspx",
+      "archiveUrl": "https://web.archive.org/web/20260907124209/https://www.youtube.com/watch?v=HPj3GsWuImU&feature=youtu.be",
+      "timestamp": "20260907124209",
+      "checkedAt": "2026-09-07"
     },
     "https://youtu.be/tEg0PmpbK7I": {
       "refId": "santoflow-kuster-fsspx",
