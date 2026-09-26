@@ -1991,7 +1991,7 @@
       "title": "Ecclesia Dei — Apostolic Letter of John Paul II (2 July 1988)",
       "url": "https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html",
       "publisher": "Holy See (vatican.va)",
-      "type": "primary",
+      "type": "official",
       "official": true
     },
     {
@@ -1999,7 +1999,7 @@
       "title": "Summorum Pontificum — Apostolic Letter of Benedict XVI (7 July 2007)",
       "url": "https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html",
       "publisher": "Holy See (vatican.va)",
-      "type": "primary",
+      "type": "official",
       "official": true
     },
     {
@@ -2007,7 +2007,7 @@
       "title": "Decree remitting the excommunication of the four bishops (Congregation for Bishops, 21 January 2009)",
       "url": "https://www.vatican.va/roman_curia/congregations/cbishops/documents/rc_con_cbishops_doc_20090121_remissione-scomunica_en.html",
       "publisher": "Holy See (vatican.va)",
-      "type": "primary",
+      "type": "official",
       "official": true
     },
     {
@@ -2015,7 +2015,7 @@
       "title": "Misericordia et misera — Apostolic Letter of Francis (20 November 2016), §12",
       "url": "https://www.vatican.va/content/francesco/en/apost_letters/documents/papa-francesco-lettera-ap_20161120_misericordia-et-misera.html",
       "publisher": "Holy See (vatican.va)",
-      "type": "primary",
+      "type": "official",
       "official": true
     },
     {
@@ -2023,7 +2023,7 @@
       "title": "Letter of the Ecclesia Dei Commission on marriages in the SSPX milieu (27 March 2017)",
       "url": "https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html",
       "publisher": "Holy See (vatican.va)",
-      "type": "primary",
+      "type": "official",
       "official": true
     },
     {
@@ -2031,7 +2031,7 @@
       "title": "Traditionis Custodes — Apostolic Letter of Francis (16 July 2021)",
       "url": "https://www.vatican.va/content/francesco/en/motu_proprio/documents/20210716-motu-proprio-traditionis-custodes.html",
       "publisher": "Holy See (vatican.va)",
-      "type": "primary",
+      "type": "official",
       "official": true
     },
     {
@@ -2039,7 +2039,7 @@
       "title": "SSPX United States district — timeline of the July 1, 2026 episcopal consecrations",
       "url": "https://sspx.org/en/news/timeline-society-saint-pius-xs-july-1-2026-episcopal-consecrations-60126",
       "publisher": "SSPX (official)",
-      "type": "official-site",
+      "type": "official",
       "official": true
     },
     {
@@ -2047,7 +2047,7 @@
       "title": "SSPX General House (Maison Générale) — official site",
       "url": "https://fsspx.org/en",
       "publisher": "SSPX (official)",
-      "type": "official-site",
+      "type": "official",
       "official": true
     },
     {
@@ -2055,7 +2055,7 @@
       "title": "FSSPX — Casa Autônoma do Brasil",
       "url": "https://fsspx.com.br",
       "publisher": "FSSPX Brasil (official, PT)",
-      "type": "official-site",
+      "type": "official",
       "official": true
     },
     {
@@ -2063,7 +2063,7 @@
       "title": "SSPX: Brazil becomes Autonomous House",
       "url": "https://fsspx.news/en/news/sspx-brazil-becomes-autonomous-house-16213",
       "publisher": "FSSPX.News (official news organ)",
-      "type": "official-site",
+      "type": "news",
       "official": true
     },
     {
@@ -2148,7 +2148,7 @@
       "title": "Statement of Bishop Michael F. Burbidge on the consecration of Fr. Gerardo Zendejas (8 May 2017)",
       "url": "https://www.arlingtondiocese.org/2017/05/08/statement-from-most-reverend-michael-f-burbidge-on-the-consecration-of-father-gerardo-zendejas-member-of-an-independent-church/",
       "publisher": "Catholic Diocese of Arlington (official)",
-      "type": "primary"
+      "type": "official"
     },
     {
       "id": "novusordowatch-aquino",
@@ -2176,7 +2176,7 @@
       "title": "General House Communiqué: The Society Files a Recourse Against the Decree of 2 July 2026 (13 July 2026)",
       "url": "https://fsspx.news/en/news/general-house-communique-society-files-recourse-against-decree-2-july-2026-60112",
       "publisher": "FSSPX.News (official news organ)",
-      "type": "official-site",
+      "type": "official",
       "official": true
     },
     {
@@ -2296,7 +2296,7 @@
       "title": "1974 Declaration of Archbishop Lefebvre — full text, dated 21 November 1974",
       "url": "https://fsspx.org/en/1974-declaration-archbishop-lefebvre-31164",
       "publisher": "SSPX General House (official)",
-      "type": "primary",
+      "type": "official",
       "official": true
     },
     {
@@ -2304,7 +2304,7 @@
       "title": "Letter of Archbishop Lefebvre to Cardinal Ratzinger, 6 May 1988 (full text)",
       "url": "https://sspxasia.com/Documents/Archbishop-Lefebvre/Archbishop_Lefebvre_and_the_Vatican/Part_I/1988-05-06.htm",
       "publisher": "SSPX Asia (SSPX-affiliated archive — sympathetic; primary text)",
-      "type": "primary"
+      "type": "archive"
     },
     {
       "id": "wikipedia-tissier",
@@ -2318,7 +2318,7 @@
       "title": "Death of Bishop Bernard Tissier de Mallerais (8 October 2024)",
       "url": "https://fsspx.news/en/news/death-bishop-bernard-tissier-mallerais-47993",
       "publisher": "FSSPX.News (official news organ — sympathetic obituary)",
-      "type": "official-site",
+      "type": "news",
       "official": true
     },
     {
@@ -2326,7 +2326,7 @@
       "title": "Funeral of Bishop Bernard Tissier de Mallerais (Écône, 18 October 2024)",
       "url": "https://sspx.org/en/news/funeral-bishop-bernard-tissier-mallerais-48150",
       "publisher": "SSPX (official)",
-      "type": "official-site",
+      "type": "news",
       "official": true
     },
     {
@@ -2341,7 +2341,7 @@
       "title": "Bishop Antônio de Castro Mayer — Catholic-Hierarchy record (gives death date 26 April 1991)",
       "url": "https://www.catholic-hierarchy.org/bishop/bcasmay.html",
       "publisher": "Catholic-Hierarchy.org (independent reference database)",
-      "type": "reference"
+      "type": "database"
     },
     {
       "id": "rorate-faure-2015",
@@ -2362,7 +2362,7 @@
       "title": "Sermon of Archbishop Lefebvre at the episcopal consecrations, Écône, 30 June 1988 (full text, incl. the Palmar de Troya repudiation)",
       "url": "https://sspx.org/en/1988-episcopal-consecrations-sermon-30926",
       "publisher": "SSPX (official)",
-      "type": "primary",
+      "type": "official",
       "official": true
     },
     {
@@ -2412,21 +2412,21 @@
       "title": "Rama Coomaraswamy, 'On the Validity of My Ordination' (the-pope.com, via Wayback)",
       "url": "https://web.archive.org/web/20061130041405/http://www.the-pope.com/validity.html",
       "publisher": "the-pope.com via Internet Archive (primary — his own account)",
-      "type": "primary"
+      "type": "testimony"
     },
     {
       "id": "angelus-1983-clarification",
       "title": "'Clarification of Misinformation' — editorial, The Angelus, June 1983 (on the departure of the 'Nine' and the Ridgefield faculty)",
       "url": "https://isidore.co/misc/Res%20pro%20Deo/Pope%20St.%20Pius%20X%20&%E2%81%84or%20SSPX/The%20Angelus/HTMLs/768.html",
       "publisher": "The Angelus / Angelus Press (SSPX magazine — the Society's own side of the 1983 split)",
-      "type": "primary"
+      "type": "analysis"
     },
     {
       "id": "stas-seminary-history",
       "title": "'Saying Good Bye to our Alma Mater' (11 June 2016) — Armada to Ridgefield in 1979, the 1983 exit of the 'Nine', Winona in 1988",
       "url": "https://stas.org/en/news/saying-good-bye-our-alma-mater-7546",
       "publisher": "St. Thomas Aquinas Seminary / SSPX District of the USA (official)",
-      "type": "official-site",
+      "type": "news",
       "official": true
     },
     {
@@ -2441,14 +2441,14 @@
       "title": "Rama Coomaraswamy — mirror of a since-deleted Wikipedia article",
       "url": "https://en-academic.com/dic.nsf/enwiki/548402",
       "publisher": "en-academic.com (unattributed mirror of a deleted Wikipedia article — weak source, cited here only for claims explicitly flagged unverified)",
-      "type": "reference"
+      "type": "encyclopedia"
     },
     {
       "id": "vatican-audience-19691119",
       "title": "General Audience of Paul VI, 19 November 1969 — on the new Order of the Mass",
       "url": "https://www.vatican.va/content/paul-vi/it/audiences/1969/documents/hf_p-vi_aud_19691119.html",
       "publisher": "Holy See (vatican.va — Italian original)",
-      "type": "primary",
+      "type": "official",
       "official": true
     },
     {
@@ -2456,7 +2456,7 @@
       "title": "Sermon of Archbishop Lefebvre at Lille, 29 August 1976 (full French text)",
       "url": "https://laportelatine.org/formation/mgr-lefebvre/sermons-historiques/lille-29-aout-1976",
       "publisher": "La Porte Latine — SSPX District of France (the Society's own archive of the text; sympathetic)",
-      "type": "primary",
+      "type": "official",
       "official": true
     },
     {
@@ -2471,7 +2471,7 @@
       "title": "Explanatory Note on the excommunication for schism incurred by adherents of the movement of Archbishop Lefebvre (Pontifical Council for the Interpretation of Legislative Texts, 24 August 1996)",
       "url": "https://www.catholicculture.org/culture/library/view.cfm?recnum=1224",
       "publisher": "Catholic Culture library (English text of a Holy See document; the carrier is a conservative Catholic library site — labeled as such)",
-      "type": "primary"
+      "type": "official"
     },
     {
       "id": "cwr-sspx-2018",
@@ -2485,7 +2485,7 @@
       "title": "Don Angelo Citati, «L'esperienza della Tradizione o la \"Tradizione integrale\"? Riflessioni sulla situazione attuale della Fraternità Sacerdotale San Pio X» — the essay and his letter of departure (published 9 September 2020)",
       "url": "http://chiesaepostconcilio.blogspot.com/2020/09/lesperienza-della-tradizione-o-la.html",
       "publisher": "Chiesa e post-concilio (Italian traditionalist blog — labeled as such; carries the priest's own text, i.e. a departing member's account in his own words)",
-      "type": "primary"
+      "type": "testimony"
     },
     {
       "id": "swissinfo-huonder-obit",
@@ -2563,7 +2563,7 @@
       "title": "Achille Cardinal Liénart — episcopal record (dates, offices, consecrators)",
       "url": "https://www.catholic-hierarchy.org/bishop/blienart.html",
       "publisher": "catholic-hierarchy.org — a compiled episcopal database, not an official Holy See source; used here for dates and consecration lineage, which is what it is reliable for",
-      "type": "reference"
+      "type": "database"
     },
     {
       "id": "angelus-1978-validity-orders",
@@ -2578,7 +2578,7 @@
       "title": "'Achille Liénart Documented As Freemason On 1976 Italian Registry List' — excerpt from Piers Compton, The Broken Cross",
       "url": "https://www.todayscatholicworld.com/1976-doc.htm",
       "publisher": "todayscatholicworld.com — sedevacantist/conclavist site; the allegation in its own words, quoting Piers Compton citing Georges Virebeau. Attributed allegation source, not a finding. Preserved in cronologia/archive as webcaptures/lienart-1976-doc.html",
-      "type": "allegation"
+      "type": "web"
     },
     {
       "id": "quicumque-lienart-lettre",
@@ -2592,7 +2592,7 @@
       "title": "'Les affiliations franc-maçonniques de Mgr Lefebvre' — Praedicatho blog, June 2026",
       "url": "https://www.homelie.biz/",
       "publisher": "Praedicatho / homelie.biz — a personal blog kept by a diocesan priest since 2006. SELF-PUBLISHED: an attributed claim from an individual, not an institutional or scholarly source. Preserved in cronologia/archive as webcaptures/lefebvre-homelie-affiliations-maconniques.html",
-      "type": "commentary"
+      "type": "web"
     }
   ]
 }
