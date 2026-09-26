@@ -1,0 +1,25 @@
+{
+  "_about": "Template build.js functions this site customises on purpose. Checked by cronologia/core tools/build-drift.py: an undeclared difference is drift; when the template's version of a declared function changes, the declaration goes STALE until the change is ported here and `base` is bumped (python3 tools/build-drift.py --hash <name>).",
+  "customized": {
+    "seoHead": {
+      "reason": "optional siteName / JSON-LD for the per-figure pages (ADR-0003)",
+      "base": "121bafdbe3ee"
+    },
+    "langSwitcher": {
+      "reason": "links climb by route depth (upTo), so the switcher works on figures/<id>.html",
+      "base": "83021396b269"
+    },
+    "renderFigureCard": {
+      "reason": "the card links to its figure page when the figure has an id (ADR-0003)",
+      "base": "9b95d2cecd4a"
+    },
+    "renderPage": {
+      "reason": "stylesheet path by route depth; page order: Divisions leads, spine/storylines/divisions open the page, genealogy after the chronology (fsspx#28)",
+      "base": "45fda29b9eea"
+    },
+    "main": {
+      "reason": "writes the per-figure pages and adds their routes to the sitemap (ADR-0003)",
+      "base": "7d2f6fde8121"
+    }
+  }
+}
