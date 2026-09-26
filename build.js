@@ -20,48 +20,75 @@ const path = require('path');
 const ROOT = __dirname;
 const DATA_FILE = path.join(ROOT, 'data', 'chronology.json');
 const ARCHIVES_FILE = path.join(ROOT, 'data', 'archives.json');
+const PLACES_FILE = path.join(ROOT, 'data', 'places.json');
 const I18N_DIR = path.join(ROOT, 'data', 'i18n');
 const SRC_DIR = path.join(ROOT, 'src');
+const WORLD_FILE = path.join(SRC_DIR, 'world-land.json');
 const OUT_DIR = path.join(ROOT, 'docs');
 
 /* ---------------------------------------------------------------------------
- * Multi-language (i18n) + SEO — adopted verbatim from the cronologia/core
- * template (see core/template/build.js and its adrs/0001-multilingual.md,
- * cronologia/core#9). English is authoritative and hand-written; es/pt are
- * machine-translated from committed caches (data/i18n/<lang>.json, managed by
- * scripts/translate.js — never hand-edit) and carry a visible disclaimer.
+ * Multi-language (i18n) + SEO. English is authoritative and hand-written; es/pt
+ * are served from committed caches (data/i18n/<lang>.json) and carry a visible
+ * disclaimer saying HOW they were produced.
  *
- * The language is a path segment AFTER the project (/fsspx/{en,es,pt}/…) because
+ * Those caches are usually AUTHORED, not machine-translated — see the header of
+ * scripts/translate.js, where authoring is the primary path and the backend is
+ * a convenience. So the disclaimer is derived from each cache's own `_meta`
+ * rather than hardcoded: a page that announces "machine translation" over
+ * hand-authored prose is a false provenance claim, and provenance is the thing
+ * these datasets exist to keep straight. `_meta.generatedBy` and
+ * `_meta.humanReviewed` decide which of the three sentences a locale gets.
+ *
+ * The language is a path segment AFTER the project (/<repo>/{en,es,pt}/…) because
  * GitHub Pages serves each repo under https://<org>.github.io/<repo>/. Content is
  * localized at the DATA level (a key-based walk, so every renderer — chronology,
- * episcopal genealogy, branch timeline, glossary links — is covered
- * automatically); the compiler's own chrome is localized from the UI table below.
- * English (empty dict) is byte-identical to a pre-i18n render except for the new
- * /en/ path + SEO head.
+ * genealogy, charts, glossary links — is covered automatically); the compiler's
+ * own chrome is localized from the UI table below. English (empty dict) is
+ * byte-identical to a pre-i18n render except for the new /en/ path + SEO head.
+ * See adrs/0001-multilingual.md and cronologia/core#9.
  * ------------------------------------------------------------------------- */
 
 const LOCALES = ['en', 'es', 'pt'];
 const OG_LOCALE = { en: 'en_US', es: 'es_ES', pt: 'pt_BR' };
+// Page paths (relative to a locale root) the site emits. The base template ships
+// a single page; sites with detail pages push their routes here so the sitemap
+// and hreflang stay complete.
 // Page paths (relative to a locale root) the site emits. This is the STATIC
 // base; `allRoutes(data)` appends the data-derived per-figure routes. Both the
 // build loop and renderSitemap() take their list from allRoutes(), so a page
 // can never be emitted without a sitemap entry (ADR-0003 §4).
 const ROUTES = [''];
 
-// Data fields whose string values are prose to translate. Reference titles/
-// publishers, proper names, URLs, ids, dates and numbers are NOT here, and the
-// whole `references` array is skipped, so bibliographic data is passed verbatim.
-// `direct`/`indirect` are this site's typed-edge legend labels
-// (episcopalLineage.edgeLegend) — an addition to the template's key set, to be
-// ported back to core/template (adopt-template rule 6).
+// Data fields whose string values are prose to translate. Proper names, URLs,
+// ids, dates and numbers are NOT here. This is the GENERAL rule; subtrees where
+// it misfires (`references`, and whatever a repo adds) carry their own narrower
+// allowlist in SUBTREE_TRANSLATABLE below.
 const TRANSLATABLE_KEYS = new Set([
   'title', 'subtitle', 'description', 'dataQualityNote', 'label', 'value', 'text',
   'place', 'role', 'country', 'notes', 'note', 'heading', 'navLabel', 'summary',
-  'detail', 'status', 'relation', 'unitNote', 'sourceLabel', 'display', 'unit', 'edgeLabel',
-  'direct', 'indirect',
+  'detail', 'status', 'relation', 'unitNote', 'sourceLabel', 'display', 'unit', 'edgeLabel', 'unlistedLabel',
   // Lane bases are prose and RENDER on the page (renderSwimlanes publishes each
   // lane's grounding), so they are translated like any other visible prose.
   'basis', 'intro',
+  // The lineage figure's typed-edge legend labels (`lineage.edgeLegend.direct`
+  // and `.indirect`) render under the tree as prose. Found untranslated in
+  // rcc, fixed there, upstreamed here.
+  'direct', 'indirect',
+  // `organizations[].founded` reads as a date and is written as a sentence
+  // ("1817, Ghent (Belgium); in Brazil from the 19th–20th century"). It RENDERS
+  // — the card prints "Fundada em <founded>" — so leaving it out put English
+  // clauses on both localized pages, invisible to every check because nothing
+  // demanded a translation for a key nobody had declared prose. A dataset
+  // whose `founded` really is a bare year costs one dictionary entry per
+  // organization; an English sentence on a Portuguese page costs a reader.
+  // Found and fixed in cimbres; upstreamed here.
+  'founded',
+  // `dateNote` is prose ABOUT the dating — which sources disagree, what a date
+  // still rests on. It was carried in every dataset in the family and rendered
+  // NOWHERE, so roughly eighty caveats were written, and invisible to every
+  // reader. olavo hit this and fixed it locally; this is that fix, upstreamed
+  // (core#73). Translatable because it is prose, and it now renders.
+  'dateNote',
 ]);
 
 // Interface strings the compiler emits itself (everything not sourced from data).
@@ -72,28 +99,24 @@ const UI = {
     figuresHeading: 'Key figures', organizationsHeading: 'Related organizations',
     disambiguationHeading: 'Disambiguation &amp; nuance', referencesHeading: 'References',
     aboutHeading: 'About', chronologyHeading: 'Chronology',
-    lastUpdated: 'Last updated:', language: 'Language', founded: 'Founded',
+    lastUpdated: 'Last updated:', language: 'Language',
     chronologyIntro: 'Key events in chronological order. A <span class="flag">?</span> flag marks\n      dates not yet verified against a primary source.',
     thYear: 'Year', thDate: 'Date', thPlace: 'Place', thEvent: 'Event',
     spineHeading: 'Events over time', spineNav: 'Over time',
     spineIntro: 'How the record is distributed across time. Bar height is the number of recorded events in that decade; the hatched part of a bar is events whose date is not yet verified against a primary source. Select a decade to jump to it in the chronology below.',
     spineBreakLabel: (n, from_, to) => `${n} decades with no recorded events (${from_}–${to})`,
-    spineColLabel: (dec, n, u) => `${dec}: ${n} event${n === 1 ? '' : 's'}${u ? `, ${u} with an unverified date` : ''}`,
-    spineCaption: (n, span, u) => `${n} events, ${span}${u ? ` · ${u} with a date not yet verified against a primary source` : ''}. Gaps are shown as explicit breaks, never compressed away.`,
-    swHeading: 'Parallel storylines', swNav: 'Storylines',
-    swIntro: 'The chronology read as parallel storylines: one row per lane, one column per decade, each cell the number of that lane’s events in that decade. An event that belongs to several storylines is counted in each, so the rows sum to more than the number of events. Select a number to jump to that decade in the chronology.',
-    swLaneHeader: 'Storyline', swTotalHeader: 'Events',
-    swBasesHeading: 'What each lane is grounded in',
-    swCellLabel: (lane, dec, n, u) => `${lane}, ${dec}: ${n} event${n === 1 ? '' : 's'}${u ? `, ${u} with a date not yet verified against a primary source` : ''}`,
-    swEmptyCell: (lane, dec) => `${lane}, ${dec}: no recorded events`,
-    swCaption: (n, lanes, span, assign) => `${n} events across ${lanes} lanes, ${span} · ${assign} lane assignments, because an event may belong to more than one storyline. Gaps are shown as explicit breaks, never compressed away.`,
-    swUntaggedNote: (n) => `${n} dated event${n === 1 ? ' carries' : 's carry'} no lane yet and ${n === 1 ? 'is' : 'are'} therefore not shown here.`,
-    flagTitle: 'Date not yet verified against a primary source',
-    factFlagTitle: 'Not yet verified against a primary source',
-    footer: 'Compiled static site generated from <code>data/chronology.json</code> by <code>build.js</code>. Open data — corrections welcome via pull request.\n      Part of the Cronologia project family.',
-    refsIntro: (n, a) => `${n} sources${a ? ` · ${a} with an Internet Archive fallback` : ''}. Sources span the\n      spectrum of perspectives by design; contested claims are attributed to their authors.`,
-    disclaimer: null,
-    // --- per-figure pages (ADR-0003) ---------------------------------------
+    // Suffix for years before the common era: a negative `year` is that many
+    // years BCE (-4 is 4 BCE; there is no year 0). See yearLabel().
+    bce: 'BCE',
+    rvFilterLabel: 'Filter the chronology', rvFirm: 'Firm dates only', rvFind: 'Find',
+    rvReading: 'Reading', rvAll: (n) => `all ${n} events`, rvSome: (n, total) => `${n} of ${total} events shown`,
+    rvEmpty: 'No events match. Clear the search or turn a storyline back on.',
+    rvRibbonLabel: (n, lanes) => `Overview of all ${n} events${lanes ? ` in ${lanes} storylines` : ''}; long gaps in the record are drawn as breaks`,
+    // The numbers chart's own labels (upstreamed from rcc, which localized them).
+    ncAxisNote: (max, unit) => `axis: 0–${max} ${unit}`,
+    ncCaptionMeta: (src, unit) => ` — reported by ${src}, in ${unit}`,
+    // --- per-figure pages (fsspx ADR-0003) ---
+    figuresHeading: 'Key figures', organizationsHeading: 'Related organizations',
     figureCardLink: 'Full page',
     figureBacklink: '← Back to the chronology',
     figureScopeNote: 'This page gathers what this chronology records about one figure — the role summary, the events linked to them, and their position in the episcopal genealogy — with every claim carrying its source. It is a dossier page, not a full biography.',
@@ -113,6 +136,82 @@ const UI = {
     figureFlagEventDate: 'Date not yet verified against a primary source.',
     figureRefsHeading: 'Sources cited on this page',
     figureRefsIntro: (n, a) => `${n} sources${a ? ` · ${a} with an Internet Archive fallback` : ''}, numbered for this page. Sources span the\n      spectrum of perspectives by design; contested claims are attributed to their authors.`,
+    catNav: 'Catalogue', catHeading: 'Catalogue',
+    catListHeading: 'Where each object is kept',
+    catWhere: 'Kept at', catObject: 'The object', catVisibility: 'When it can be seen',
+    catAttested: 'First attested', catDating: 'Scientific dating', catChurch: 'Acts of Church authorities',
+    catOsm: 'exact location on OpenStreetMap',
+    catNoImage: 'No freely licensed image of this object was located.',
+    catImageLabel: 'Image',
+    catPinLabel: (where, names) => `${where}: ${names}`,
+    catMapCaption: (n, pins) => `${n} object${n === 1 ? '' : 's'} at ${pins} marked location${pins === 1 ? '' : 's'}; numbers match the entries below. Objects kept close together share a marker.`,
+    catNonGeoNote: (n) => `${n} object${n === 1 ? ' has' : 's have'} no fixed location and ${n === 1 ? 'is' : 'are'} not mapped.`,
+    spineColLabel: (dec, n, u) => `${dec}: ${n} event${n === 1 ? '' : 's'}${u ? `, ${u} with an unverified date` : ''}`,
+    spineCaption: (n, span, u) => `${n} events, ${span}${u ? ` · ${u} with a date not yet verified against a primary source` : ''}. Gaps are shown as explicit breaks, never compressed away.`,
+    mapHeading: 'Events on the map', mapNav: 'Map',
+    mapIntro: 'Every recorded event that names a place, placed at that place. Marker area grows with the number of events there; an event naming more than one place appears at each. Select a marker to jump to its first decade in the chronology.',
+    mapLegendSize: 'marker area = number of recorded events',
+    mapLegendApprox: 'hollow marker = country-level location (approximate centre, not a specific site)',
+    mapApproxBadge: 'country-level, approximate',
+    mapLegendUnverified: 'dashed marker = the first date recorded there is not yet verified against a primary source',
+    mapCredit: 'Basemap: Natural Earth (public domain).',
+    tierMapHeading: 'Map', tierMapHint: 'Hover or focus a country for details.',
+    mapPinLabel: (name, n, y, u) => `${name}: ${n} event${n === 1 ? '' : 's'}, first recorded ${y}${u ? ' (date not yet verified)' : ''}`,
+    mapListHeading: 'Mapped places',
+    mapCaption: (nEv, nPl, span) => `${nEv} events at ${nPl} mapped places, first recorded ${span}.`,
+    mapNonGeoNote: (n) => `${n} event${n === 1 ? ' has' : 's have'} a non-geographic scope (e.g. worldwide) and ${n === 1 ? 'is' : 'are'} deliberately not mapped.`,
+    mapUnresolvedNote: (n) => `${n} event${n === 1 ? '' : 's'} name${n === 1 ? 's' : ''} a place not yet in the gazetteer and ${n === 1 ? 'is' : 'are'} not mapped.`,
+    mapSliderLabel: 'Show places first recorded up to',
+    mapPlay: '▶ Play', mapPause: '⏸ Pause',
+    mapShowing: (y, shown, total) => `Showing places first recorded up to ${y}: ${shown} of ${total}.`,
+    swHeading: 'Parallel storylines', swNav: 'Storylines',
+    swIntro: 'The chronology read as parallel storylines: one row per lane, one column per decade, each cell the number of that lane’s events in that decade. An event that belongs to several storylines is counted in each, so the rows sum to more than the number of events. Select a number to jump to that decade in the chronology.',
+    swLaneHeader: 'Storyline', swTotalHeader: 'Events',
+    swBasesHeading: 'What each lane is grounded in',
+    swCellLabel: (lane, dec, n, u) => `${lane}, ${dec}: ${n} event${n === 1 ? '' : 's'}${u ? `, ${u} with a date not yet verified against a primary source` : ''}`,
+    swEmptyCell: (lane, dec) => `${lane}, ${dec}: no recorded events`,
+    swCaption: (n, lanes, span, assign) => `${n} events across ${lanes} lanes, ${span} · ${assign} lane assignments, because an event may belong to more than one storyline. Gaps are shown as explicit breaks, never compressed away.`,
+    swUntaggedNote: (n) => `${n} dated event${n === 1 ? ' carries' : 's carry'} no lane yet and ${n === 1 ? 'is' : 'are'} therefore not shown here.`,
+    flagTitle: 'Date not yet verified against a primary source',
+    factFlagTitle: 'Not yet verified against a primary source',
+    footer: 'Compiled static site generated from <code>data/chronology.json</code> by <code>build.js</code>. Open data — corrections welcome via pull request.\n      Part of the Cronologia project family.',
+    refsIntro: (n, a) => `${n} sources${a ? ` · ${a} with an Internet Archive fallback` : ''}. Sources span the\n      spectrum of perspectives by design; contested claims are attributed to their authors.`,
+    orgFounded: 'Founded',
+    // Reference kinds are a CLOSED vocabulary, so they live here with the rest
+    // of the chrome rather than in the translation caches.
+    //
+    // `type` is the KIND OF DOCUMENT, and nothing else. Two things that look
+    // like types are not, and putting them here was the single commonest error
+    // across the family (core#74):
+    //   PRIMACY -- `primary` was used 52 times. It is orthogonal: a vatican.va
+    //     decree is `official` AND primary, a diary is `archive` AND primary.
+    //     Say it in `publisherNote`, which is translated.
+    //   PERSPECTIVE -- `devotional`, `institutional`, `official-site`. The
+    //     source's stance is not its medium; `publisherNote` again.
+    // `testimony` and `analysis` ARE kinds and were missing; the sourcing rules
+    // name testimony explicitly as a class with its own corroboration bar.
+    refTypes: {
+      news: 'news', academic: 'academic', archive: 'archive', official: 'official',
+      encyclopedia: 'encyclopedia', web: 'web', corpus: 'corpus', database: 'database',
+      video: 'video', index: 'index', book: 'book', report: 'report', legal: 'legal',
+      testimony: 'testimony', analysis: 'analysis',
+    },
+    ladderHeading: 'How far the case went',
+    ladderIntro: 'Each step is a separate judgment by a different authority. The page records what each one did and when, citing the act; it does not add them up into a verdict.',
+    ladderCaption: 'One rung per authority. "No ruling found" is a statement about the evidence, not about the case.',
+    ladderStatus: {
+      favourable: 'Investigated — concluded in favour',
+      negative: 'Investigated — concluded against',
+      inconclusive: 'Investigated — no verdict issued',
+      'reported-undocumented': 'A ruling is reported; no document located',
+      'not-found': 'No record found that this step took place',
+      'not-reached': 'The case did not reach this step',
+      pending: 'Under way',
+      adjacent: 'Church act on a related matter — not a ruling on the apparition',
+    },
+    ladderDetails: 'Step by step, with the documents',
+    // English is the authoritative text, so it never carries a translation note.
+    disclaimers: null,
   },
   es: {
     about: 'Acerca de', chronology: 'Cronología', figures: 'Figuras clave',
@@ -120,28 +219,23 @@ const UI = {
     figuresHeading: 'Figuras clave', organizationsHeading: 'Organizaciones relacionadas',
     disambiguationHeading: 'Desambiguación y matices', referencesHeading: 'Referencias',
     aboutHeading: 'Acerca de', chronologyHeading: 'Cronología',
-    lastUpdated: 'Última actualización:', language: 'Idioma', founded: 'Fundada en',
+    lastUpdated: 'Última actualización:', language: 'Idioma',
     chronologyIntro: 'Acontecimientos clave en orden cronológico. Una marca <span class="flag">?</span> indica\n      fechas aún no verificadas con una fuente primaria.',
     thYear: 'Año', thDate: 'Fecha', thPlace: 'Lugar', thEvent: 'Acontecimiento',
     spineHeading: 'Acontecimientos a lo largo del tiempo', spineNav: 'En el tiempo',
     spineIntro: 'Cómo se distribuye el registro en el tiempo. La altura de cada barra es el número de acontecimientos registrados en esa década; la parte rayada corresponde a acontecimientos cuya fecha aún no se ha verificado con una fuente primaria. Seleccione una década para ir a ella en la cronología.',
     spineBreakLabel: (n, from_, to) => `${n} décadas sin acontecimientos registrados (${from_}–${to})`,
-    spineColLabel: (dec, n, u) => `${dec}: ${n} acontecimiento${n === 1 ? '' : 's'}${u ? `, ${u} con fecha no verificada` : ''}`,
-    spineCaption: (n, span, u) => `${n} acontecimientos, ${span}${u ? ` · ${u} con fecha aún no verificada con una fuente primaria` : ''}. Los vacíos se muestran como cortes explícitos, nunca comprimidos.`,
-    swHeading: 'Relatos paralelos', swNav: 'Relatos',
-    swIntro: 'La cronología leída como relatos paralelos: una fila por franja, una columna por década, y en cada celda el número de acontecimientos de esa franja en esa década. Un acontecimiento que pertenece a varios relatos se cuenta en cada uno, de modo que las filas suman más que el total de acontecimientos. Seleccione un número para ir a esa década en la cronología.',
-    swLaneHeader: 'Relato', swTotalHeader: 'Acontecimientos',
-    swBasesHeading: 'En qué se funda cada franja',
-    swCellLabel: (lane, dec, n, u) => `${lane}, ${dec}: ${n} acontecimiento${n === 1 ? '' : 's'}${u ? `, ${u} con fecha aún no verificada con una fuente primaria` : ''}`,
-    swEmptyCell: (lane, dec) => `${lane}, ${dec}: sin acontecimientos registrados`,
-    swCaption: (n, lanes, span, assign) => `${n} acontecimientos en ${lanes} franjas, ${span} · ${assign} asignaciones a franjas, porque un acontecimiento puede pertenecer a más de un relato. Los vacíos se muestran como cortes explícitos, nunca comprimidos.`,
-    swUntaggedNote: (n) => `${n} acontecimiento${n === 1 ? ' fechado no tiene' : 's fechados no tienen'} todavía ninguna franja y por eso no ${n === 1 ? 'aparece' : 'aparecen'} aquí.`,
-    flagTitle: 'Fecha aún no verificada con una fuente primaria',
-    factFlagTitle: 'Aún no verificado con una fuente primaria',
-    footer: 'Sitio estático compilado a partir de <code>data/chronology.json</code> por <code>build.js</code>. Datos abiertos — correcciones bienvenidas mediante pull request.\n      Parte de la familia de proyectos Cronologia.',
-    refsIntro: (n, a) => `${n} fuentes${a ? ` · ${a} con copia en Internet Archive` : ''}. Las fuentes abarcan el\n      espectro de perspectivas de forma deliberada; las afirmaciones controvertidas se atribuyen a sus autores.`,
-    disclaimer: 'Traducción automática del inglés; la página en inglés es la versión de referencia.',
-    // --- páginas por figura (ADR-0003) -------------------------------------
+    // Suffix for years before the common era: a negative `year` is that many
+    // years BCE (-4 is 4 BCE; there is no year 0). See yearLabel().
+    bce: 'a. C.',
+    rvFilterLabel: 'Filtrar la cronología', rvFirm: 'Solo fechas firmes', rvFind: 'Buscar',
+    rvReading: 'Leyendo', rvAll: (n) => `los ${n} acontecimientos`, rvSome: (n, total) => `${n} de ${total} acontecimientos mostrados`,
+    rvEmpty: 'Ningún acontecimiento coincide. Borre la búsqueda o vuelva a activar un relato.',
+    rvRibbonLabel: (n, lanes) => `Vista general de los ${n} acontecimientos${lanes ? ` en ${lanes} relatos` : ''}; los grandes vacíos del registro se dibujan como cortes`,
+    ncAxisNote: (max, unit) => `eje: 0–${max} ${unit}`,
+    ncCaptionMeta: (src, unit) => ` — reportado por ${src}, en ${unit}`,
+    // --- per-figure pages (fsspx ADR-0003) ---
+    figuresHeading: 'Figuras clave', organizationsHeading: 'Organizaciones relacionadas',
     figureCardLink: 'Página completa',
     figureBacklink: '← Volver a la cronología',
     figureScopeNote: 'Esta página reúne lo que esta cronología registra sobre una figura — el resumen de su papel, los acontecimientos vinculados a ella y su posición en la genealogía episcopal — con cada afirmación acompañada de su fuente. Es una página de dosier, no una biografía completa.',
@@ -161,6 +255,72 @@ const UI = {
     figureFlagEventDate: 'Fecha aún no verificada con una fuente primaria.',
     figureRefsHeading: 'Fuentes citadas en esta página',
     figureRefsIntro: (n, a) => `${n} fuentes${a ? ` · ${a} con copia en Internet Archive` : ''}, numeradas para esta página. Las fuentes abarcan el\n      espectro de perspectivas de forma deliberada; las afirmaciones controvertidas se atribuyen a sus autores.`,
+    catNav: 'Catálogo', catHeading: 'Catálogo',
+    catListHeading: 'Dónde se conserva cada objeto',
+    catWhere: 'Se conserva en', catObject: 'El objeto', catVisibility: 'Cuándo puede verse',
+    catAttested: 'Primera mención', catDating: 'Datación científica', catChurch: 'Actos de las autoridades de la Iglesia',
+    catOsm: 'ubicación exacta en OpenStreetMap',
+    catNoImage: 'No se localizó ninguna imagen de este objeto con licencia libre.',
+    catImageLabel: 'Imagen',
+    catPinLabel: (where, names) => `${where}: ${names}`,
+    catMapCaption: (n, pins) => `${n} objeto${n === 1 ? '' : 's'} en ${pins} ubicación${pins === 1 ? '' : 'es'} marcada${pins === 1 ? '' : 's'}; los números corresponden a las entradas de abajo. Los objetos conservados muy cerca comparten un marcador.`,
+    catNonGeoNote: (n) => `${n} objeto${n === 1 ? ' no tiene' : 's no tienen'} una ubicación fija y no ${n === 1 ? 'se muestra' : 'se muestran'} en el mapa.`,
+    spineColLabel: (dec, n, u) => `${dec}: ${n} acontecimiento${n === 1 ? '' : 's'}${u ? `, ${u} con fecha no verificada` : ''}`,
+    spineCaption: (n, span, u) => `${n} acontecimientos, ${span}${u ? ` · ${u} con fecha aún no verificada con una fuente primaria` : ''}. Los vacíos se muestran como cortes explícitos, nunca comprimidos.`,
+    mapHeading: 'Acontecimientos en el mapa', mapNav: 'Mapa',
+    mapIntro: 'Cada acontecimiento registrado que nombra un lugar, situado en ese lugar. El área del marcador crece con el número de acontecimientos allí; un acontecimiento que nombra más de un lugar aparece en cada uno. Seleccione un marcador para ir a su primera década en la cronología.',
+    mapLegendSize: 'área del marcador = número de acontecimientos registrados',
+    mapLegendApprox: 'marcador hueco = ubicación a nivel de país (centro aproximado, no un sitio concreto)',
+    mapApproxBadge: 'nivel de país, aproximado',
+    mapLegendUnverified: 'marcador discontinuo = la primera fecha registrada allí aún no está verificada con una fuente primaria',
+    mapCredit: 'Mapa base: Natural Earth (dominio público).',
+    tierMapHeading: 'Mapa', tierMapHint: 'Pase el cursor o enfoque un país para ver detalles.',
+    mapPinLabel: (name, n, y, u) => `${name}: ${n} acontecimiento${n === 1 ? '' : 's'}, primero registrado en ${y}${u ? ' (fecha aún no verificada)' : ''}`,
+    mapListHeading: 'Lugares en el mapa',
+    mapCaption: (nEv, nPl, span) => `${nEv} acontecimientos en ${nPl} lugares del mapa, primeros registros ${span}.`,
+    mapNonGeoNote: (n) => `${n} acontecimiento${n === 1 ? ' tiene' : 's tienen'} un alcance no geográfico (p. ej. mundial) y deliberadamente no se ${n === 1 ? 'mapea' : 'mapean'}.`,
+    mapUnresolvedNote: (n) => `${n} acontecimiento${n === 1 ? ' nombra' : 's nombran'} un lugar que aún no está en el gacetero y no se ${n === 1 ? 'mapea' : 'mapean'}.`,
+    mapSliderLabel: 'Mostrar lugares registrados por primera vez hasta',
+    mapPlay: '▶ Reproducir', mapPause: '⏸ Pausa',
+    mapShowing: (y, shown, total) => `Mostrando lugares registrados por primera vez hasta ${y}: ${shown} de ${total}.`,
+    swHeading: 'Relatos paralelos', swNav: 'Relatos',
+    swIntro: 'La cronología leída como relatos paralelos: una fila por franja, una columna por década, y en cada celda el número de acontecimientos de esa franja en esa década. Un acontecimiento que pertenece a varios relatos se cuenta en cada uno, de modo que las filas suman más que el total de acontecimientos. Seleccione un número para ir a esa década en la cronología.',
+    swLaneHeader: 'Relato', swTotalHeader: 'Acontecimientos',
+    swBasesHeading: 'En qué se funda cada franja',
+    swCellLabel: (lane, dec, n, u) => `${lane}, ${dec}: ${n} acontecimiento${n === 1 ? '' : 's'}${u ? `, ${u} con fecha aún no verificada con una fuente primaria` : ''}`,
+    swEmptyCell: (lane, dec) => `${lane}, ${dec}: sin acontecimientos registrados`,
+    swCaption: (n, lanes, span, assign) => `${n} acontecimientos en ${lanes} franjas, ${span} · ${assign} asignaciones a franjas, porque un acontecimiento puede pertenecer a más de un relato. Los vacíos se muestran como cortes explícitos, nunca comprimidos.`,
+    swUntaggedNote: (n) => `${n} acontecimiento${n === 1 ? ' fechado no tiene' : 's fechados no tienen'} todavía ninguna franja y por eso no ${n === 1 ? 'aparece' : 'aparecen'} aquí.`,
+    flagTitle: 'Fecha aún no verificada con una fuente primaria',
+    factFlagTitle: 'Aún no verificado con una fuente primaria',
+    footer: 'Sitio estático compilado a partir de <code>data/chronology.json</code> por <code>build.js</code>. Datos abiertos — correcciones bienvenidas mediante pull request.\n      Parte de la familia de proyectos Cronologia.',
+    refsIntro: (n, a) => `${n} fuentes${a ? ` · ${a} con copia en Internet Archive` : ''}. Las fuentes abarcan el\n      espectro de perspectivas de forma deliberada; las afirmaciones controvertidas se atribuyen a sus autores.`,
+    orgFounded: 'Fundada en',
+    refTypes: {
+      news: 'prensa', academic: 'académico', archive: 'archivo', official: 'oficial',
+      encyclopedia: 'enciclopedia', web: 'web', corpus: 'corpus', database: 'base de datos',
+      video: 'video', index: 'índice', book: 'libro', report: 'informe', legal: 'jurídico',
+      testimony: 'testimonio', analysis: 'análisis',
+    },
+    ladderHeading: 'Hasta dónde llegó el caso',
+    ladderIntro: 'Cada paso es un juicio distinto de una autoridad distinta. La página registra qué hizo cada una y cuándo, citando el acto; no los suma en un veredicto.',
+    ladderCaption: 'Un escalón por autoridad. «No se ha encontrado resolución» dice algo sobre las fuentes, no sobre el caso.',
+    ladderStatus: {
+      favourable: 'Investigado — resolución favorable',
+      negative: 'Investigado — resolución contraria',
+      inconclusive: 'Investigado — sin veredicto',
+      'reported-undocumented': 'Se refiere una resolución; no se ha localizado el documento',
+      'not-found': 'No consta que este paso se diera',
+      'not-reached': 'El caso no llegó a este paso',
+      pending: 'En curso',
+      adjacent: 'Acto de la Iglesia sobre una materia relacionada — no una resolución sobre la aparición',
+    },
+    ladderDetails: 'Paso a paso, con los documentos',
+    disclaimers: {
+      machine: 'Traducción automática del inglés; la página en inglés es la versión de referencia.',
+      authored: 'Traducción del inglés escrita por el asistente, sin revisión humana; la página en inglés es la versión de referencia.',
+      reviewed: 'Traducción del inglés revisada por una persona; la página en inglés es la versión de referencia.',
+    },
   },
   pt: {
     about: 'Sobre', chronology: 'Cronologia', figures: 'Figuras-chave',
@@ -168,28 +328,23 @@ const UI = {
     figuresHeading: 'Figuras-chave', organizationsHeading: 'Organizações relacionadas',
     disambiguationHeading: 'Desambiguação e nuances', referencesHeading: 'Referências',
     aboutHeading: 'Sobre', chronologyHeading: 'Cronologia',
-    lastUpdated: 'Última atualização:', language: 'Idioma', founded: 'Fundada em',
+    lastUpdated: 'Última atualização:', language: 'Idioma',
     chronologyIntro: 'Principais acontecimentos em ordem cronológica. Uma marca <span class="flag">?</span> indica\n      datas ainda não verificadas com uma fonte primária.',
     thYear: 'Ano', thDate: 'Data', thPlace: 'Local', thEvent: 'Acontecimento',
     spineHeading: 'Acontecimentos ao longo do tempo', spineNav: 'No tempo',
     spineIntro: 'Como o registo se distribui no tempo. A altura de cada barra é o número de acontecimentos registados nessa década; a parte tracejada corresponde a acontecimentos cuja data ainda não foi verificada com uma fonte primária. Selecione uma década para saltar para ela na cronologia.',
     spineBreakLabel: (n, from_, to) => `${n} décadas sem acontecimentos registados (${from_}–${to})`,
-    spineColLabel: (dec, n, u) => `${dec}: ${n} acontecimento${n === 1 ? '' : 's'}${u ? `, ${u} com data não verificada` : ''}`,
-    spineCaption: (n, span, u) => `${n} acontecimentos, ${span}${u ? ` · ${u} com data ainda não verificada com uma fonte primária` : ''}. As lacunas são mostradas como cortes explícitos, nunca comprimidas.`,
-    swHeading: 'Narrativas paralelas', swNav: 'Narrativas',
-    swIntro: 'A cronologia lida como narrativas paralelas: uma linha por faixa, uma coluna por década, e em cada célula o número de acontecimentos dessa faixa nessa década. Um acontecimento que pertence a várias narrativas é contado em cada uma, pelo que as linhas somam mais do que o total de acontecimentos. Selecione um número para ir a essa década na cronologia.',
-    swLaneHeader: 'Narrativa', swTotalHeader: 'Acontecimentos',
-    swBasesHeading: 'Em que se fundamenta cada faixa',
-    swCellLabel: (lane, dec, n, u) => `${lane}, ${dec}: ${n} acontecimento${n === 1 ? '' : 's'}${u ? `, ${u} com data ainda não verificada com uma fonte primária` : ''}`,
-    swEmptyCell: (lane, dec) => `${lane}, ${dec}: sem acontecimentos registados`,
-    swCaption: (n, lanes, span, assign) => `${n} acontecimentos em ${lanes} faixas, ${span} · ${assign} atribuições a faixas, porque um acontecimento pode pertencer a mais de uma narrativa. As lacunas são mostradas como cortes explícitos, nunca comprimidas.`,
-    swUntaggedNote: (n) => `${n} acontecimento${n === 1 ? ' datado não tem' : 's datados não têm'} ainda qualquer faixa e por isso não ${n === 1 ? 'aparece' : 'aparecem'} aqui.`,
-    flagTitle: 'Data ainda não verificada com uma fonte primária',
-    factFlagTitle: 'Ainda não verificado com uma fonte primária',
-    footer: 'Site estático compilado a partir de <code>data/chronology.json</code> por <code>build.js</code>. Dados abertos — correções bem-vindas via pull request.\n      Parte da família de projetos Cronologia.',
-    refsIntro: (n, a) => `${n} fontes${a ? ` · ${a} com cópia no Internet Archive` : ''}. As fontes abrangem o\n      espectro de perspectivas de forma deliberada; afirmações controversas são atribuídas aos seus autores.`,
-    disclaimer: 'Tradução automática do inglês; a página em inglês é a versão de referência.',
-    // --- páginas por figura (ADR-0003) -------------------------------------
+    // Suffix for years before the common era: a negative `year` is that many
+    // years BCE (-4 is 4 BCE; there is no year 0). See yearLabel().
+    bce: 'a.C.',
+    rvFilterLabel: 'Filtrar a cronologia', rvFirm: 'Apenas datas firmes', rvFind: 'Buscar',
+    rvReading: 'Lendo', rvAll: (n) => `todos os ${n} acontecimentos`, rvSome: (n, total) => `${n} de ${total} acontecimentos exibidos`,
+    rvEmpty: 'Nenhum acontecimento corresponde. Limpe a busca ou reative uma narrativa.',
+    rvRibbonLabel: (n, lanes) => `Visão geral dos ${n} acontecimentos${lanes ? ` em ${lanes} narrativas` : ''}; as grandes lacunas do registro aparecem como cortes`,
+    ncAxisNote: (max, unit) => `eixo: 0–${max} ${unit}`,
+    ncCaptionMeta: (src, unit) => ` — reportado por ${src}, em ${unit}`,
+    // --- per-figure pages (fsspx ADR-0003) ---
+    figuresHeading: 'Figuras-chave', organizationsHeading: 'Organizações relacionadas',
     figureCardLink: 'Página completa',
     figureBacklink: '← Voltar à cronologia',
     figureScopeNote: 'Esta página reúne o que esta cronologia registra sobre uma figura — o resumo do seu papel, os acontecimentos a ela vinculados e a sua posição na genealogia episcopal — com cada afirmação acompanhada da sua fonte. É uma página de dossiê, não uma biografia completa.',
@@ -209,6 +364,72 @@ const UI = {
     figureFlagEventDate: 'Data ainda não verificada com uma fonte primária.',
     figureRefsHeading: 'Fontes citadas nesta página',
     figureRefsIntro: (n, a) => `${n} fontes${a ? ` · ${a} com cópia no Internet Archive` : ''}, numeradas para esta página. As fontes abrangem o\n      espectro de perspectivas de forma deliberada; afirmações controversas são atribuídas aos seus autores.`,
+    catNav: 'Catálogo', catHeading: 'Catálogo',
+    catListHeading: 'Onde cada objeto é conservado',
+    catWhere: 'Conservado em', catObject: 'O objeto', catVisibility: 'Quando pode ser visto',
+    catAttested: 'Primeira menção', catDating: 'Datação científica', catChurch: 'Atos das autoridades da Igreja',
+    catOsm: 'localização exata no OpenStreetMap',
+    catNoImage: 'Não foi localizada nenhuma imagem deste objeto com licença livre.',
+    catImageLabel: 'Imagem',
+    catPinLabel: (where, names) => `${where}: ${names}`,
+    catMapCaption: (n, pins) => `${n} objeto${n === 1 ? '' : 's'} em ${pins} localiza${pins === 1 ? 'ção marcada' : 'ções marcadas'}; os números correspondem às entradas abaixo. Objetos conservados muito próximos compartilham um marcador.`,
+    catNonGeoNote: (n) => `${n} objeto${n === 1 ? ' não tem' : 's não têm'} localização fixa e não ${n === 1 ? 'aparece' : 'aparecem'} no mapa.`,
+    spineColLabel: (dec, n, u) => `${dec}: ${n} acontecimento${n === 1 ? '' : 's'}${u ? `, ${u} com data não verificada` : ''}`,
+    spineCaption: (n, span, u) => `${n} acontecimentos, ${span}${u ? ` · ${u} com data ainda não verificada com uma fonte primária` : ''}. As lacunas são mostradas como cortes explícitos, nunca comprimidas.`,
+    mapHeading: 'Acontecimentos no mapa', mapNav: 'Mapa',
+    mapIntro: 'Cada acontecimento registado que nomeia um lugar, situado nesse lugar. A área do marcador cresce com o número de acontecimentos ali; um acontecimento que nomeia mais de um lugar aparece em cada um. Selecione um marcador para ir à sua primeira década na cronologia.',
+    mapLegendSize: 'área do marcador = número de acontecimentos registados',
+    mapLegendApprox: 'marcador vazado = localização ao nível do país (centro aproximado, não um local específico)',
+    mapApproxBadge: 'nível de país, aproximado',
+    mapLegendUnverified: 'marcador tracejado = a primeira data registada ali ainda não foi verificada com uma fonte primária',
+    mapCredit: 'Mapa-base: Natural Earth (domínio público).',
+    tierMapHeading: 'Mapa', tierMapHint: 'Passe o cursor ou foque um país para ver detalhes.',
+    mapPinLabel: (name, n, y, u) => `${name}: ${n} acontecimento${n === 1 ? '' : 's'}, primeiro registo em ${y}${u ? ' (data ainda não verificada)' : ''}`,
+    mapListHeading: 'Lugares no mapa',
+    mapCaption: (nEv, nPl, span) => `${nEv} acontecimentos em ${nPl} lugares do mapa, primeiros registos ${span}.`,
+    mapNonGeoNote: (n) => `${n} acontecimento${n === 1 ? ' tem' : 's têm'} um alcance não geográfico (p. ex. mundial) e deliberadamente não ${n === 1 ? 'é mapeado' : 'são mapeados'}.`,
+    mapUnresolvedNote: (n) => `${n} acontecimento${n === 1 ? ' nomeia' : 's nomeiam'} um lugar que ainda não está no dicionário geográfico e não ${n === 1 ? 'é mapeado' : 'são mapeados'}.`,
+    mapSliderLabel: 'Mostrar lugares registados pela primeira vez até',
+    mapPlay: '▶ Reproduzir', mapPause: '⏸ Pausar',
+    mapShowing: (y, shown, total) => `A mostrar lugares registados pela primeira vez até ${y}: ${shown} de ${total}.`,
+    swHeading: 'Narrativas paralelas', swNav: 'Narrativas',
+    swIntro: 'A cronologia lida como narrativas paralelas: uma linha por faixa, uma coluna por década, e em cada célula o número de acontecimentos dessa faixa nessa década. Um acontecimento que pertence a várias narrativas é contado em cada uma, pelo que as linhas somam mais do que o total de acontecimentos. Selecione um número para ir a essa década na cronologia.',
+    swLaneHeader: 'Narrativa', swTotalHeader: 'Acontecimentos',
+    swBasesHeading: 'Em que se fundamenta cada faixa',
+    swCellLabel: (lane, dec, n, u) => `${lane}, ${dec}: ${n} acontecimento${n === 1 ? '' : 's'}${u ? `, ${u} com data ainda não verificada com uma fonte primária` : ''}`,
+    swEmptyCell: (lane, dec) => `${lane}, ${dec}: sem acontecimentos registados`,
+    swCaption: (n, lanes, span, assign) => `${n} acontecimentos em ${lanes} faixas, ${span} · ${assign} atribuições a faixas, porque um acontecimento pode pertencer a mais de uma narrativa. As lacunas são mostradas como cortes explícitos, nunca comprimidas.`,
+    swUntaggedNote: (n) => `${n} acontecimento${n === 1 ? ' datado não tem' : 's datados não têm'} ainda qualquer faixa e por isso não ${n === 1 ? 'aparece' : 'aparecem'} aqui.`,
+    flagTitle: 'Data ainda não verificada com uma fonte primária',
+    factFlagTitle: 'Ainda não verificado com uma fonte primária',
+    footer: 'Site estático compilado a partir de <code>data/chronology.json</code> por <code>build.js</code>. Dados abertos — correções bem-vindas via pull request.\n      Parte da família de projetos Cronologia.',
+    refsIntro: (n, a) => `${n} fontes${a ? ` · ${a} com cópia no Internet Archive` : ''}. As fontes abrangem o\n      espectro de perspectivas de forma deliberada; afirmações controversas são atribuídas aos seus autores.`,
+    orgFounded: 'Fundada em',
+    refTypes: {
+      news: 'imprensa', academic: 'acadêmico', archive: 'arquivo', official: 'oficial',
+      encyclopedia: 'enciclopédia', web: 'web', corpus: 'corpus', database: 'base de dados',
+      video: 'vídeo', index: 'índice', book: 'livro', report: 'relatório', legal: 'jurídico',
+      testimony: 'testemunho', analysis: 'análise',
+    },
+    ladderHeading: 'Até onde o caso chegou',
+    ladderIntro: 'Cada passo é um juízo distinto de uma autoridade distinta. A página regista o que cada uma fez e quando, citando o ato; não os soma num veredicto.',
+    ladderCaption: 'Um degrau por autoridade. «Nenhuma decisão localizada» diz algo sobre as fontes, não sobre o caso.',
+    ladderStatus: {
+      favourable: 'Investigado — decisão favorável',
+      negative: 'Investigado — decisão contrária',
+      inconclusive: 'Investigado — sem veredicto',
+      'reported-undocumented': 'Relata-se uma decisão; documento não localizado',
+      'not-found': 'Não há registo de que este passo tenha ocorrido',
+      'not-reached': 'O caso não chegou a este passo',
+      pending: 'Em curso',
+      adjacent: 'Ato da Igreja sobre matéria relacionada — não uma decisão sobre a aparição',
+    },
+    ladderDetails: 'Passo a passo, com os documentos',
+    disclaimers: {
+      machine: 'Tradução automática do inglês; a página em inglês é a versão de referência.',
+      authored: 'Tradução do inglês escrita pelo assistente, sem revisão humana; a página em inglês é a versão de referência.',
+      reviewed: 'Tradução do inglês revisada por uma pessoa; a página em inglês é a versão de referência.',
+    },
   },
 };
 
@@ -223,9 +444,50 @@ function loadDict(lang) {
   }
 }
 
+/** Load a locale cache's `_meta` (provenance), or {} when there is no cache. */
+function loadDictMeta(lang) {
+  if (lang === 'en') return {};
+  try {
+    const parsed = JSON.parse(fs.readFileSync(path.join(I18N_DIR, `${lang}.json`), 'utf8'));
+    return (parsed && parsed._meta) || {};
+  } catch {
+    return {};
+  }
+}
+
+/**
+ * Which translation disclaimer a locale gets, decided by the cache's OWN `_meta`.
+ *
+ * Three honest states, and the page states whichever is true:
+ *   reviewed  — `_meta.humanReviewed === true`
+ *   machine   — `_meta.generatedBy` names scripts/translate.js (the only thing
+ *               that actually calls a translation backend)
+ *   authored  — anything else: written by hand or by an assistant, unreviewed
+ *
+ * `authored` is the default on purpose. An unset or unrecognized `generatedBy`
+ * means nobody recorded a machine doing it, and claiming machine translation
+ * over hand-written prose is the wrong way to be wrong: it invites a reader to
+ * discount prose a person stands behind. The reverse error (calling machine
+ * output "authored") is prevented by translate.js, which stamps `generatedBy`
+ * whenever it fills a cache from a backend.
+ */
+function disclaimerFor(meta, ui) {
+  const set = ui && ui.disclaimers;
+  if (!set) return null;
+  if (!meta) return set.authored;
+  if (meta.humanReviewed === true) return set.reviewed;
+  // ANCHORED, not a substring search. The caches in this family record their
+  // provenance in prose, and that prose MENTIONS the script in order to deny
+  // it: "hand-authored by the assistant — NOT produced by scripts/translate.js".
+  // A loose /translate\.js/ matches that sentence and reports the exact
+  // opposite of what it says. Only the string translate.js itself writes counts.
+  if (typeof meta.generatedBy === 'string' && /^scripts\/translate\.js\b/.test(meta.generatedBy.trim())) return set.machine;
+  return set.authored;
+}
+
 /** Normalize a public base URL to exactly one trailing slash. */
 function siteBase(meta) {
-  const raw = (meta && meta.siteUrl) || 'https://cronologia.github.io/fsspx/';
+  const raw = (meta && meta.siteUrl) || 'https://cronologia.github.io/PROJECT/';
   return raw.replace(/\/+$/, '') + '/';
 }
 
@@ -235,50 +497,145 @@ function translator(dict) {
 }
 
 /**
+ * Deep-copy `data` with every translatable prose field replaced by its
+ * translation (fallback: English), and meta.language set to `lang`. With an
+ * empty dictionary (English) the values are unchanged, so the render stays
+ * byte-identical to a pre-i18n build.
+ *
+ * Most of the dataset is prose and `TRANSLATABLE_KEYS` decides it. A few
+ * SUBTREES are not: inside them the same key means something else, and the
+ * general rule is wrong there. Those get their own, narrower allowlist —
+ * declared below as a map from the subtree's key to the keys that are prose
+ * inside it, so a third exception is one more entry rather than one more
+ * boolean threaded through the walk.
+ *
+ * `references` is the shipped one. It is bibliographic and passes through
+ * verbatim — EXCEPT for `publisherNote`. The wholesale skip this replaced was
+ * right about titles, publishers, URLs and dates and wrong about one field: a
+ * reference NAMES its source in `publisher` and CHARACTERISES it in
+ * `publisherNote` ("left-wing outlet — critical perspective", "live URL
+ * bot-blocked, verified via Wayback availability"). The second is the project
+ * writing in its own voice — it is the half that makes "sources span the
+ * spectrum" legible — and skipping the whole array left it in English on every
+ * localized page.
+ *
+ * An allowlist rather than a boolean: a new key inside a special subtree stays
+ * untranslated by default, which is the safe direction for citation data.
+ */
+const SUBTREE_TRANSLATABLE = {
+  references: new Set(['publisherNote']),
+  // The approval ladder. `status` is deliberately ABSENT: it is a closed enum
+  // ('favourable', 'not-reached'), the renderer looks it up in STATUS_GLYPH and
+  // in the UI table, and the general walk WOULD have translated it -- `status`
+  // is in TRANSLATABLE_KEYS as prose for other datasets -- turning the value
+  // into "Investigado" and failing the localized build with "unknown status".
+  // Everything a reader actually reads is here instead; the status renders in
+  // the page's language from the UI table, keyed on the untranslated enum.
+  approvalLadder: new Set(['label', 'when', 'who', 'outcome', 'noDocument', 'heading', 'note', 'caption', 'navLabel']),
+  // The object catalogue (renderCatalogue). `site` is deliberately ABSENT: it
+  // is the gazetteer key the pin resolves on, like an event's canonical place,
+  // and a translated site resolves to nothing. So are the image's `file`,
+  // `credit`, `license`, `licenseUrl` and `sourceUrl`: attribution is
+  // bibliography and must read exactly as the licence requires. What a reader
+  // reads as prose is here.
+  catalogue: new Set(['heading', 'navLabel', 'intro', 'note', 'name', 'where', 'object', 'visibility', 'attested', 'dating', 'church', 'alt', 'caption']),
+  // >>> ADOPT: subtree-allowlists  (subtrees of this repo's dataset that are not prose)
+  // A repo whose dataset carries subtrees where the general rule misfires adds
+  // them here. `olavo`'s bibliography is the worked example:
+  //
+  //   works: new Set(['note', 'sourceNote', 'label', 'blurb', 'role', 'when']),
+  //
+  // `title` is deliberately ABSENT from that one — a book's title is its name,
+  // and the general walk would have sent thirty Portuguese titles through the
+  // dictionaries. `when` is deliberately PRESENT: it reads as a run of years
+  // but is written as a sentence, so it would otherwise sit in English on every
+  // localized page. Nothing here is needed by a dataset without the key: with
+  // no `works` in the data the entry never matches and the build is unchanged.
+  // <<< ADOPT
+};
+
+/**
+ * Which key set applies to a value, given the special subtree it sits inside.
+ *
+ * `subtree` is the nearest enclosing entry of SUBTREE_TRANSLATABLE, and it is
+ * sticky: every descendant of `references` is bibliographic until a deeper
+ * entry says otherwise. `hasOwnProperty` rather than a plain lookup because a
+ * dataset key called "constructor" would otherwise resolve to Object's.
+ *
+ * Returns `[subtreeHere, keySet]` so both walks resolve it identically.
+ */
+function keysFor(key, subtree) {
+  const here = Object.prototype.hasOwnProperty.call(SUBTREE_TRANSLATABLE, key) ? key : subtree;
+  return [here, SUBTREE_TRANSLATABLE[here] || TRANSLATABLE_KEYS];
+}
+
+/**
  * Every string this build would send through the dictionaries, in walk order,
- * deduplicated. Mirrors localizeData's walk below -- and is imported by
- * scripts/translate.js instead of being reimplemented there, because the
- * reimplementation drifted (cronologia/core#81, #82). A test asserts the two
- * visit the same set.
+ * deduplicated.
+ *
+ * This exists so `scripts/translate.js` can stop mirroring the rules by hand.
+ * Hand-mirroring drifted in BOTH directions at once and each direction lied:
+ * translate.js skipped the whole `references` array, so it under-counted by
+ * every `publisherNote` the pages actually render; and it applied the general
+ * key set to `approvalLadder`, so it counted `status` — a closed enum — and
+ * would have instructed a backend to translate `not-found` into `no
+ * encontrado`, which fails the localized build outright. A coverage number is
+ * worth having only if it measures the set the renderer uses, so both now come
+ * from the same place, and a test pins them to the same answer.
  */
 function collectTranslatable(data) {
   const out = [];
   const seen = new Set();
-  const walk = (val, key) => {
-    if (key === 'references') return;
-    if (Array.isArray(val)) { val.forEach((v) => walk(v, key)); return; }
-    if (val && typeof val === 'object') { for (const k of Object.keys(val)) walk(val[k], k); return; }
-    if (typeof val === 'string' && val.trim() && TRANSLATABLE_KEYS.has(key) && !seen.has(val)) {
+  const walk = (val, key, subtree) => {
+    const [here, keys] = keysFor(key, subtree);
+    if (Array.isArray(val)) { val.forEach((v) => walk(v, key, here)); return; }
+    if (val && typeof val === 'object') {
+      for (const k of Object.keys(val)) walk(val[k], k, here);
+      return;
+    }
+    if (typeof val === 'string' && val.trim() && keys.has(key) && !seen.has(val)) {
       seen.add(val);
       out.push(val);
     }
   };
-  walk(data, null);
+  walk(data, null, null);
   return out;
 }
 
-/**
- * Deep-copy `data` with every translatable prose field replaced by its
- * translation (fallback: English), and meta.language set to `lang`. The whole
- * `references` array is passed through verbatim (bibliographic data). With an
- * empty dictionary (English) the values are unchanged, so the render stays
- * byte-identical to a pre-i18n build.
- */
 function localizeData(data, dict, lang) {
   const t = translator(dict);
-  const walk = (val, key) => {
-    if (key === 'references') return val; // never translate bibliographic entries
-    if (Array.isArray(val)) return val.map((v) => walk(v, key));
+  const walk = (val, key, subtree) => {
+    const [here, keys] = keysFor(key, subtree);
+    if (Array.isArray(val)) return val.map((v) => walk(v, key, here));
     if (val && typeof val === 'object') {
       const out = {};
-      for (const k of Object.keys(val)) out[k] = walk(val[k], k);
+      for (const k of Object.keys(val)) out[k] = walk(val[k], k, here);
       return out;
     }
-    if (typeof val === 'string' && TRANSLATABLE_KEYS.has(key)) return t(val);
+    if (typeof val === 'string' && keys.has(key)) return t(val);
     return val;
   };
-  const copy = walk(data, null);
+  const copy = walk(data, null, null);
   copy.meta = Object.assign({}, copy.meta, { language: lang });
+  // `place` IS translated prose (the chronology's Place column reads in the
+  // page's language), but the gazetteer behind the places map is keyed on the
+  // CANONICAL English strings — a translated "Roma" resolves to nothing. So
+  // record the source string next to the translated one and let the map resolve
+  // on that. Without this a localized page silently loses markers AND its
+  // caption reports the events as missing from the gazetteer, which is false:
+  // the entries are there, only the lookup key was translated out from under
+  // them. Compound strings are the worst case — "Topeka / Los Angeles, USA"
+  // keeps its first pin and drops the second, exactly the origin-misplacement
+  // failure the list-valued resolution exists to prevent (core#24).
+  // Set ONLY when translation actually moved the string, so English (and any
+  // untranslated place) stays byte-identical to the source — the identity-
+  // localization invariant the helper tests pin. The map falls back to `place`.
+  if (Array.isArray(copy.events) && Array.isArray(data.events)) {
+    copy.events.forEach((ev, i) => {
+      const src = data.events[i];
+      if (src && src.place && ev.place !== src.place) ev.placeKey = src.place;
+    });
+  }
   return copy;
 }
 
@@ -289,14 +646,7 @@ function alternates(base, route, lang) {
   return `  <link rel="canonical" href="${esc(url(lang))}">\n${links}\n  <link rel="alternate" hreflang="x-default" href="${esc(base)}">`;
 }
 
-/**
- * Localized <head> SEO block (canonical/hreflang/OG/Twitter/JSON-LD).
- *
- * `opts` is optional and additive, for detail pages that are not the site root:
- *   opts.siteName — og:site_name (defaults to meta.title, the index behaviour)
- *   opts.jsonLd   — replaces the JSON-LD object wholesale
- * Called without `opts` the output is byte-identical to the template's.
- */
+/** Localized <head> SEO block (canonical/hreflang/OG/Twitter/JSON-LD). */
 function seoHead(meta, base, route, lang, opts) {
   const title = meta.title;
   const description = meta.description;
@@ -315,10 +665,11 @@ function seoHead(meta, base, route, lang, opts) {
   <meta name="twitter:title" content="${esc(title)}">
   <meta name="twitter:description" content="${esc(description)}">
   <script type="application/ld+json">
-${JSON.stringify(jsonLd, null, 2).split('\n').map((l) => '  ' + l).join('\n')}
+${JSON.stringify(jsonLd, null, 2).replace(/</g, '\\u003c').split('\n').map((l) => '  ' + l).join('\n')}
   </script>`;
 }
 
+/** Path-preserving language switcher (swap only the locale segment). */
 /**
  * How many directory levels a route sits below its locale root:
  * '' -> 0, 'figures/x.html' -> 1. `upTo` is the matching '../' prefix that
@@ -333,7 +684,6 @@ function upTo(route) {
   return '../'.repeat(routeDepth(route) + 1);
 }
 
-/** Path-preserving language switcher (swap only the locale segment). */
 function langSwitcher(route, lang, ui) {
   const up = upTo(route);
   const links = LOCALES.map((l) => (l === lang
@@ -488,6 +838,24 @@ function loadArchives() {
   }
 }
 
+/** Vendored gazetteer (data/places.json, refreshed by scripts/sync-places.js). */
+function loadPlaces() {
+  try {
+    return JSON.parse(fs.readFileSync(PLACES_FILE, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+/** Committed world basemap (src/world-land.json — see its _meta for provenance). */
+function loadWorld() {
+  try {
+    return JSON.parse(fs.readFileSync(WORLD_FILE, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Render superscript citation markers ("[1] [2]") for a `sources` array of
  * reference ids, linking to the anchored References list. Raw URLs are allowed
@@ -527,8 +895,31 @@ function renderVizChips(vizChips) {
 }
 
 /** Group events by decade for the chronology's section headers. */
-function decadeOf(year) {
-  return `${Math.floor(year / 10) * 10}s`;
+/**
+ * Display label for an event year. Datasets reaching back before the common
+ * era store BCE years as negative numbers (-4 is 4 BCE) and never use year 0,
+ * so the chronological sort stays numeric. Years >= 1 render exactly as
+ * before, keeping every existing site byte-identical.
+ */
+function yearLabel(year, ui) {
+  if (!(year <= 0)) return String(year);
+  return `${-year} ${(ui || UI.en).bce}`;
+}
+
+/** Display label for a decade bucket (the floor of year/10, times 10). */
+function decadeLabel(decade, ui) {
+  if (decade >= 0) return `${decade}s`;
+  // A negative bucket holds BCE years: bucket -10 is the years -10..-1.
+  return `${-decade}–${-(decade + 9)} ${(ui || UI.en).bce}`;
+}
+
+/** A layout's year span, localized (identical to layout.span for CE years). */
+function spanLabel(layout, ui) {
+  return `${yearLabel(layout.spanFrom, ui)}–${yearLabel(layout.spanTo, ui)}`;
+}
+
+function decadeOf(year, ui) {
+  return decadeLabel(Math.floor(year / 10) * 10, ui);
 }
 
 /* ---------------------------------------------------------------------------
@@ -771,6 +1162,125 @@ ${captionItems}
 }
 
 /* ---------------------------------------------------------------------------
+ * Contested-numbers chart — NEW (follows the same template copy-pattern as the
+ * branch-timeline: a pure layout function, a data-driven optional top-level
+ * key, a cited <figcaption>, a .viz-scroll container, and print/mobile rules).
+ *
+ * The point of this figure is HONESTY about incomparable numbers. Each series
+ * is drawn on its OWN axis with its OWN unit and its OWN source label — the
+ * series are never merged onto a single scale, because e.g. a movement's
+ * self-reported participant counts and a survey's population percentages
+ * measure different things by different methods. The <figcaption> carries the
+ * per-series citations, so the bars never assert an uncited number on their
+ * own. An explicit `unitNote` banner states, in the page's own words, that the
+ * series are NOT directly comparable — contested numbers are never silently
+ * unified (sourcing rules).
+ *
+ * Driven by the optional top-level `numbersChart` key:
+ *
+ *   numbersChart: {
+ *     heading?:  string      // default "Numbers"
+ *     navLabel?: string      // default "Numbers" (nav bar link text)
+ *     note?:     string      // section intro
+ *     unitNote:  string      // the "not directly comparable" banner (required)
+ *     series: [{
+ *       label:       string  // what this series measures
+ *       sourceLabel: string  // WHO reported it (movement vs external survey)
+ *       unit:        string  // axis unit ("million participants", "% share")
+ *       axisMax?:    number  // top of THIS series' own axis (default: max point)
+ *       sources:     [refId]
+ *       points: [{ year?: number|string, value: number, display: string }]
+ *     }]
+ *   }
+ *
+ * Absent key = '' = byte-identical page.
+ * ------------------------------------------------------------------------- */
+
+/**
+ * Pure geometry for the numbers chart: for every series, clamp each point to
+ * that series' own axis and compute a bar percentage. Returns null when the
+ * data is absent or declares no series (renderNumbersChart then renders '').
+ */
+function layoutNumbersChart(nc) {
+  if (!nc || !Array.isArray(nc.series) || nc.series.length === 0) return null;
+  const series = nc.series
+    .filter((s) => s && Array.isArray(s.points) && s.points.length > 0)
+    .map((s, i) => {
+      const axisMax = Number.isFinite(s.axisMax) && s.axisMax > 0
+        ? s.axisMax
+        : Math.max(...s.points.map((p) => (Number.isFinite(p.value) ? p.value : 0)), 1);
+      const points = s.points.map((p) => {
+        const value = Number.isFinite(p.value) ? p.value : 0;
+        const pct = Math.max(0, Math.min(100, (value / axisMax) * 100));
+        return { year: p.year, value, display: p.display, pct: Math.round(pct * 10) / 10 };
+      });
+      return {
+        label: s.label, sourceLabel: s.sourceLabel, unit: s.unit,
+        sources: s.sources, axisMax, colorIndex: i % 6,
+        ticks: [0, axisMax / 2, axisMax], points,
+      };
+    });
+  if (series.length === 0) return null;
+  return { series };
+}
+
+/** Render the contested-numbers chart (per-series axes + cited caption), or ''. */
+function renderNumbersChart(nc, refNumById, ui) {
+  const layout = layoutNumbersChart(nc);
+  const u = ui || UI.en;
+  if (!layout) return '';
+
+  const fmtTick = (t) => (Number.isInteger(t) ? String(t) : String(Math.round(t * 10) / 10));
+
+  const panels = layout.series
+    .map((s) => {
+      const rows = s.points
+        .map((p) => `            <div class="nc-row">
+              <span class="nc-year">${esc(p.year !== undefined ? p.year : '')}</span>
+              <span class="nc-track"><span class="nc-bar nc-c${s.colorIndex}" style="width:${p.pct}%"></span></span>
+              <span class="nc-value">${esc(p.display)}</span>
+            </div>`)
+        .join('\n');
+      const ticks = s.ticks
+        .map((t) => `<span class="nc-tick">${esc(fmtTick(t))}</span>`)
+        .join('');
+      return `          <div class="nc-series">
+            <div class="nc-series-head">
+              <span class="nc-series-label">${esc(s.label)}</span>
+              <span class="nc-source-badge">${esc(s.sourceLabel)}</span>
+            </div>
+            <div class="nc-axis-note">${u.ncAxisNote(esc(fmtTick(s.axisMax)), esc(s.unit))}</div>
+${rows}
+            <div class="nc-axis"><span class="nc-year"></span><span class="nc-ticks">${ticks}</span><span class="nc-value"></span></div>
+          </div>`;
+    })
+    .join('\n');
+
+  const captionItems = layout.series
+    .map((s) => `            <li><strong>${esc(s.label)}</strong>${u.ncCaptionMeta(esc(s.sourceLabel), esc(s.unit))}${renderCites(s.sources, refNumById)}</li>`)
+    .join('\n');
+
+  const heading = nc.heading || 'Numbers';
+  return `    <section id="numbers-chart">
+      <h2>${esc(heading)}</h2>
+      ${nc.note ? `<p class="section-intro">${esc(nc.note)}</p>` : ''}
+      ${nc.unitNote ? `<p class="notice notice-attribution">${esc(nc.unitNote)}</p>` : ''}
+      <figure class="numbers-chart">
+        <div class="viz-scroll">
+${panels}
+        </div>
+        <figcaption>
+          <ol class="branch-notes">
+${captionItems}
+          </ol>
+        </figcaption>
+      </figure>
+    </section>
+
+`;
+}
+
+/* ---------------------------------------------------------------------------
  * Chronology spine — a density chart placed at the TOP of the page.
  *
  * The chronology table answers "what happened, and when". It cannot answer
@@ -895,11 +1405,228 @@ function layoutChronologySpine(spine, events) {
     totalEvents: withYear.length,
     unverified: withYear.filter((e) => e.dateVerified === false).length,
     span: `${Math.min(...years)}–${Math.max(...years)}`,
+    spanFrom: Math.min(...years),
+    spanTo: Math.max(...years),
     breaks: cells.filter((c) => c.type === 'break').length,
   };
 }
 
 /** Render the chronology spine, or '' when the data declares none. */
+/* ---------------------------------------------------------------------------
+ * Approval ladder — how far a reported apparition got through Church judgment.
+ *
+ * Driven by the optional top-level `approvalLadder` key of the dataset. It
+ * renders at the TOP of the page, above `about`, because for a reported
+ * apparition the Church's verdict is the first thing a reader wants and the
+ * thing devotional sources most often blur.
+ *
+ * The canonical shape is the escalation the Church actually uses — local
+ * inquiry (parish priest or a diocesan-appointed investigator), then the
+ * bishop's own commission and judgment, then referral to Rome and its outcome —
+ * but the rungs are DECLARED IN DATA, not hardcoded, because real cases do not
+ * all have three. Some never leave the diocese; some reach Rome twice, about
+ * different objects.
+ *
+ * Four properties are deliberate and must survive any redesign.
+ *
+ * 1. THE LADDER NEVER RENDERS AN OVERALL VERDICT. There is no "approved" badge
+ *    for the case as a whole, and adding one would be a regression. La Salette
+ *    is the standing proof: the apparition was declared worthy of belief in
+ *    1851 and Mélanie's expanded secrets were condemned in 1915 and 1923. Those
+ *    are different judgments about different objects, and any single badge
+ *    would have to misreport at least one of them. Each rung speaks only for
+ *    itself, and a case with two Roman acts declares two rungs.
+ *
+ * 2. "NO RULING FOUND" IS NOT "RULED AGAINST", AND NEITHER IS "NEVER WENT
+ *    THERE". The status vocabulary keeps all three apart, because the
+ *    difference between them is the finding in at least two of these datasets:
+ *    Cimbres has no located 1930s-40s diocesan ruling at all, while devotional
+ *    literature asserts a negative one it never produces. A vocabulary that
+ *    made those the same colour would erase the story.
+ *
+ * 3. EVERY RUNG IS CITED, OR SAYS IT CANNOT BE. A rung carrying a status but
+ *    neither `sources` nor an explicit `noDocument` note fails the build. An
+ *    uncited status here is a bare assertion about a Church act, which is the
+ *    exact claim this family refuses to make.
+ *
+ * 4. NO COLOUR-ONLY ENCODING. Every rung carries a text status label and a
+ *    glyph, the outcome prose is always present, and the whole thing degrades
+ *    to a readable ordered list with no CSS. Colour is confirmation, never the
+ *    channel.
+ *
+ * Status vocabulary (`STATUS_GLYPH` below is the closed set):
+ *   favourable            investigated, concluded in favour
+ *   negative              investigated, concluded against
+ *   inconclusive          investigated, no verdict issued or explicitly left open
+ *   reported-undocumented a ruling is REPORTED to exist; no document located
+ *   not-found             searched; nothing indicates this stage happened
+ *   not-reached           positively established that the case did not go here
+ *   pending               under way now
+ *
+ * `not-found` and `not-reached` are both "nothing here" and are deliberately
+ * distinct: the first is a statement about our evidence, the second about the
+ * case. Collapsing them would let an unsearched gap read as a settled fact.
+ */
+const STATUS_GLYPH = {
+  favourable: '✓',
+  negative: '✗',
+  inconclusive: '—',
+  'reported-undocumented': '?',
+  'not-found': '·',
+  'not-reached': '·',
+  pending: '…',
+  // A real, dated, citable Church act about something ELSE — a cult, a feast, a
+  // person's sanctity, a publication. Its own glyph and its own colour, and
+  // deliberately NOT green: an imprimatur, a coronation or a canonization
+  // rendered as "concluded in favour" tells a skimming reader the apparition was
+  // approved, which is the precise opposite of what those acts decide.
+  adjacent: '◆',
+};
+
+/** The rungs, validated. Throws on anything that would render a bare claim. */
+function ladderRungs(ladder) {
+  if (!ladder || !Array.isArray(ladder.stages) || ladder.stages.length === 0) return null;
+  return ladder.stages.map((st, i) => {
+    const where = `approvalLadder.stages[${i}]`;
+    if (!st || !st.label) throw new Error(`${where}: every rung needs a label`);
+    if (!Object.prototype.hasOwnProperty.call(STATUS_GLYPH, st.status)) {
+      throw new Error(`${where} ("${st.label}"): unknown status ${JSON.stringify(st.status)} — ` +
+        `use one of ${Object.keys(STATUS_GLYPH).join(', ')}`);
+    }
+    const cited = Array.isArray(st.sources) && st.sources.length > 0;
+    // A rung that asserts an outcome must show its work. The two "nothing here"
+    // statuses are exempt from `sources` but NOT from explanation: they still
+    // need `noDocument` prose saying what was searched, or the page would
+    // present an unexamined gap as a finding.
+    const nothingHere = st.status === 'not-found' || st.status === 'not-reached';
+    if (!cited && !st.noDocument) {
+      throw new Error(`${where} ("${st.label}"): status "${st.status}" with no sources and no ` +
+        `noDocument note — cite the act, or say in noDocument what was searched and not found`);
+    }
+    if (nothingHere && !st.noDocument) {
+      throw new Error(`${where} ("${st.label}"): "${st.status}" must carry a noDocument note ` +
+        `stating what was searched`);
+    }
+    return st;
+  });
+}
+
+function renderApprovalLadder(ladder, refNumById, ui) {
+  const rungs = ladderRungs(ladder);
+  if (!rungs) return '';
+  const t = ui || UI.en;
+  const uid = (i) => `al-rung-${i + 1}`;
+
+  // THE CASCADE. Each node carries only what a reader scanning the chart needs
+  // — which authority, when, and the status in words — and links to its panel.
+  // The step offset is a CSS custom property rather than a class per depth, so
+  // a case with nine rungs needs no new CSS.
+  const nodes = rungs.map((st, i) => {
+    const statusLabel = (t.ladderStatus && t.ladderStatus[st.status]) || st.status;
+    const when = st.when ? `<span class="al-when">${esc(st.when)}</span>` : '';
+    return `          <li class="al-node al-${esc(st.status)}" style="--al-step:${i}">
+            <a href="#${uid(i)}" class="al-node-link">
+              <span class="al-num" aria-hidden="true">${i + 1}</span>
+              <span class="al-node-body">
+                <span class="al-node-label">${esc(st.label)}</span>${when}
+                <span class="al-node-status"><span class="al-glyph" aria-hidden="true">${STATUS_GLYPH[st.status]}</span>${esc(statusLabel)}</span>
+              </span>
+            </a>
+          </li>`;
+  }).join('\n');
+
+  // THE PANELS. Full prose and citations. In static HTML these are plain
+  // sections stacked inside the disclosure — no `role="tab"` anywhere, because
+  // without the script this is not a tab widget and saying so would be a lie
+  // told to a screen reader. The script adds the roles when it makes it true.
+  const panels = rungs.map((st, i) => {
+    const statusLabel = (t.ladderStatus && t.ladderStatus[st.status]) || st.status;
+    const who = st.who ? `<p class="al-who">${esc(st.who)}</p>` : '';
+    const outcome = st.outcome ? `<p class="al-outcome">${esc(st.outcome)}</p>` : '';
+    const note = st.noDocument ? `<p class="al-nodoc">${esc(st.noDocument)}</p>` : '';
+    const cites = renderCites(st.sources, refNumById);
+    return `          <section id="${uid(i)}" class="al-panel al-${esc(st.status)}">
+            <h3 class="al-panel-title">${esc(st.label)}${st.when ? ` <span class="al-when">${esc(st.when)}</span>` : ''}</h3>
+            <p class="al-status"><span class="al-glyph" aria-hidden="true">${STATUS_GLYPH[st.status]}</span>${esc(statusLabel)}</p>
+${who}${outcome}${note}            <p class="al-cites">${cites}</p>
+          </section>`;
+  }).join('\n');
+
+  const tabs = rungs.map((st, i) =>
+    `            <button type="button" class="al-tab" data-al-panel="${uid(i)}">` +
+    `<span class="al-glyph" aria-hidden="true">${STATUS_GLYPH[st.status]}</span>${esc(st.label)}</button>`).join('\n');
+
+  const heading = ladder.heading || t.ladderHeading;
+  const intro = ladder.note || t.ladderIntro;
+  return `    <section id="approval-ladder" class="viz">
+      <h2>${esc(heading)}</h2>
+      <p class="section-intro">${esc(intro)}</p>
+      <figure class="approval-ladder">
+        <div class="viz-scroll">
+        <ol class="al-cascade">
+${nodes}
+        </ol>
+        </div>
+        <figcaption>${esc(ladder.caption || t.ladderCaption)}</figcaption>
+      </figure>
+      <details class="al-details">
+        <summary>${esc(t.ladderDetails)}</summary>
+        <div class="al-tablist" hidden aria-label="${esc(t.ladderHeading)}">
+${tabs}
+        </div>
+        <div class="al-panels">
+${panels}
+        </div>
+      </details>
+      <script>(function () {
+        var s = document.currentScript.closest('section');
+        var det = s.querySelector('.al-details');
+        var list = s.querySelector('.al-tablist');
+        var tabs = [].slice.call(s.querySelectorAll('.al-tab'));
+        var panels = [].slice.call(s.querySelectorAll('.al-panel'));
+        if (!det || !tabs.length || tabs.length !== panels.length) return;
+        list.hidden = false;
+        list.setAttribute('role', 'tablist');
+        function select(id, focus) {
+          tabs.forEach(function (b, i) {
+            var on = b.getAttribute('data-al-panel') === id;
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+            b.setAttribute('tabindex', on ? '0' : '-1');
+            panels[i].hidden = !on;
+            if (on && focus) b.focus();
+          });
+        }
+        tabs.forEach(function (b, i) {
+          b.setAttribute('role', 'tab');
+          b.id = b.getAttribute('data-al-panel') + '-tab';
+          panels[i].setAttribute('role', 'tabpanel');
+          panels[i].setAttribute('aria-labelledby', b.id);
+          panels[i].tabIndex = 0;
+          b.addEventListener('click', function () { select(b.getAttribute('data-al-panel'), false); });
+          b.addEventListener('keydown', function (e) {
+            var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+            if (!d) return;
+            e.preventDefault();
+            var n = (i + d + tabs.length) % tabs.length;
+            select(tabs[n].getAttribute('data-al-panel'), true);
+          });
+        });
+        // A cascade node opens the disclosure and selects its panel, instead of
+        // jumping the page to a fragment inside a collapsed <details>.
+        [].slice.call(s.querySelectorAll('.al-node-link')).forEach(function (a) {
+          a.addEventListener('click', function (e) {
+            e.preventDefault();
+            det.open = true;
+            select(a.getAttribute('href').slice(1), true);
+          });
+        });
+        select(tabs[0].getAttribute('data-al-panel'), false);
+      })();</script>
+    </section>
+
+`;
+}
+
 function renderChronologySpine(spine, events, ui) {
   const layout = layoutChronologySpine(spine, events);
   if (!layout) return '';
@@ -908,10 +1635,10 @@ function renderChronologySpine(spine, events, ui) {
   const cells = layout.cells
     .map((c) => {
       if (c.type === 'break') {
-        const label = t.spineBreakLabel(c.count, c.from, c.to);
+        const label = t.spineBreakLabel(c.count, yearLabel(c.from, t), yearLabel(c.to, t));
         return `          <li class="cs-break"><span class="cs-break-mark" aria-hidden="true">⸺</span><span class="cs-break-label">${esc(label)}</span></li>`;
       }
-      const dLabel = `${c.decade}s`;
+      const dLabel = decadeLabel(c.decade, t);
       const label = t.spineColLabel(dLabel, c.total, c.unverified);
       if (c.total === 0) {
         return `          <li class="cs-col cs-empty"><span class="cs-count"></span><span class="cs-track"></span><span class="cs-label">${esc(dLabel)}</span></li>`;
@@ -934,12 +1661,56 @@ function renderChronologySpine(spine, events, ui) {
 ${cells}
         </ol>
         </div>
-        <figcaption>${esc(t.spineCaption(layout.totalEvents, layout.span, layout.unverified))}</figcaption>
+        <figcaption>${esc(t.spineCaption(layout.totalEvents, spanLabel(layout, t), layout.unverified))}</figcaption>
       </figure>
     </section>
 
 `;
 }
+
+/* ---------------------------------------------------------------------------
+ * Places map — event places as sized markers on a world basemap.
+ *
+ * The chronology table names places; only a map shows the geography — for a
+ * diffusion story (Topeka → Pittsburgh → Ann Arbor → Brazil) the geography IS
+ * the argument. Extracted per core#3 item 2; the data half is core#24's
+ * committed gazetteer (data/places.json, vendored like glossary-terms.json).
+ *
+ * Five properties are deliberate and must survive any redesign:
+ *
+ * 1. A PLACE STRING RESOLVES TO A LIST of gazetteer ids, never a single one.
+ *    "Topeka / Los Angeles, USA" is ONE event in TWO places; dropping the
+ *    second pin would misplace the origin of rcc's entire subject (core#24).
+ * 2. NON-GEOGRAPHIC SCOPES ARE NOT MAPPED, and the omission is stated in the
+ *    caption. "Worldwide" is a scope, not a place; a pin for it would invent
+ *    a location the source does not claim.
+ * 3. COUNTRY-LEVEL LOCATIONS LOOK DIFFERENT (hollow marker). A centroid pin
+ *    drawn like a settlement pin implies a precision the data does not have.
+ * 4. UNVERIFIED DATES STAY VISIBLY UNVERIFIED (dashed marker + text). The
+ *    marker's "first recorded" year is an implicit dating claim, so it is
+ *    flagged exactly like the table's `?` when that earliest date carries
+ *    `dateVerified: false`.
+ * 5. NO COLOUR-ONLY OR POINTER-ONLY ENCODING. Every marker is a focusable
+ *    link with an accessible label, and the full text list of mapped places
+ *    renders under the figure — that list, not the picture, is the baseline
+ *    (and the print form beside the cropped map).
+ *
+ * The year control (a slider that hides places first recorded after the
+ * chosen year) is progressive enhancement: the no-JS and print state is the
+ * complete map, and the controls stay hidden until the inline script enables
+ * them.
+ *
+ * Driven by the optional top-level `placesMap` key:
+ *
+ *   placesMap: {
+ *     heading?:  string   // default: locale's mapHeading
+ *     navLabel?: string   // default: locale's mapNav
+ *     note?:     string   // replaces the default intro
+ *   }
+ *
+ * Requires the vendored gazetteer data/places.json (scripts/sync-places.js)
+ * and the basemap src/world-land.json. Absent key = '' = byte-identical page.
+ * ------------------------------------------------------------------------- */
 
 /* ---------------------------------------------------------------------------
  * Swimlanes — the thread-lane figure (core#23).
@@ -1017,6 +1788,8 @@ function layoutSwimlanes(threads, events) {
     columns,
     maxCell,
     span: `${Math.min(...years)}–${Math.max(...years)}`,
+    spanFrom: Math.min(...years),
+    spanTo: Math.max(...years),
     taggedEvents: tagged.length,
     // Events with a year but no lane: reported, never silently absent.
     untagged: withYear.length - tagged.length,
@@ -1034,8 +1807,8 @@ function renderSwimlanes(threads, events, refNumById, ui) {
 
   const headCells = layout.columns
     .map((col) => (col.type === 'break'
-      ? `<th scope="col" class="sw-break" title="${esc(t.spineBreakLabel(col.count, col.from, col.to))}"><span aria-hidden="true">⸺</span><span class="visually-hidden">${esc(t.spineBreakLabel(col.count, col.from, col.to))}</span></th>`
-      : `<th scope="col">${esc(`${col.decade}s`)}</th>`))
+      ? `<th scope="col" class="sw-break" title="${esc(t.spineBreakLabel(col.count, yearLabel(col.from, t), yearLabel(col.to, t)))}"><span aria-hidden="true">⸺</span><span class="visually-hidden">${esc(t.spineBreakLabel(col.count, yearLabel(col.from, t), yearLabel(col.to, t)))}</span></th>`
+      : `<th scope="col">${esc(decadeLabel(col.decade, t))}</th>`))
     .join('');
 
   const rows = layout.lanes
@@ -1066,7 +1839,7 @@ ${cells ? `            ${cells}\n` : ''}            <td class="sw-total">${lane.
 
   const heading = threads.heading || t.swHeading;
   const intro = threads.intro || t.swIntro;
-  const captionParts = [t.swCaption(layout.taggedEvents, layout.lanes.length, layout.span, layout.laneAssignments)]
+  const captionParts = [t.swCaption(layout.taggedEvents, layout.lanes.length, spanLabel(layout, t), layout.laneAssignments)]
     .concat(layout.untagged ? [t.swUntaggedNote(layout.untagged)] : []);
 
   return `    <section id="threads" class="viz">
@@ -1097,58 +1870,603 @@ ${bases}
 `;
 }
 
-function renderEventRow(ev, refNumById, ui) {
-  const flag = ev.dateVerified === false
-    ? ` <span class="flag" title="${esc((ui || UI.en).flagTitle)}">?</span>`
-    : '';
-  const text = ev.text ? ` <span class="muted">— ${renderText(ev.text)}</span>` : '';
-  return `        <tr>
-          <td class="year">${esc(ev.year)}</td>
-          <td>${esc(ev.date || '')}${flag}</td>
-          <td>${esc(ev.place || '')}</td>
-          <td><strong>${esc(ev.title)}</strong>${text}${renderCites(ev.sources, refNumById)}</td>
-        </tr>`;
+const PLACE_COMPOUND_SEP = ' / ';
+
+/** Build a lookup: casefolded place name/variant -> [gazetteer ids]. */
+function placeIndex(places) {
+  const index = new Map();
+  for (const e of (places && places.places) || []) {
+    for (const v of [e.name].concat(e.variants || [])) {
+      const key = String(v).toLowerCase();
+      const bucket = index.get(key) || [];
+      if (!bucket.includes(e.id)) bucket.push(e.id);
+      index.set(key, bucket);
+    }
+  }
+  return index;
 }
 
 /**
- * A figure card. When the figure has an `id` it also has a per-figure page
- * (ADR-0003), and the card links to it; cards for figures without an id render
- * exactly as they did before the feature.
+ * Resolve one event's place string to gazetteer ids. A compound string
+ * (" / " separated) is one event in several places and yields several ids.
+ * Commas are address structure, never a separator (same rule as
+ * core/tools/places.py — keep the two implementations in agreement).
  */
-function renderFigureCard(fig, refNumById, ui) {
-  const meta = [fig.dates, fig.country].filter(Boolean).map(esc).join(' · ');
-  const link = fig.id
-    ? `\n        <p class="party-link"><a href="${esc(figureRoute(fig.id))}">${esc((ui || UI.en).figureCardLink)} →</a></p>`
-    : '';
-  return `      <div class="party-card">
-        <h3>${esc(fig.name)}</h3>
-        ${meta ? `<p class="country">${meta}</p>` : ''}
-        <p class="figures">${renderText(fig.role)}${renderCites(fig.sources, refNumById)}</p>
-        ${fig.notes ? `<p class="party-notes">${renderText(fig.notes)}</p>` : ''}${link}
-      </div>`;
+function resolvePlaceString(place, index) {
+  const ids = [];
+  const missing = [];
+  for (const part of String(place).split(PLACE_COMPOUND_SEP).map((s) => s.trim()).filter(Boolean)) {
+    const hit = index.get(part.toLowerCase());
+    if (hit) { for (const id of hit) if (!ids.includes(id)) ids.push(id); }
+    else missing.push(part);
+  }
+  return { ids, missing };
 }
 
-function renderOrgCard(org, refNumById, ui) {
-  const foundedLabel = (ui || UI.en).founded;
-  const meta = [org.founded ? `${foundedLabel} ${org.founded}` : null, org.place].filter(Boolean).map(esc).join(' · ');
-  return `      <div class="related-card">
-        <h3>${esc(org.name)}</h3>
-        ${meta ? `<p class="related-meta">${meta}</p>` : ''}
-        <p>${renderText(org.relation)}${renderCites(org.sources, refNumById)}</p>
-        ${org.notes ? `<p class="related-meta">${renderText(org.notes)}</p>` : ''}
-        ${org.url ? `<p class="related-link"><a href="${esc(org.url)}" rel="noopener noreferrer" target="_blank">${esc(org.url)}</a></p>` : ''}
-      </div>`;
+/**
+ * Pure layout: aggregate events per mapped place, crop the viewBox to the
+ * used places, and account for every event the map does NOT show (so the
+ * caption can say so instead of silently dropping it).
+ * Returns null when there is nothing to draw (renderPlacesMap then '').
+ */
+function layoutPlacesMap(pm, events, places) {
+  if (!pm) return null;
+  const entries = new Map((((places && places.places) || [])).map((e) => [e.id, e]));
+  if (entries.size === 0) return null;
+  const index = placeIndex(places);
+
+  const perPlace = new Map(); // id -> { count, firstYear, firstUnverified }
+  const unresolvedStrings = new Set();
+  let nonGeoEvents = 0;
+  let unresolvedEvents = 0;
+  let mappedEvents = 0;
+
+  const sorted = [...(events || [])]
+    .filter((e) => Number.isFinite(e.year))
+    .sort((a, b) => a.year - b.year || String(a.date || '').localeCompare(String(b.date || '')));
+
+  for (const ev of sorted) {
+    if (!ev.place) continue;
+    // `placeKey` is the canonical English string kept by localizeData; `place`
+    // may have been translated, and the gazetteer is keyed on the canonical
+    // form. Resolve on the key, never on the display string.
+    const { ids, missing } = resolvePlaceString(ev.placeKey || ev.place, index);
+    for (const m of missing) unresolvedStrings.add(m);
+    if (missing.length > 0) unresolvedEvents += 1;
+    const geoIds = ids.filter((id) => {
+      const e = entries.get(id);
+      return e && Number.isFinite(e.lat) && Number.isFinite(e.lon);
+    });
+    if (geoIds.length === 0) {
+      // Resolved, but only to non-geographic scopes ("Worldwide"): counted,
+      // deliberately not mapped. (Fully unresolved events are counted above.)
+      if (missing.length === 0 && ids.length > 0) nonGeoEvents += 1;
+      continue;
+    }
+    mappedEvents += 1;
+    for (const id of geoIds) {
+      const cur = perPlace.get(id) || { count: 0, firstYear: Infinity, firstUnverified: false };
+      cur.count += 1;
+      if (ev.year < cur.firstYear) {
+        cur.firstYear = ev.year;
+        cur.firstUnverified = ev.dateVerified === false;
+      } else if (ev.year === cur.firstYear && ev.dateVerified === false) {
+        // Any event in the first year with an unverified date keeps the flag.
+        cur.firstUnverified = cur.firstUnverified || true;
+      }
+      perPlace.set(id, cur);
+    }
+  }
+  if (perPlace.size === 0) return null;
+
+  // Crop to the used places. Padding keeps coastline context; minimum spans
+  // stop a tight cluster from zooming past the basemap's 1:110m resolution.
+  const xs = []; const ys = [];
+  for (const id of perPlace.keys()) {
+    const e = entries.get(id);
+    xs.push(e.lon + 180);
+    ys.push(90 - e.lat);
+  }
+  const pad = 6;
+  let minX = Math.min(...xs) - pad; let maxX = Math.max(...xs) + pad;
+  let minY = Math.min(...ys) - pad; let maxY = Math.max(...ys) + pad;
+  const MIN_W = 60; const MIN_H = 30;
+  if (maxX - minX < MIN_W) { const c = (minX + maxX) / 2; minX = c - MIN_W / 2; maxX = c + MIN_W / 2; }
+  if (maxY - minY < MIN_H) { const c = (minY + maxY) / 2; minY = c - MIN_H / 2; maxY = c + MIN_H / 2; }
+  minX = Math.max(0, minX); maxX = Math.min(360, maxX);
+  minY = Math.max(0, minY); maxY = Math.min(180, maxY);
+  const r1 = (n) => Math.round(n * 10) / 10;
+  const vbW = r1(maxX - minX); const vbH = r1(maxY - minY);
+
+  // Marker radius in viewBox units, so it scales with the crop: area ~ count.
+  const rUnit = vbW / 150;
+  const pins = [...perPlace.entries()]
+    .map(([id, agg]) => {
+      const e = entries.get(id);
+      return {
+        id,
+        name: e.name,
+        note: e.note || '',
+        x: r1(e.lon + 180),
+        y: r1(90 - e.lat),
+        r: r1(rUnit * (1 + Math.sqrt(agg.count))),
+        count: agg.count,
+        firstYear: agg.firstYear,
+        firstUnverified: agg.firstUnverified,
+        approx: e.precision === 'country-centroid',
+      };
+    })
+    .sort((a, b) => a.firstYear - b.firstYear || a.name.localeCompare(b.name, 'en'));
+
+  const firstYears = [...new Set(pins.map((p) => p.firstYear))].sort((a, b) => a - b);
+  return {
+    pins,
+    viewBox: `${r1(minX)} ${r1(minY)} ${vbW} ${vbH}`,
+    mappedEvents,
+    nonGeoEvents,
+    unresolvedEvents,
+    unresolvedStrings: [...unresolvedStrings].sort(),
+    firstYears,
+    span: `${firstYears[0]}–${firstYears[firstYears.length - 1]}`,
+    spanFrom: firstYears[0],
+    spanTo: firstYears[firstYears.length - 1],
+    hasApprox: pins.some((p) => p.approx),
+    hasUnverified: pins.some((p) => p.firstUnverified),
+  };
 }
 
-function renderReference(r, n, archives) {
-  const snap = archives[r.url];
-  const archived = snap && snap.archiveUrl
-    ? ` · <a class="archive-link" href="${esc(snap.archiveUrl)}" rel="noopener noreferrer" target="_blank">🗄 archived${snap.timestamp ? ` ${esc(formatArchiveTs(snap.timestamp))}` : ''}</a>`
+/** Render the places map, or '' when the data declares none. */
+function renderPlacesMap(pm, events, places, world, ui) {
+  const layout = layoutPlacesMap(pm, events, places);
+  if (!layout) return '';
+  if (!world || typeof world.d !== 'string' || !world.d) {
+    // The data declares a map; building silently without the basemap would
+    // ship a broken section. Fail loudly instead.
+    throw new Error('placesMap is declared in the data but src/world-land.json is missing or empty');
+  }
+  const t = ui || UI.en;
+
+  const pinMarkup = layout.pins
+    .map((p) => {
+      const cls = `pm-pin${p.approx ? ' pm-approx' : ''}${p.firstUnverified ? ' pm-unverified' : ''}`;
+      const label = t.mapPinLabel(p.name, p.count, yearLabel(p.firstYear, t), p.firstUnverified);
+      return `            <a class="${cls}" href="#decade-${Math.floor(p.firstYear / 10) * 10}" data-year="${p.firstYear}" aria-label="${esc(label)}"><circle cx="${p.x}" cy="${p.y}" r="${p.r}"/><title>${esc(label)}</title></a>`;
+    })
+    .join('\n');
+
+  const listItems = layout.pins
+    .map((p) => {
+      const flag = p.firstUnverified ? ` <span class="flag" title="${esc(t.flagTitle)}">?</span>` : '';
+      const approx = p.approx ? ` <span class="pm-approx-badge">${esc(t.mapApproxBadge)}</span>` : '';
+      return `          <li>${esc(t.mapPinLabel(p.name, p.count, yearLabel(p.firstYear, t), false))}${flag}${approx}${p.note ? ` <span class="muted">— ${esc(p.note)}</span>` : ''}</li>`;
+    })
+    .join('\n');
+
+  const legendParts = [t.mapLegendSize]
+    .concat(layout.hasApprox ? [t.mapLegendApprox] : [])
+    .concat(layout.hasUnverified ? [t.mapLegendUnverified] : []);
+  const captionNotes = [t.mapCaption(layout.mappedEvents, layout.pins.length, spanLabel(layout, t))]
+    .concat(layout.nonGeoEvents ? [t.mapNonGeoNote(layout.nonGeoEvents)] : [])
+    .concat(layout.unresolvedEvents ? [t.mapUnresolvedNote(layout.unresolvedEvents)] : []);
+
+  // Year control: progressive enhancement only — rendered hidden, enabled by
+  // the inline script, and pointless with a single first-year.
+  const minYear = layout.firstYears[0];
+  const maxYear = layout.firstYears[layout.firstYears.length - 1];
+  const slider = layout.firstYears.length > 1
+    ? `        <div class="pm-controls" hidden>
+          <button type="button" class="pm-play" data-play="${esc(t.mapPlay)}" data-pause="${esc(t.mapPause)}">${esc(t.mapPlay)}</button>
+          <label><span class="visually-hidden">${esc(t.mapSliderLabel)}</span>
+          <input type="range" class="pm-slider" min="${minYear}" max="${maxYear}" value="${maxYear}" step="1"></label>
+          <output class="pm-year">${esc(yearLabel(maxYear, t))}</output>
+        </div>\n`
     : '';
-  return `        <li id="ref-${n}">
-          <a href="${esc(r.url)}" rel="noopener noreferrer" target="_blank">${esc(r.title)}</a>${archived}
-          <span class="ref-meta">${esc(r.publisher)} · ${esc(r.type)}</span>
+  // Only a map reaching back before the common era formats the slider's year:
+  // a negative value is that many years BCE (yearLabel). Maps that start in
+  // the common era keep the plain number, so their output is unchanged.
+  const yearExpr = minYear <= 0
+    ? `(y > 0 ? String(y) : (y < 0 ? -y : 1) + ' ' + ${JSON.stringify(t.bce)})`
+    : 'y';
+  const script = layout.firstYears.length > 1
+    ? `      <script>(function () {
+        var s = document.currentScript.closest('section');
+        var controls = s.querySelector('.pm-controls');
+        var slider = s.querySelector('.pm-slider');
+        var out = s.querySelector('.pm-year');
+        var play = s.querySelector('.pm-play');
+        var live = s.querySelector('.pm-live');
+        var pins = Array.prototype.slice.call(s.querySelectorAll('.pm-pin'));
+        var total = pins.length;
+        var liveTpl = ${JSON.stringify(t.mapShowing('{Y}', '{S}', '{T}'))};
+        var timer = null;
+        function apply(y) {
+          var shown = 0;
+          pins.forEach(function (p) {
+            var vis = Number(p.getAttribute('data-year')) <= y;
+            p.classList.toggle('pm-future', !vis);
+            if (vis) shown += 1;
+          });
+          out.textContent = ${yearExpr};
+          live.textContent = liveTpl.replace('{Y}', ${yearExpr}).replace('{S}', shown).replace('{T}', total);
+        }
+        function stop() { if (timer) { clearInterval(timer); timer = null; play.textContent = play.getAttribute('data-play'); } }
+        slider.addEventListener('input', function () { stop(); apply(Number(slider.value)); });
+        play.addEventListener('click', function () {
+          if (timer) { stop(); return; }
+          if (Number(slider.value) >= ${maxYear}) slider.value = ${minYear};
+          play.textContent = play.getAttribute('data-pause');
+          timer = setInterval(function () {
+            var y = Number(slider.value) + 1;
+            slider.value = y;
+            apply(y);
+            if (y >= ${maxYear}) stop();
+          }, 350);
+        });
+        controls.hidden = false;
+        apply(${maxYear});
+      })();</script>\n`
+    : '';
+
+  const heading = pm.heading || t.mapHeading;
+  const intro = pm.note || t.mapIntro;
+  return `    <section id="places-map" class="viz">
+      <h2>${esc(heading)}</h2>
+      <p class="section-intro">${esc(intro)}</p>
+      <figure class="places-map">
+${slider}        <div class="viz-scroll">
+          <svg viewBox="${layout.viewBox}" role="img" aria-label="${esc(heading)}" preserveAspectRatio="xMidYMid meet">
+            <path class="pm-land" d="${world.d}" fill-rule="evenodd"/>
+${pinMarkup}
+          </svg>
+        </div>
+        <p class="pm-legend">${legendParts.map(esc).join(' · ')} · ${esc(t.mapCredit)}</p>
+        <p class="pm-live visually-hidden" aria-live="polite"></p>
+        <figcaption>${captionNotes.map(esc).join(' ')}</figcaption>
+      </figure>
+      <details class="pm-list" open>
+        <summary>${esc(t.mapListHeading)}</summary>
+        <ol>
+${listItems}
+        </ol>
+      </details>
+${script}    </section>
+
+`;
+}
+
+/* ---------------------------------------------------------------------------
+ * Object catalogue (cronologia/cristo: the relics and where they are kept).
+ *
+ * Driven by the optional top-level `catalogue` key; absent, nothing renders
+ * and the build is byte-identical (ADR-0001):
+ *
+ *   catalogue: {
+ *     heading?, navLabel?, intro?,
+ *     items: [{
+ *       id, name,
+ *       site,                  // gazetteer name/variant of the BUILDING (not translated)
+ *       where,                 // what the reader reads: chapel, building, city
+ *       object?, visibility?, attested?, dating?, church?,   // prose, each optional
+ *       image?: { file, width, height, alt, caption?, credit, license, licenseUrl, sourceUrl },
+ *       sources: [refId, ...],
+ *     }],
+ *   }
+ *
+ * Images live in src/img/ and are copied to docs/img/. Only freely licensed
+ * images belong here, and the validator enforces the licence vocabulary and
+ * the attribution fields: a picture on a public site is a publication.
+ *
+ * The map places each object at its building. Objects kept in the same
+ * place — buildings within CATALOGUE_CLUSTER_DEG of each other (about 10 km:
+ * several relics are kept within a few kilometres in Rome) — share one
+ * marker; different cities never do, whatever the map's extent. Every card
+ * also links to the building's exact point on OpenStreetMap, which is the
+ * precise answer the marker can only approximate.
+ * ------------------------------------------------------------------------- */
+
+/** Buildings closer than this (degrees, ~10 km) share one marker: the same city. */
+const CATALOGUE_CLUSTER_DEG = 0.1;
+
+/** Licences a catalogue image may carry: reusable on a public site with attribution. */
+const CATALOGUE_LICENSES = /^(Public domain|CC0( 1\.0)?|CC BY(-SA)? [1-4]\.0( [A-Za-z-]+)?)$/;
+
+function layoutCatalogue(cat, places) {
+  if (!cat || !Array.isArray(cat.items) || cat.items.length === 0) return null;
+  const entries = new Map((((places && places.places) || [])).map((e) => [e.id, e]));
+  const index = placeIndex(places);
+  const items = cat.items.map((it, i) => {
+    const { ids } = resolvePlaceString(it.site || '', index);
+    const geo = ids.map((id) => entries.get(id)).find((e) => e && Number.isFinite(e.lat) && Number.isFinite(e.lon));
+    return { item: it, n: i + 1, geo: geo || null };
+  });
+  const mapped = items.filter((x) => x.geo);
+  if (mapped.length === 0) return { items, pins: [], viewBox: null, nonGeo: items.length };
+
+  const xs = mapped.map((x) => x.geo.lon + 180);
+  const ys = mapped.map((x) => 90 - x.geo.lat);
+  const pad = 4;
+  let minX = Math.min(...xs) - pad; let maxX = Math.max(...xs) + pad;
+  let minY = Math.min(...ys) - pad; let maxY = Math.max(...ys) + pad;
+  const MIN_W = 30; const MIN_H = 18;
+  if (maxX - minX < MIN_W) { const c = (minX + maxX) / 2; minX = c - MIN_W / 2; maxX = c + MIN_W / 2; }
+  if (maxY - minY < MIN_H) { const c = (minY + maxY) / 2; minY = c - MIN_H / 2; maxY = c + MIN_H / 2; }
+  minX = Math.max(0, minX); maxX = Math.min(360, maxX);
+  minY = Math.max(0, minY); maxY = Math.min(180, maxY);
+  const r1 = (v) => Math.round(v * 10) / 10;
+  const vbW = r1(maxX - minX); const vbH = r1(maxY - minY);
+
+  // Cluster greedily, in item order: the same place, not "close at this zoom".
+  const radius = vbW / 90;
+  const pins = [];
+  for (const x of mapped) {
+    const px = x.geo.lon + 180; const py = 90 - x.geo.lat;
+    const near = pins.find((p) => Math.hypot(p.cx - px, p.cy - py) < CATALOGUE_CLUSTER_DEG);
+    if (near) near.members.push(x);
+    else pins.push({ cx: px, cy: py, members: [x] });
+  }
+  for (const p of pins) {
+    p.x = r1(p.members.reduce((a, m) => a + m.geo.lon + 180, 0) / p.members.length);
+    p.y = r1(p.members.reduce((a, m) => a + 90 - m.geo.lat, 0) / p.members.length);
+    p.r = r1(radius * (p.members.length > 1 ? 1.35 : 1));
+    p.fontSize = r1(radius * 1.05);
+  }
+  return {
+    items, pins,
+    viewBox: `${r1(minX)} ${r1(minY)} ${vbW} ${vbH}`,
+    nonGeo: items.length - mapped.length,
+  };
+}
+
+/** A building's exact point on OpenStreetMap (the precise location a marker approximates). */
+function osmLink(geo) {
+  const lat = Math.round(geo.lat * 1e5) / 1e5; const lon = Math.round(geo.lon * 1e5) / 1e5;
+  return `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=18/${lat}/${lon}`;
+}
+
+function renderCatalogue(cat, places, world, refNumById, ui) {
+  const layout = layoutCatalogue(cat, places);
+  if (!layout) return '';
+  const t = ui || UI.en;
+  const heading = cat.heading || t.catHeading;
+
+  let mapHtml = '';
+  if (layout.pins.length > 0) {
+    if (!world || typeof world.d !== 'string' || !world.d) {
+      throw new Error('catalogue is declared in the data but src/world-land.json is missing or empty');
+    }
+    const pinMarkup = layout.pins.map((p) => {
+      const first = p.members[0];
+      // One building: name it once. Several: each object with its own building,
+      // so no object is ever labelled with a neighbour's church.
+      const oneSite = p.members.every((m) => m.geo.id === first.geo.id);
+      const label = oneSite
+        ? t.catPinLabel(first.geo.name, p.members.map((m) => `${m.n}. ${m.item.name}`).join('; '))
+        : p.members.map((m) => `${m.n}. ${m.item.name} (${m.geo.name})`).join('; ');
+      // A cluster shows how many objects it holds; the list below the map
+      // spells each one out, so nothing depends on reading tiny numbers.
+      const text = p.members.length > 1 ? `×${p.members.length}` : String(first.n);
+      const fs_ = p.members.length > 1 ? r1f(p.fontSize * 0.8) : p.fontSize;
+      return `            <a class="pm-pin cat-pin${p.members.length > 1 ? ' cat-cluster' : ''}" href="#item-${esc(first.item.id)}" aria-label="${esc(label)}"><circle cx="${p.x}" cy="${p.y}" r="${p.r}"/><text x="${p.x}" y="${p.y}" font-size="${fs_}">${esc(text)}</text><title>${esc(label)}</title></a>`;
+    }).join('\n');
+    const captions = [t.catMapCaption(layout.items.length - layout.nonGeo, layout.pins.length)]
+      .concat(layout.nonGeo ? [t.catNonGeoNote(layout.nonGeo)] : []);
+    // Every marker in words, with a link to each object's card: the map's
+    // text equivalent, and the answer where neighbouring markers overlap.
+    const listItems = layout.pins.map((p) => {
+      const links = p.members.map((m) => `<a href="#item-${esc(m.item.id)}">${m.n}. ${esc(m.item.name)}</a>`);
+      const sites = [...new Set(p.members.map((m) => m.geo.name))];
+      return `          <li>${esc(sites.join(' · '))}: ${links.join(', ')}</li>`;
+    }).join('\n');
+    mapHtml = `      <figure class="places-map cat-map">
+        <div class="viz-scroll">
+          <svg viewBox="${layout.viewBox}" role="img" aria-label="${esc(heading)}" preserveAspectRatio="xMidYMid meet">
+            <path class="pm-land" d="${world.d}" fill-rule="evenodd"/>
+${pinMarkup}
+          </svg>
+        </div>
+        <p class="pm-legend">${esc(t.mapCredit)}</p>
+        <figcaption>${captions.map(esc).join(' ')}</figcaption>
+      </figure>
+      <details class="pm-list cat-list" open>
+        <summary>${esc(t.catListHeading)}</summary>
+        <ol>
+${listItems}
+        </ol>
+      </details>
+`;
+  }
+
+  const row = (label, value) => (value ? `            <dt>${esc(label)}</dt><dd>${renderText(value)}</dd>\n` : '');
+  const cards = layout.items.map(({ item: it, n, geo }) => {
+    const img = it.image;
+    const figure = img && img.file
+      ? `          <figure class="cat-img">
+            <img src="../img/${esc(img.file)}" alt="${esc(img.alt || it.name)}"${img.width ? ` width="${Number(img.width)}"` : ''}${img.height ? ` height="${Number(img.height)}"` : ''} loading="lazy" decoding="async">
+            <figcaption>${img.caption ? `${esc(img.caption)} ` : ''}<span class="cat-credit">${esc(t.catImageLabel)}: <a href="${esc(img.sourceUrl)}" rel="noopener">${esc(img.credit)}</a> · ${img.licenseUrl ? `<a href="${esc(img.licenseUrl)}" rel="license noopener">${esc(img.license)}</a>` : esc(img.license)}</span></figcaption>
+          </figure>\n`
+      : `          <p class="cat-noimg">${esc(t.catNoImage)}</p>\n`;
+    const where = it.where ? `${renderText(it.where)}${geo ? ` · <a href="${esc(osmLink(geo))}" rel="noopener">${esc(t.catOsm)}</a>` : ''}` : '';
+    return `        <article class="cat-item" id="item-${esc(it.id)}">
+${figure}          <h3><span class="cat-num">${n}</span> ${esc(it.name)}</h3>
+          <dl>
+${where ? `            <dt>${esc(t.catWhere)}</dt><dd>${where}</dd>\n` : ''}${row(t.catObject, it.object)}${row(t.catVisibility, it.visibility)}${row(t.catAttested, it.attested)}${row(t.catDating, it.dating)}${row(t.catChurch, it.church)}          </dl>
+          <p class="cat-cites">${renderCites(it.sources, refNumById)}</p>
+        </article>`;
+  }).join('\n');
+
+  return `    <section id="catalogue" class="viz catalogue">
+      <h2>${esc(heading)}</h2>
+${cat.intro ? `      <p class="section-intro">${esc(cat.intro)}</p>\n` : ''}${mapHtml}      <div class="cat-grid">
+${cards}
+      </div>
+    </section>
+
+`;
+}
+const r1f = (v) => Math.round(v * 10) / 10;
+
+/* ---------------------------------------------------------------------------
+ * Time river: the chronology as lane tracks instead of a table (core#108).
+ *
+ * Opt-in per site with `meta.layout: "river"`; absent (or "table"), the
+ * chronology is the table and the page is byte-identical (ADR-0001). The river
+ * renders the SAME events with the SAME caveats as the table: the `?` flag,
+ * the `dateNote`, the citations and the `decade-NNNN` anchors every other
+ * figure links to. What it adds:
+ *
+ * - one vertical track per `meta.threads` lane (one track when the site
+ *   declares none); an event sits on every lane it belongs to;
+ * - a ribbon above the list: every event as a tick on its lane rows, on the
+ *   SAME column model as the spine and the swimlanes (decadeColumns), so a gap
+ *   is collapsed at exactly the decades where those figures collapse it;
+ * - a gap row in the list wherever the ribbon breaks, with the same label;
+ * - filters (per lane, firm dates only) and a find box, added by
+ *   src/river.js. Without the script the controls stay hidden and the page is
+ *   a complete, readable list: nothing is behind the script except filtering.
+ *
+ * The swimlanes table, where a site has one, still renders: it is the
+ * accessible tabular form and carries the lanes' editorial note and bases.
+ * Lane labels render verbatim (the chips use the full label).
+ * ------------------------------------------------------------------------- */
+
+const RIVER_LAYOUTS = new Set(['table', 'river']);
+
+/** Pure layout for the river: lanes, sorted events, ribbon columns and gap rows. */
+function layoutRiver(events, threads) {
+  const withYear = (events || []).filter((e) => Number.isFinite(e.year));
+  if (withYear.length === 0) return null;
+  const declared = threads && Array.isArray(threads.lanes) && threads.lanes.length > 0;
+  const lanes = declared ? threads.lanes.map((l) => ({ id: l.id, label: l.label })) : [{ id: '', label: '' }];
+  const laneIdx = new Map(lanes.map((l, i) => [l.id, i]));
+  const sorted = [...withYear].sort((a, b) => a.year - b.year || String(a.date || '').localeCompare(String(b.date || '')));
+  const columns = decadeColumns(new Set(sorted.map((e) => decadeBucket(e.year))), collapseAfterOf(threads));
+
+  // Ribbon geometry: equal decade columns, fixed-width breaks, in a 1000-wide
+  // viewBox, so the ribbon always spans the full width of the section.
+  const W = 1000; const BRK = 16;
+  const nBreaks = columns.filter((c) => c.type === 'break').length;
+  const nDec = columns.length - nBreaks;
+  const colW = (W - nBreaks * BRK) / Math.max(1, nDec);
+  let x = 0;
+  const colAt = new Map();
+  const r1 = (v) => Math.round(v * 10) / 10;
+  for (const c of columns) {
+    if (c.type === 'break') { c.x = r1(x); c.w = BRK; x += BRK; } else { c.x = r1(x); c.w = r1(colW); colAt.set(c.decade, c); x += colW; }
+  }
+  const width = r1(x);
+
+  const items = sorted.map((ev, i) => {
+    const ids = declared && Array.isArray(ev.threads) ? ev.threads.filter((t) => laneIdx.has(t)) : [];
+    const k = declared ? ids.map((t) => laneIdx.get(t)) : [0];
+    const col = colAt.get(decadeBucket(ev.year));
+    const tx = r1(col.x + ((ev.year - col.decade) + 0.5) / 10 * col.w);
+    return { ev, i, lanes: k, laneIds: ids, x: tx, decade: decadeBucket(ev.year) };
+  });
+  // A gap row goes between two consecutive events whenever a break column
+  // lies between their decades — the same breaks the ribbon draws.
+  const gapsBefore = new Map();
+  for (let i = 1; i < items.length; i += 1) {
+    const brk = columns.find((c) => c.type === 'break' && c.from > items[i - 1].decade && c.to < items[i].decade + 10);
+    if (brk) gapsBefore.set(i, brk);
+  }
+  return { lanes, declared, items, columns, width, gapsBefore, untagged: declared ? items.filter((it) => it.lanes.length === 0).length : 0 };
+}
+
+function renderRiverRibbon(layout, t) {
+  const ROW = 11; const TOP = 2; const nL = layout.lanes.length;
+  const H = TOP + nL * ROW + 16;
+  const rows = layout.lanes.map((l, k) => `<rect class="rv-row" x="0" y="${TOP + k * ROW}" width="${layout.width}" height="${ROW - 2}"/>`).join('');
+  const breaks = layout.columns.filter((c) => c.type === 'break')
+    .map((c) => `<rect class="rv-brk" x="${r1f(c.x + c.w / 2 - 2)}" y="${TOP}" width="4" height="${nL * ROW - 2}"><title>${esc(t.spineBreakLabel(c.count, yearLabel(c.from, t), yearLabel(c.to, t)))}</title></rect>`).join('');
+  const ticks = layout.items.flatMap((it) => it.lanes.map((k) => `<line class="rv-tick rv-l${k % 8}${it.ev.dateVerified === false ? ' rv-u' : ''}" data-i="${it.i}" x1="${it.x}" x2="${it.x}" y1="${TOP + k * ROW + 1.5}" y2="${TOP + k * ROW + ROW - 3.5}"/>`)).join('');
+  // Axis: the first and last year, and each side of every break.
+  const marks = [];
+  const first = layout.items[0].ev.year; const last = layout.items[layout.items.length - 1].ev.year;
+  marks.push({ x: 0, label: yearLabel(first, t), anchor: 'start' });
+  layout.columns.forEach((c, i) => {
+    if (c.type !== 'break') return;
+    const prev = layout.items.filter((it) => it.decade < c.from).pop();
+    const next = layout.items.find((it) => it.decade > c.to);
+    if (prev && i > 0) marks.push({ x: c.x, label: yearLabel(prev.ev.year, t), anchor: 'end' });
+    if (next) marks.push({ x: c.x + c.w, label: yearLabel(next.ev.year, t), anchor: 'start' });
+  });
+  marks.push({ x: layout.width, label: yearLabel(last, t), anchor: 'end' });
+  const seen = new Set(); let lastEnd = -Infinity;
+  const axis = marks.filter((m) => {
+    const key = `${m.label}@${m.anchor}`; if (seen.has(key)) return false; seen.add(key);
+    const w = m.label.length * 6.2;
+    const x0 = m.anchor === 'end' ? m.x - w : m.x; const x1 = m.anchor === 'end' ? m.x : m.x + w;
+    if (x0 < lastEnd + 8 && m !== marks[marks.length - 1]) return false;
+    lastEnd = x1; return true;
+  }).map((m) => `<text class="rv-axis" x="${m.x}" y="${H - 3}" text-anchor="${m.anchor}">${esc(m.label)}</text>`).join('');
+  const label = t.rvRibbonLabel(layout.items.length, layout.declared ? nL : 0);
+  return `        <svg class="rv-ribbon" viewBox="-4 0 ${r1f(layout.width + 8)} ${H}" preserveAspectRatio="xMinYMid meet" role="img" aria-label="${esc(label)}">
+          ${rows}${breaks}
+          ${ticks}
+          ${axis}<rect class="rv-win" x="0" y="0" width="0" height="${nL * ROW + TOP}"/>
+        </svg>`;
+}
+
+function renderRiverItem(it, layout, refNumById, t, anchorId) {
+  const ev = it.ev;
+  const unverified = ev.dateVerified === false;
+  const flag = unverified ? ` <span class="flag" title="${esc(t.flagTitle)}">?</span>` : '';
+  const laneNames = it.laneIds.map((id) => layout.lanes.find((l) => l.id === id).label);
+  const kick = [
+    ...laneNames.map((n, j) => `<span class="rv-lane rv-l${it.lanes[j] % 8}">${esc(n)}</span>`),
+    ev.place ? `<span>${esc(ev.place)}</span>` : '',
+  ].filter(Boolean).join('');
+  const nodes = it.lanes.length
+    ? it.lanes.map((k) => `<i class="rv-l${k % 8}" style="--k:${k}"></i>`).join('')
+    : '<i class="rv-l0 rv-none" style="--k:0"></i>';
+  const text = ev.text ? `\n            <p class="rv-text">${renderText(ev.text)}${renderCites(ev.sources, refNumById)}</p>` : `\n            <p class="rv-text">${renderCites(ev.sources, refNumById)}</p>`;
+  const note = ev.dateNote ? `\n            <p class="date-note">${renderText(ev.dateNote)}</p>` : '';
+  return `        <li class="rv-e${unverified ? ' rv-u' : ''}"${anchorId ? ` id="${anchorId}"` : ''} data-i="${it.i}" data-lanes="${esc(it.laneIds.join(' '))}" data-decade="${esc(decadeLabel(it.decade, t))}">
+          <div class="rv-year">${esc(yearLabel(ev.year, t))}${ev.date ? `<small>${esc(ev.date)}</small>` : ''}${flag}</div>
+          <div class="rv-node" aria-hidden="true">${nodes}</div>
+          <div class="rv-card">
+            ${kick ? `<p class="rv-kick">${kick}</p>\n            ` : ''}<h3>${esc(ev.title)}</h3>${text}${note}
+          </div>
         </li>`;
+}
+
+/** The chronology section as a river. Called only when meta.layout is "river". */
+function renderRiver(events, threads, refNumById, ui) {
+  const t = ui || UI.en;
+  const layout = layoutRiver(events, threads);
+  const head = (declared) => `    <section id="chronology" class="river${declared ? ' rv-lanes' : ''}">
+      <h2>${esc(t.chronologyHeading)}</h2>
+      <p class="section-intro">${t.chronologyIntro}</p>
+`;
+  if (!layout) return `${head(false)}    </section>\n`;
+  const nL = layout.lanes.length;
+  const chips = layout.declared
+    ? layout.lanes.map((l, k) => `<label class="rv-chip rv-l${k % 8}"><input type="checkbox" data-lane="${esc(l.id)}" checked><span class="rv-sw"></span>${esc(l.label)}</label>`).join('\n          ')
+    : '';
+  const controls = `        <div class="rv-controls" role="group" aria-label="${esc(t.rvFilterLabel)}" hidden>
+          ${chips}${chips ? '\n          ' : ''}<label class="rv-chip rv-firm"><input type="checkbox" data-firm><span class="rv-sw"></span>${esc(t.rvFirm)}</label>
+          <label class="rv-find">${esc(t.rvFind)} <input type="search" autocomplete="off"></label>
+          <p class="rv-status" aria-live="polite" data-all="${esc(t.rvAll('{n}'))}" data-some="${esc(t.rvSome('{n}', '{total}'))}" data-reading="${esc(t.rvReading)}"></p>
+        </div>`;
+  let lastDecade = null;
+  const rows = layout.items.map((it) => {
+    let out = '';
+    const brk = layout.gapsBefore.get(it.i);
+    if (brk) out += `        <li class="rv-gap"><span>${esc(t.spineBreakLabel(brk.count, yearLabel(brk.from, t), yearLabel(brk.to, t)))}</span></li>\n`;
+    const anchor = it.decade !== lastDecade ? `decade-${it.decade}` : '';
+    lastDecade = it.decade;
+    return out + renderRiverItem(it, layout, refNumById, t, anchor);
+  }).join('\n');
+  return `${head(layout.declared)}      <div class="rv-bar">
+${controls}
+${renderRiverRibbon(layout, t)}
+      </div>
+      <ol class="rv-list" style="--lanes:${nL}">
+${rows}
+      </ol>
+      <p class="rv-empty" hidden>${esc(t.rvEmpty)}</p>
+    </section>
+`;
 }
 
 /* ---------------------------------------------------------------------------
@@ -1273,11 +2591,6 @@ function allRoutes(data) {
   return ROUTES.concat(figurePages(data).map((p) => figureRoute(p.id)));
 }
 
-/** Plain-text form of a prose field: glossary markers reduced to their label. */
-function stripGlossaryMarkers(value) {
-  if (typeof value !== 'string' || value.indexOf('[[') === -1) return value || '';
-  return value.replace(new RegExp(GLOSSARY_MARKER.source, 'g'), (_m, id, label) => (label && label.trim() ? label : id));
-}
 
 /** Collapse prose to a single-line meta description, cut on a word boundary. */
 function metaSummary(value, limit = 240) {
@@ -1348,7 +2661,9 @@ ${rows.join('\n')}
 function renderFigurePage(page, data, archives, opts = {}) {
   const { meta, references } = data;
   const lang = opts.lang || (meta && meta.language) || 'en';
-  const ui = UI[lang] || UI.en;
+  // The page-language notice reads the dictionary's own provenance, like the
+  // main page (disclaimerFor); the old static `disclaimer` string is gone.
+  const ui = { ...(UI[lang] || UI.en), disclaimer: disclaimerFor(loadDictMeta(lang), UI[lang] || UI.en) };
   const base = opts.base || siteBase(meta);
   const route = figureRoute(page.id);
   const up = upTo(route);
@@ -1462,7 +2777,7 @@ ${eventRows}
       <h2>${esc(ui.figureRefsHeading)}</h2>
       <p class="section-intro">${ui.figureRefsIntro(pageRefs.length, archivedRefs)}</p>
       <ol class="references">
-${pageRefs.map((r, i) => renderReference(r, i + 1, archives)).join('\n')}
+${pageRefs.map((r, i) => renderReference(r, i + 1, archives, ui)).join('\n')}
       </ol>
     </section>
   </main>
@@ -1478,16 +2793,217 @@ ${pageRefs.map((r, i) => renderReference(r, i + 1, archives)).join('\n')}
 `;
 }
 
+/** Out-of-vocabulary `references[].type` values seen this build (core#74). */
+const UNKNOWN_REF_TYPES = new Set();
+
+function renderEventRow(ev, refNumById, ui) {
+  const flag = ev.dateVerified === false
+    ? ` <span class="flag" title="${esc((ui || UI.en).flagTitle)}">?</span>`
+    : '';
+  const text = ev.text ? ` <span class="muted">— ${renderText(ev.text)}</span>` : '';
+  // `dateNote` is the prose about the dating: which sources disagree, what a
+  // date still rests on. The `?` flag says a date is unverified; this says WHY,
+  // and who disagrees. It was carried in the data and rendered nowhere, so the
+  // weaker half of the caveat was the only half a reader ever saw (core#73).
+  const dateNote = ev.dateNote
+    ? `<span class="date-note">${renderText(ev.dateNote)}</span>`
+    : '';
+  return `        <tr>
+          <td class="year">${esc(yearLabel(ev.year, ui))}</td>
+          <td>${esc(ev.date || '')}${flag}</td>
+          <td>${esc(ev.place || '')}</td>
+          <td><strong>${esc(ev.title)}</strong>${text}${renderCites(ev.sources, refNumById)}${dateNote}</td>
+        </tr>`;
+}
+
+function renderFigureCard(fig, refNumById, ui) {
+  const meta = [fig.dates, fig.country].filter(Boolean).map(esc).join(' · ');
+  const link = fig.id
+    ? `\n        <p class="party-link"><a href="${esc(figureRoute(fig.id))}">${esc((ui || UI.en).figureCardLink)} →</a></p>`
+    : '';
+  return `      <div class="party-card">
+        <h3>${esc(fig.name)}</h3>
+        ${meta ? `<p class="country">${meta}</p>` : ''}
+        <p class="figures">${renderText(fig.role)}${renderCites(fig.sources, refNumById)}</p>
+        ${fig.notes ? `<p class="party-notes">${renderText(fig.notes)}</p>` : ''}${link}
+      </div>`;
+}
+
+function renderOrgCard(org, refNumById, ui) {
+  // 'Founded' is chrome. Hardcoded here it rendered in English on the es and
+  // pt pages, beside a place name that HAD been translated.
+  const foundedLabel = (ui && ui.orgFounded) || 'Founded';
+  const meta = [org.founded ? `${foundedLabel} ${org.founded}` : null, org.place].filter(Boolean).map(esc).join(' · ');
+  return `      <div class="related-card">
+        <h3>${esc(org.name)}</h3>
+        ${meta ? `<p class="related-meta">${meta}</p>` : ''}
+        <p>${renderText(org.relation)}${renderCites(org.sources, refNumById)}</p>
+        ${org.notes ? `<p class="related-meta">${renderText(org.notes)}</p>` : ''}
+        ${org.url ? `<p class="related-link"><a href="${esc(org.url)}" rel="noopener noreferrer" target="_blank">${esc(org.url)}</a></p>` : ''}
+      </div>`;
+}
+
+/** A reference line: the citation, then the project's own note about it.
+ *
+ * `publisher` NAMES the source and is bibliographic — verbatim in every
+ * locale. `publisherNote` CHARACTERISES it and is the project's own prose, so
+ * it translates. They render reassembled, so a repo that has not split them
+ * yet is unaffected and the English page never changes.
+ *
+ * Rendering follows LENGTH. A stance note of a few words reads well in
+ * brackets after the citation. Some are 150 words of source criticism — how
+ * far the source can be trusted, what was and was not consulted — and that is
+ * not a parenthesis, it is a paragraph. Over NOTE_INLINE_MAX it gets its own
+ * line under the reference.
+ */
+function renderReference(r, n, archives, ui) {
+  const snap = archives[r.url];
+  const archived = snap && snap.archiveUrl
+    ? ` · <a class="archive-link" href="${esc(snap.archiveUrl)}" rel="noopener noreferrer" target="_blank">🗄 archived${snap.timestamp ? ` ${esc(formatArchiveTs(snap.timestamp))}` : ''}</a>`
+    : '';
+  const NOTE_INLINE_MAX = 110;
+  const note = r.publisherNote || '';
+  const inline = note && note.length <= NOTE_INLINE_MAX;
+  const pub = inline ? `${r.publisher} (${note})` : r.publisher;
+  const noteLine = note && !inline
+    ? `\n          <span class="ref-note">${esc(note)}</span>`
+    : '';
+  // `type` is a CLOSED vocabulary, not prose: it belongs in the UI table with
+  // the rest of the chrome, so a new type is a code change that surfaces as a
+  // missing label rather than a silent English word on a Portuguese page.
+  // The vocabulary is closed, and an unknown type falls through to the raw
+  // English word on a localized page -- which is exactly what the comment above
+  // says must not happen. Every repo in the family currently has offenders
+  // (core#74), so this REPORTS rather than throws: making it fatal today would
+  // take twelve sites red at once. Once the vocabulary question is settled and
+  // the datasets migrated, this becomes the throw the comment always implied.
+  if (ui && ui.refTypes && r.type && !Object.prototype.hasOwnProperty.call(ui.refTypes, r.type)) {
+    UNKNOWN_REF_TYPES.add(r.type);
+  }
+  const type = (ui && ui.refTypes && ui.refTypes[r.type]) || r.type;
+  return `        <li id="ref-${n}">
+          <a href="${esc(r.url)}" rel="noopener noreferrer" target="_blank">${esc(r.title)}</a>${archived}
+          <span class="ref-meta">${esc(pub)} · ${esc(type)}</span>${noteLine}
+        </li>`;
+}
+
+
+// ---------------------------------------------------------------------------
+// Country tier map (`map` key — the tl presence-map pattern, core#3 item 2).
+// A static choropleth of the vendored Latin America base map (src/latam.svg):
+// each listed country is filled by its TIER — a per-repo, DATA-DECLARED
+// vocabulary, like the thread lanes (core#23): what a tier means is an
+// editorial claim, so its id and legend label live in the data, never in the
+// renderer. Distinct from `placesMap` (event pins): this section says what
+// KIND of place a country is in the subject's story, not where events
+// happened. The year-slider mode (fsp's member map) is a declared follow-up.
+
+const LATAM_SVG_FILE = path.join(__dirname, 'src', 'latam.svg');
+
+function loadLatamSvg() {
+  try {
+    return fs.readFileSync(LATAM_SVG_FILE, 'utf8');
+  } catch {
+    return '';
+  }
+}
+
+/**
+ * Replace glossary [[markers]] with their visible text (no link) — for HTML
+ * ATTRIBUTES, where an anchor cannot render. Keeps a marked-up country note
+ * readable in the map tooltip while the card below carries the real link.
+ */
+function stripGlossaryMarkers(value) {
+  const s = String(value ?? '');
+  if (s.indexOf('[[') === -1) return s;
+  return s.replace(new RegExp(GLOSSARY_MARKER.source, 'g'), (_m, id, label) => (label && label.trim() ? label : id));
+}
+
+/**
+ * Render the country tier map. Returns '' when the data declares no map —
+ * the page is then byte-identical to a build without the feature. A missing
+ * src/latam.svg also renders '' here, but validate-data.js errors on that
+ * combination first, so a broken adoption never fails silently.
+ */
+function renderTierMap(map, refNumById, ui) {
+  if (!map || !Array.isArray(map.countries) || map.countries.length === 0) return '';
+  let svg = loadLatamSvg();
+  if (!svg) return '';
+
+  const tiers = Array.isArray(map.tiers) ? map.tiers : [];
+  const rank = new Map(tiers.map((t, i) => [t.id, i]));
+
+  for (const c of map.countries) {
+    const marker = `id="ne-${c.code}" class="latam-c"`;
+    svg = svg.replace(
+      marker,
+      `id="ne-${c.code}" class="latam-c map-t${rank.get(c.tier)}" tabindex="0" ` +
+        `data-name="${esc(stripGlossaryMarkers(c.name))}" data-note="${esc(stripGlossaryMarkers(c.note))}"`
+    );
+  }
+
+  const legend = tiers
+    .map((t, i) => `            <span class="ptl-key"><span class="atlas-swatch map-t${i}"></span> ${esc(t.label)}</span>`)
+    .join('\n')
+    + `\n            <span class="ptl-key"><span class="atlas-swatch"></span> ${esc(map.unlistedLabel)}</span>`;
+
+  const cards = map.countries
+    .map((c) => `        <div class="map-card map-card-t${rank.get(c.tier)}">
+          <h3>${esc(c.name)}</h3>
+          <p>${renderText(c.note)}${renderCites(c.sources, refNumById)}</p>
+        </div>`)
+    .join('\n');
+
+  const heading = map.heading || ui.tierMapHeading;
+  return `    <section id="map" class="viz">
+      <h2>${esc(heading)}</h2>
+      <p class="section-intro">${esc(map.note)}</p>
+      <div class="map-cols">
+        <div class="atlas-map">
+${svg}
+          <p class="ptl-caption" id="tier-map-caption" aria-live="polite">${esc(ui.tierMapHint)}</p>
+          <div class="ptl-legend">
+${legend}
+          </div>
+          <p class="atlas-credit">${esc(ui.mapCredit)}</p>
+        </div>
+        <div class="map-cards">
+${cards}
+        </div>
+      </div>
+      <script>
+        (function () {
+          var cap = document.getElementById('tier-map-caption');
+          if (!cap) return;
+          var idle = cap.textContent;
+          var reset = function () { cap.textContent = idle; };
+          document.querySelectorAll('#map .latam-c[data-name]').forEach(function (el) {
+            var show = function () { cap.textContent = el.getAttribute('data-name') + ' — ' + el.getAttribute('data-note'); };
+            el.addEventListener('mouseenter', show);
+            el.addEventListener('focus', show);
+            el.addEventListener('mouseleave', reset);
+            el.addEventListener('blur', reset);
+          });
+        })();
+      </script>
+    </section>
+`;
+}
+
 function renderPage(data, archives, opts = {}) {
   const { meta, facts, events, figures, organizations, disambiguation, references } = data;
   const lang = opts.lang || (meta && meta.language) || 'en';
   const ui = UI[lang] || UI.en;
+  const disclaimer = disclaimerFor(loadDictMeta(lang), ui);
   const base = opts.base || siteBase(meta);
   const route = opts.route || '';
   // `episcopalLineage` is the original fsspx key, kept as an alias.
   const lineage = data.lineage || data.episcopalLineage;
   const branchTimeline = data.branchTimeline;
+  const numbersChart = data.numbersChart;
   const chronologySpine = data.chronologySpine;
+  const placesMap = data.placesMap;
+  const tierMap = data.map;
   // The lane taxonomy lives in meta; declaring one turns the figure on.
   const threads = meta && meta.threads;
 
@@ -1496,21 +3012,24 @@ function renderPage(data, archives, opts = {}) {
 
   // Optional visual sections ('' when the data declares none — the page is
   // then byte-identical to a build without these features).
-  // fsspx ordering (#28): the divisions branch timeline renders at the TOP of
-  // the page (first section in <main>, first nav link) as an at-a-glance
-  // orientation figure; the template's default places it after the genealogy.
   const lineageHtml = renderLineageSection(lineage, refNumById);
   const branchTimelineHtml = renderBranchTimeline(branchTimeline, refNumById);
+  const numbersChartHtml = renderNumbersChart(numbersChart, refNumById, ui);
   const chronologySpineHtml = renderChronologySpine(chronologySpine, events, ui);
+  const approvalLadderHtml = renderApprovalLadder(data.approvalLadder, refNumById, ui);
+  const placesMapHtml = renderPlacesMap(placesMap, events, opts.places, opts.world, ui);
+  const catalogueHtml = renderCatalogue(data.catalogue, opts.places, opts.world, refNumById, ui);
+  const tierMapHtml = renderTierMap(tierMap, refNumById, ui);
   const swimlanesHtml = renderSwimlanes(threads, events, refNumById, ui);
 
+  const river = meta && meta.layout === 'river';
   const sortedEvents = [...events].sort((a, b) => a.year - b.year || String(a.date || '').localeCompare(String(b.date || '')));
 
   // Chronology rows with a decade header row whenever the decade changes.
   let lastDecade = null;
   const eventRows = sortedEvents
     .map((ev) => {
-      const d = decadeOf(ev.year);
+      const d = decadeOf(ev.year, ui);
       const header = d !== lastDecade
         ? `        <tr class="decade-row" id="decade-${Math.floor(ev.year / 10) * 10}"><th colspan="4">${esc(d)}</th></tr>\n`
         : '';
@@ -1543,7 +3062,7 @@ function renderPage(data, archives, opts = {}) {
   <title>${esc(meta.title)}</title>
   <meta name="description" content="${esc(meta.description)}">
 ${ANALYTICS}
-  <link rel="stylesheet" href="${upTo(route)}styles.css">
+  <link rel="stylesheet" href="${upTo(route)}styles.css">${river ? '\n  <script src="../river.js" defer></script>' : ''}
 ${seoHead(meta, base, route, lang)}
 </head>
 <body>
@@ -1555,12 +3074,12 @@ ${seoHead(meta, base, route, lang)}
       <p class="lead">${esc(meta.description)}</p>
       <p class="updated">${esc(ui.lastUpdated)} ${esc(meta.lastUpdated)}</p>${renderVizChips(meta.vizChips)}
     </div>
-  </header>${ui.disclaimer ? `\n  <div class="i18n-disclaimer" role="note">🌐 ${esc(ui.disclaimer)}</div>` : ''}
+  </header>${disclaimer ? `\n  <div class="i18n-disclaimer" role="note">🌐 ${esc(disclaimer)}</div>` : ''}
 
   <nav class="site-nav">
     <div class="wrap">
       ${branchTimelineHtml ? `<a href="#branch-timeline">${esc(branchTimeline.navLabel || 'Divisions')}</a>\n      ` : ''}<a href="#about">${esc(ui.about)}</a>
-      <a href="#chronology">${esc(ui.chronology)}</a>${chronologySpineHtml ? `\n      <a href="#chronology-spine">${esc((chronologySpine && chronologySpine.navLabel) || ui.spineNav)}</a>` : ''}${swimlanesHtml ? `\n      <a href="#threads">${esc((threads && threads.navLabel) || ui.swNav)}</a>` : ''}${lineageHtml ? `\n      <a href="#lineage">${esc(lineage.navLabel || 'Genealogy')}</a>` : ''}
+      <a href="#chronology">${esc(ui.chronology)}</a>${approvalLadderHtml ? `\n      <a href="#approval-ladder">${esc((data.approvalLadder && data.approvalLadder.navLabel) || ui.ladderHeading)}</a>` : ''}${chronologySpineHtml ? `\n      <a href="#chronology-spine">${esc((chronologySpine && chronologySpine.navLabel) || ui.spineNav)}</a>` : ''}${swimlanesHtml ? `\n      <a href="#threads">${esc((threads && threads.navLabel) || ui.swNav)}</a>` : ''}${placesMapHtml ? `\n      <a href="#places-map">${esc((placesMap && placesMap.navLabel) || ui.mapNav)}</a>` : ''}${catalogueHtml ? `\n      <a href="#catalogue">${esc((data.catalogue && data.catalogue.navLabel) || ui.catNav)}</a>` : ''}${tierMapHtml ? `\n      <a href="#map">${esc((tierMap && tierMap.navLabel) || ui.tierMapHeading)}</a>` : ''}${lineageHtml ? `\n      <a href="#lineage">${esc(lineage.navLabel || 'Genealogy')}</a>` : ''}${numbersChartHtml ? `\n      <a href="#numbers-chart">${esc(numbersChart.navLabel || 'Numbers')}</a>` : ''}
       <a href="#figures">${esc(ui.figures)}</a>
       <a href="#organizations">${esc(ui.organizations)}</a>
       ${disambigCards ? `<a href="#disambiguation">${esc(ui.disambiguation)}</a>` : ''}
@@ -1569,7 +3088,7 @@ ${seoHead(meta, base, route, lang)}
   </nav>
 
   <main class="wrap">
-${chronologySpineHtml}${swimlanesHtml}${branchTimelineHtml}    <section id="about">
+${approvalLadderHtml}${chronologySpineHtml}${swimlanesHtml}${branchTimelineHtml}    <section id="about">
       <h2>${esc(ui.aboutHeading)}</h2>
       <p class="notice">${esc(meta.dataQualityNote)}</p>
       <dl class="facts">
@@ -1577,7 +3096,7 @@ ${factRows}
       </dl>
     </section>
 
-    <section id="chronology">
+${river ? renderRiver(events, threads, refNumById, ui) : `    <section id="chronology">
       <h2>${esc(ui.chronologyHeading)}</h2>
       <p class="section-intro">${ui.chronologyIntro}</p>
       <div class="table-scroll">
@@ -1591,8 +3110,8 @@ ${eventRows}
       </table>
       </div>
     </section>
-
-${lineageHtml}    <section id="figures">
+`}
+${placesMapHtml}${catalogueHtml}${tierMapHtml}${lineageHtml}${numbersChartHtml}    <section id="figures">
       <h2>${esc(ui.figuresHeading)}</h2>
       <div class="party-grid">
 ${figures.map((f) => renderFigureCard(f, refNumById, ui)).join('\n')}
@@ -1618,7 +3137,7 @@ ${disambigCards}
       <h2>${esc(ui.referencesHeading)}</h2>
       <p class="section-intro">${ui.refsIntro(references.length, archivedRefs)}</p>
       <ol class="references">
-${references.map((r, i) => renderReference(r, i + 1, archives)).join('\n')}
+${references.map((r, i) => renderReference(r, i + 1, archives, ui)).join('\n')}
       </ol>
     </section>
   </main>
@@ -1637,6 +3156,8 @@ function main() {
   const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
   const archives = loadArchives();
   const base = siteBase(data.meta);
+  const places = loadPlaces();
+  const world = loadWorld();
 
   const routes = allRoutes(data);
 
@@ -1645,7 +3166,7 @@ function main() {
     const localized = localizeData(data, loadDict(lang), lang);
     const dir = path.join(OUT_DIR, lang);
     fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, 'index.html'), renderPage(localized, archives, { lang, base, route: '' }));
+    fs.writeFileSync(path.join(dir, 'index.html'), renderPage(localized, archives, { lang, base, route: '', places, world }));
     // Per-figure pages, emitted from the LOCALIZED data so the dossier prose,
     // the genealogy detail and the status lines are all in-locale (ADR-0003).
     const pages = figurePages(localized);
@@ -1658,17 +3179,37 @@ function main() {
   fs.writeFileSync(path.join(OUT_DIR, 'sitemap.xml'), renderSitemap(base, routes));
   fs.writeFileSync(path.join(OUT_DIR, 'robots.txt'), renderRobots(base));
   fs.copyFileSync(path.join(SRC_DIR, 'styles.css'), path.join(OUT_DIR, 'styles.css'));
+  // The river's filters and reading window; copied only for sites that use it.
+  if (data.meta && data.meta.layout === 'river') fs.copyFileSync(path.join(SRC_DIR, 'river.js'), path.join(OUT_DIR, 'river.js'));
+  // Catalogue images: only the files the data references, so docs/ carries
+  // nothing the site does not show.
+  const catImages = ((data.catalogue && data.catalogue.items) || [])
+    .map((it) => it.image && it.image.file).filter(Boolean);
+  if (catImages.length) {
+    fs.mkdirSync(path.join(OUT_DIR, 'img'), { recursive: true });
+    for (const f of catImages) fs.copyFileSync(path.join(SRC_DIR, 'img', f), path.join(OUT_DIR, 'img', f));
+  }
   // Disable Jekyll processing on GitHub Pages.
   fs.writeFileSync(path.join(OUT_DIR, '.nojekyll'), '');
 
   const archivedRefs = data.references.filter((r) => archives[r.url] && archives[r.url].archiveUrl).length;
-  const figPages = allRoutes(data).length - ROUTES.length;
   console.log(
     `Built ${LOCALES.length} locales (${LOCALES.join(', ')}) × ${routes.length} route(s) + root redirect, sitemap, robots — ` +
-    `${data.events.length} events, ${data.figures.length} figures ` +
-    `(${figPages} with a page → ${figPages * LOCALES.length} figure pages), ` +
+    `${data.events.length} events, ${data.figures.length} figures, ` +
     `${data.references.length} references, ${archivedRefs} with archive fallback.`
   );
+  // Named, not counted, and ALL of them: a report that says "3 problems" sends
+  // you looking, and one that says which three is actionable in the same run.
+  // See core#74 -- the publisher check's one-at-a-time reporting is the
+  // anti-pattern this avoids.
+  if (UNKNOWN_REF_TYPES.size) {
+    console.warn(
+      `WARNING: ${UNKNOWN_REF_TYPES.size} reference type(s) are outside the closed refTypes ` +
+      `vocabulary and render as raw English on every localized page: ` +
+      `${[...UNKNOWN_REF_TYPES].sort().map((t) => JSON.stringify(t)).join(', ')}. ` +
+      `Retype them, or move the characterisation into publisherNote, which IS translated (core#74).`
+    );
+  }
 }
 
 // Run the build only when invoked directly; when required (tests) just expose
@@ -1676,18 +3217,26 @@ function main() {
 if (require.main === module) main();
 
 module.exports = {
-  layoutChronologySpine, renderChronologySpine, decadeBucket, decadeColumns, collapseAfterOf,
-  layoutSwimlanes, renderSwimlanes,
-  esc, formatArchiveTs, renderCites, renderVizChips, decadeOf,
+  esc, formatArchiveTs, renderCites, renderVizChips, decadeOf, yearLabel, decadeLabel, spanLabel,
   GLOSSARY_BASE, GLOSSARY_MARKER, glossaryMarkerIds, renderGlossaryLinks, renderText,
   renderLineageNode, lineageHasIndirectEdges, renderLineageLegend, renderLineageSection,
   layoutBranchTimeline, renderBranchTimeline, BT_GEOM,
-  renderPage, renderFigureCard,
+  layoutNumbersChart, renderNumbersChart,
+  renderTierMap, stripGlossaryMarkers,
+  layoutChronologySpine, renderChronologySpine, decadeBucket, decadeColumns, collapseAfterOf,
+  layoutSwimlanes, renderSwimlanes,
+  PLACE_COMPOUND_SEP, placeIndex, resolvePlaceString, layoutPlacesMap, renderPlacesMap,
+  layoutCatalogue, renderCatalogue, osmLink, CATALOGUE_LICENSES,
+  layoutRiver, renderRiver, RIVER_LAYOUTS,
+  renderFigureCard,
   FIGURE_ID_RE, FIGURE_PAGE_MIN_EVENTS, FIGURE_PAGE_MIN_SOURCES,
   figureRoute, figureEvents, lineageOccurrences, figurePageSourceIds, figurePageMetrics,
   figurePageFailures, figurePages, allRoutes, figurePageFlags, renderFigurePage,
-  stripGlossaryMarkers, metaSummary, routeDepth, upTo,
-  LOCALES, ROUTES, OG_LOCALE, UI, TRANSLATABLE_KEYS, collectTranslatable,
-  loadDict, siteBase, translator, localizeData,
+  metaSummary, routeDepth, upTo,
+  loadPlaces, loadWorld,
+  renderPage,
+  LOCALES, ROUTES, OG_LOCALE, UI, loadDict, loadDictMeta, disclaimerFor, renderApprovalLadder, ladderRungs, STATUS_GLYPH,
+  renderEventRow, UNKNOWN_REF_TYPES, renderReference, siteBase, translator, localizeData,
+  TRANSLATABLE_KEYS, SUBTREE_TRANSLATABLE, keysFor, collectTranslatable,
   alternates, seoHead, langSwitcher, renderRootStub, renderSitemap, renderRobots,
 };

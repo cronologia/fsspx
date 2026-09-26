@@ -1,7 +1,7 @@
 {
   "_meta": {
     "targetLang": "pt",
-    "coverage": "320/320",
+    "coverage": "327/327",
     "generatedBy": "LLM translation (Claude, model claude-opus-5) during an agent session, 2026-07-25; extended 2026-07-26 for the COF/Olavo disambiguation entries and the Liénart dossier",
     "method": "No TRANSLATE_ENDPOINT backend is configured for this project. scripts/translate.js normalizes this cache and reports coverage, but it did NOT author these strings — an LLM did. Re-running translate.js against a configured MT backend would REPLACE them with different (and for this subject matter, likely weaker) output. See cronologia/core#9.",
     "note": "GENERATED machine-translation cache — do not hand-edit; regenerate instead. English is authoritative and every non-English page carries a visible machine-translated disclaimer.",
@@ -9,6 +9,12 @@
     "humanReviewed": false
   },
   "strings": {
+    "1967": "1967",
+    "1983": "1983",
+    "1988": "1988",
+    "2006": "2006",
+    "2012": "2012",
+    "2017": "2017",
     "'Ecclesia Dei'": "'Ecclesia Dei'",
     "'Resistance' line — from Richard Williamson (ex-SSPX)": "Linha da 'Resistência' — a partir de Richard Williamson (ex-FSSPX)",
     "'Summorum Pontificum'": "'Summorum Pontificum'",
@@ -328,6 +334,7 @@
     "Écône, Valais, Switzerland": "Écône, Valais, Suíça",
     "🌳 Episcopal genealogy": "🌳 Genealogia episcopal",
     "📜 Chronology": "📜 Cronologia",
-    "🚇 Divisions timeline": "🚇 Linha do tempo das divisões"
+    "🚇 Divisions timeline": "🚇 Linha do tempo das divisões",
+    "1988 / 2002": "1988 / 2002"
   }
 }
