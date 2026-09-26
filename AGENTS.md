@@ -40,6 +40,7 @@ data/archives.json       Wayback snapshot cache (GENERATED — do not hand-edit;
 data/glossary-terms.json VENDORED, PINNED list of cronologia/glossary term ids (written by scripts/sync-glossary-terms.js; committed) — validates [[term-id]] cross-links offline
 data/i18n/{pt,es}.json   Machine-translation caches, English source string -> translation (GENERATED — do not hand-edit; managed by scripts/translate.js; 314/314 each)
 src/styles.css           Stylesheet (copied into the build)
+src/river.js             Time-river filters, find box and reading window (core#108); copied into the build only when meta.layout is "river"
 scripts/validate-data.js Schema check (runs in CI before the build) — also fails on unknown glossary [[term-id]] links
 scripts/sync-glossary-terms.js  Refresh data/glossary-terms.json from cronologia/glossary (out-of-band; needs network)
 scripts/archive-refs.js  Wayback preservation: references[] -> data/archives.json (out-of-band; needs network)

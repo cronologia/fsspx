@@ -31,8 +31,7 @@
  *   node scripts/translate.js es           # a single locale
  *
  * NOT translated: proper names, reference titles/publishers, URLs, dates, ids.
- * The translatable-key set is build.js's TRANSLATABLE_KEYS — imported, not
- * mirrored, so the coverage report and the renderer cannot disagree.
+ * The translatable set is build.js's — imported, not mirrored; see below.
  */
 'use strict';
 
@@ -51,17 +50,15 @@ const DEFAULT_LOCALES = ['es', 'pt'];
 /**
  * The one walk, imported from the renderer.
  *
- * This file used to keep its own copy of TRANSLATABLE_KEYS and its own walk.
- * The key list was genuinely pinned to build.js's by a test, and it held — but
- * nothing pinned the two WALKS, and the walk is the half that went wrong
- * elsewhere: the copy skipped `references` wholesale, so the coverage number
- * omitted every `publisherNote` the localized pages actually render. That
- * matters beyond reporting, because `--stats` is the safe invocation and every
- * other one PRUNES against whatever set this file believes in; a single
- * mistyped flag deleted 44 committed Spanish translations in a sibling repo.
- * So the walk is imported rather than mirrored, and a test asserts it visits
- * exactly the strings localizeData translates (cronologia/core#81, #82;
- * ADR-0008). Requiring build.js is safe — it runs main() only under
+ * This file used to keep its own copy of TRANSLATABLE_KEYS and its own walk,
+ * under a comment saying the copy "MUST mirror build.js's set". It did not.
+ * The copy skipped `references` wholesale, so the coverage number omitted every
+ * `publisherNote` the localized pages actually render; and it knew nothing of
+ * SUBTREE_TRANSLATABLE, so it counted `approvalLadder[].status` — a closed enum
+ * — and told the operator to go translate `not-found`, which would fail the
+ * localized build with "unknown status". A coverage report that measures a
+ * different set than the renderer is worse than no report: it is a number that
+ * looks like an answer. Requiring build.js is safe — it runs main() only under
  * `require.main === module`.
  */
 const { collectTranslatable: collectStrings } = require(path.join(ROOT, 'build.js'));
