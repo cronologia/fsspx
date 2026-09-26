@@ -41,6 +41,7 @@ data/glossary-terms.json VENDORED, PINNED list of cronologia/glossary term ids (
 data/i18n/{pt,es}.json   Machine-translation caches, English source string -> translation (GENERATED — do not hand-edit; managed by scripts/translate.js; 314/314 each)
 src/styles.css           Stylesheet (copied into the build)
 src/river.js             Time-river filters, find box and reading window (core#108); copied into the build only when meta.layout is "river"
+.template-drift.json      The template build.js functions this site customises on purpose, with reasons (checked by core tools/build-drift.py)
 scripts/validate-data.js Schema check (runs in CI before the build) — also fails on unknown glossary [[term-id]] links
 scripts/sync-glossary-terms.js  Refresh data/glossary-terms.json from cronologia/glossary (out-of-band; needs network)
 scripts/archive-refs.js  Wayback preservation: references[] -> data/archives.json (out-of-band; needs network)
