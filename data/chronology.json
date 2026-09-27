@@ -2038,7 +2038,8 @@
       "id": "sspx-org",
       "title": "SSPX United States district — timeline of the July 1, 2026 episcopal consecrations",
       "url": "https://sspx.org/en/news/timeline-society-saint-pius-xs-july-1-2026-episcopal-consecrations-60126",
-      "publisher": "SSPX (official)",
+      "publisher": "SSPX",
+      "publisherNote": "official",
       "type": "official",
       "official": true
     },
@@ -2046,7 +2047,8 @@
       "id": "fsspx-org",
       "title": "SSPX General House (Maison Générale) — official site",
       "url": "https://fsspx.org/en",
-      "publisher": "SSPX (official)",
+      "publisher": "SSPX",
+      "publisherNote": "official",
       "type": "official",
       "official": true
     },
@@ -2054,7 +2056,8 @@
       "id": "fsspx-brasil",
       "title": "FSSPX — Casa Autônoma do Brasil",
       "url": "https://fsspx.com.br",
-      "publisher": "FSSPX Brasil (official, PT)",
+      "publisher": "FSSPX Brasil",
+      "publisherNote": "official, PT",
       "type": "official",
       "official": true
     },
@@ -2062,7 +2065,8 @@
       "id": "fsspx-news-brazil",
       "title": "SSPX: Brazil becomes Autonomous House",
       "url": "https://fsspx.news/en/news/sspx-brazil-becomes-autonomous-house-16213",
-      "publisher": "FSSPX.News (official news organ)",
+      "publisher": "FSSPX.News",
+      "publisherNote": "official news organ",
       "type": "news",
       "official": true
     },
@@ -2147,21 +2151,24 @@
       "id": "arlington-zendejas",
       "title": "Statement of Bishop Michael F. Burbidge on the consecration of Fr. Gerardo Zendejas (8 May 2017)",
       "url": "https://www.arlingtondiocese.org/2017/05/08/statement-from-most-reverend-michael-f-burbidge-on-the-consecration-of-father-gerardo-zendejas-member-of-an-independent-church/",
-      "publisher": "Catholic Diocese of Arlington (official)",
+      "publisher": "Catholic Diocese of Arlington",
+      "publisherNote": "official",
       "type": "official"
     },
     {
       "id": "novusordowatch-aquino",
       "title": "Bp. Williamson consecrates Fr. Tomás de Aquino a bishop for Resistance group (March 2016)",
       "url": "https://novusordowatch.org/2016/03/williamson-consecrates-tomas-de-aquino/",
-      "publisher": "Novus Ordo Watch (sedevacantist site — labeled as such)",
+      "publisher": "Novus Ordo Watch",
+      "publisherNote": "sedevacantist site — labeled as such",
       "type": "analysis"
     },
     {
       "id": "onepeterfive-campos",
       "title": "Two Paths of Catholic Traditionalism: Campos, the SSPX, and the debate over communion with Rome",
       "url": "https://onepeterfive.com/two-paths-of-catholic-traditionalism-campos-the-sspx-and-the-debate-over-communion-with-rome/",
-      "publisher": "OnePeterFive (traditionalist-leaning — labeled as such)",
+      "publisher": "OnePeterFive",
+      "publisherNote": "traditionalist-leaning — labeled as such",
       "type": "analysis"
     },
     {
@@ -2175,7 +2182,8 @@
       "id": "fsspx-news-recourse",
       "title": "General House Communiqué: The Society Files a Recourse Against the Decree of 2 July 2026 (13 July 2026)",
       "url": "https://fsspx.news/en/news/general-house-communique-society-files-recourse-against-decree-2-july-2026-60112",
-      "publisher": "FSSPX.News (official news organ)",
+      "publisher": "FSSPX.News",
+      "publisherNote": "official news organ",
       "type": "official",
       "official": true
     },
@@ -2190,35 +2198,40 @@
       "id": "santoflow-437",
       "title": "A Verdade sobre a Fraternidade São Pio X (Pe. José, Prof. Vinícius, Dr. Juliano) — SantoFlow #437 (published 11 June 2026, before the consecrations)",
       "url": "https://www.youtube.com/live/JhDL_VUpTIo",
-      "publisher": "SantoFlow (YouTube — Brazilian mainstream-Catholic panel commentary, critical of the SSPX; includes ex-member testimony)",
+      "publisher": "SantoFlow",
+      "publisherNote": "YouTube — Brazilian mainstream-Catholic panel commentary, critical of the SSPX; includes ex-member testimony",
       "type": "analysis"
     },
     {
       "id": "santoflow-kuster-fsspx",
       "title": "O Problema da Fraternidade São Pio X (Bernardo Küster) — SantoFlow (published 8 July 2026; segment internally undated, does not mention the 2026 consecrations)",
       "url": "https://youtu.be/tEg0PmpbK7I",
-      "publisher": "SantoFlow (YouTube — Brazilian conservative commentary, critical of the SSPX; obedience framing)",
+      "publisher": "SantoFlow",
+      "publisherNote": "YouTube — Brazilian conservative commentary, critical of the SSPX; obedience framing",
       "type": "analysis"
     },
     {
       "id": "fradd-phillips-2026",
       "title": "SSPX in Schism, Liturgy Wars, and Vatican II (Jacob Phillips) — Pints with Aquinas (29 June 2026)",
       "url": "https://youtu.be/viI_TXPzhBo",
-      "publisher": "Pints with Aquinas (YouTube — interview with academic theologian Jacob Phillips, St Mary's University Twickenham; conservative/'Ratzingerian' perspective, critical of the SSPX; recorded before the 1 July 2026 consecrations)",
+      "publisher": "Pints with Aquinas",
+      "publisherNote": "YouTube — interview with academic theologian Jacob Phillips, St Mary's University Twickenham; conservative/'Ratzingerian' perspective, critical of the SSPX; recorded before the 1 July 2026 consecrations",
       "type": "analysis"
     },
     {
       "id": "salza-siscoe-tofp",
       "title": "True or False Pope? Refuting Sedevacantism and Other Modern Errors (John Salza & Robert Siscoe, 2015)",
       "url": "https://www.trueorfalsepope.com/",
-      "publisher": "Salza & Siscoe, trueorfalsepope.com (lay canonical commentary — critical of sedevacantism and, after Salza's 2019 break, of the SSPX)",
+      "publisher": "Salza & Siscoe, trueorfalsepope.com",
+      "publisherNote": "lay canonical commentary — critical of sedevacantism and, after Salza's 2019 break, of the SSPX",
       "type": "analysis"
     },
     {
       "id": "fradd-salza-2023",
       "title": "Schismatics, the SSPX, and Sedes (John Salza) — Pints with Aquinas Ep. 383 (9 January 2023)",
       "url": "https://www.youtube.com/live/gd0OhVy1JtM",
-      "publisher": "Pints with Aquinas (YouTube — lay canonical commentary and ex-SSPX-chapel-attendee testimony, critical of sedevacantism and of the SSPX)",
+      "publisher": "Pints with Aquinas",
+      "publisherNote": "YouTube — lay canonical commentary and ex-SSPX-chapel-attendee testimony, critical of sedevacantism and of the SSPX",
       "type": "analysis"
     },
     {
@@ -2274,28 +2287,32 @@
       "id": "nobarco-190",
       "title": "Entenda o que é a excomunhão e erros da FSSPX (Pe. Bruno Otênio) — NOBARCO Podcast #190 (recorded 1 July 2026, before the DDF decree)",
       "url": "https://youtu.be/z19V7nTN5B8",
-      "publisher": "NOBARCO Podcast (YouTube — Brazilian diocesan-side commentary, critical of the SSPX)",
+      "publisher": "NOBARCO Podcast",
+      "publisherNote": "YouTube — Brazilian diocesan-side commentary, critical of the SSPX",
       "type": "analysis"
     },
     {
       "id": "nobarco-191",
       "title": "Ex-membro da FSSPX — Dr. Juliano — NOBARCO Podcast #191 (live, 6 July 2026)",
       "url": "https://www.youtube.com/live/baBrpIz6BLw",
-      "publisher": "NOBARCO Podcast (YouTube — ex-member testimony on a diocesan-side podcast; the speaker declares the aim of 'emptying' the SSPX)",
+      "publisher": "NOBARCO Podcast",
+      "publisherNote": "YouTube — ex-member testimony on a diocesan-side podcast; the speaker declares the aim of 'emptying' the SSPX",
       "type": "testimony"
     },
     {
       "id": "kuster-affonseca-catecismos",
       "title": "Entenda a Guerra dos Catecismos (Bernardo Küster & Pedro Affonseca) (17 June 2025)",
       "url": "https://www.youtube.com/live/6Nol3aGbdjk",
-      "publisher": "Bernardo P Küster (YouTube — Brazilian conservative commentary; lay critics of the SSPX from an in-communion position; Affonseca is ex-president of Centro Dom Bosco — testimony)",
+      "publisher": "Bernardo P Küster",
+      "publisherNote": "YouTube — Brazilian conservative commentary; lay critics of the SSPX from an in-communion position; Affonseca is ex-president of Centro Dom Bosco — testimony",
       "type": "analysis"
     },
     {
       "id": "fsspx-1974-declaration",
       "title": "1974 Declaration of Archbishop Lefebvre — full text, dated 21 November 1974",
       "url": "https://fsspx.org/en/1974-declaration-archbishop-lefebvre-31164",
-      "publisher": "SSPX General House (official)",
+      "publisher": "SSPX General House",
+      "publisherNote": "official",
       "type": "official",
       "official": true
     },
@@ -2303,7 +2320,8 @@
       "id": "sspxasia-1988-letter",
       "title": "Letter of Archbishop Lefebvre to Cardinal Ratzinger, 6 May 1988 (full text)",
       "url": "https://sspxasia.com/Documents/Archbishop-Lefebvre/Archbishop_Lefebvre_and_the_Vatican/Part_I/1988-05-06.htm",
-      "publisher": "SSPX Asia (SSPX-affiliated archive — sympathetic; primary text)",
+      "publisher": "SSPX Asia",
+      "publisherNote": "SSPX-affiliated archive — sympathetic; primary text",
       "type": "archive"
     },
     {
@@ -2317,7 +2335,8 @@
       "id": "fsspx-news-tissier-obit",
       "title": "Death of Bishop Bernard Tissier de Mallerais (8 October 2024)",
       "url": "https://fsspx.news/en/news/death-bishop-bernard-tissier-mallerais-47993",
-      "publisher": "FSSPX.News (official news organ — sympathetic obituary)",
+      "publisher": "FSSPX.News",
+      "publisherNote": "official news organ — sympathetic obituary",
       "type": "news",
       "official": true
     },
@@ -2325,7 +2344,8 @@
       "id": "sspx-tissier-funeral",
       "title": "Funeral of Bishop Bernard Tissier de Mallerais (Écône, 18 October 2024)",
       "url": "https://sspx.org/en/news/funeral-bishop-bernard-tissier-mallerais-48150",
-      "publisher": "SSPX (official)",
+      "publisher": "SSPX",
+      "publisherNote": "official",
       "type": "news",
       "official": true
     },
@@ -2333,21 +2353,24 @@
       "id": "osv-williamson-obit",
       "title": "Excommunicated Bishop Williamson dies at 84 (Cindy Wooden, 30 January 2025)",
       "url": "https://www.osvnews.com/excommunicated-bishop-williamson-dies-at-84/",
-      "publisher": "OSV News (mainstream Catholic news service)",
+      "publisher": "OSV News",
+      "publisherNote": "mainstream Catholic news service",
       "type": "news"
     },
     {
       "id": "catholic-hierarchy-castro-mayer",
       "title": "Bishop Antônio de Castro Mayer — Catholic-Hierarchy record (gives death date 26 April 1991)",
       "url": "https://www.catholic-hierarchy.org/bishop/bcasmay.html",
-      "publisher": "Catholic-Hierarchy.org (independent reference database)",
+      "publisher": "Catholic-Hierarchy.org",
+      "publisherNote": "independent reference database",
       "type": "database"
     },
     {
       "id": "rorate-faure-2015",
       "title": "Former SSPX bishop Williamson consecrates Fr. Jean-Michel Faure (19 March 2015)",
       "url": "https://rorate-caeli.blogspot.com/2015/03/breaking-exclusive-former-sspx-bishop.html",
-      "publisher": "Rorate Caeli (traditionalist blog — labeled as such)",
+      "publisher": "Rorate Caeli",
+      "publisherNote": "traditionalist blog — labeled as such",
       "type": "news"
     },
     {
@@ -2361,7 +2384,8 @@
       "id": "sspx-1988-sermon",
       "title": "Sermon of Archbishop Lefebvre at the episcopal consecrations, Écône, 30 June 1988 (full text, incl. the Palmar de Troya repudiation)",
       "url": "https://sspx.org/en/1988-episcopal-consecrations-sermon-30926",
-      "publisher": "SSPX (official)",
+      "publisher": "SSPX",
+      "publisherNote": "official",
       "type": "official",
       "official": true
     },
@@ -2369,21 +2393,24 @@
       "id": "sisinono-sedevacantist-priests",
       "title": "Meet the Sedevacantist Priests (Si Si No No, November 1998 — on Guérard des Lauriers's 1977 dismissal from Écône)",
       "url": "https://www.sspxasia.com/Documents/SiSiNoNo/1998_November/Meet_the_Sedevacantist_Priests.htm",
-      "publisher": "Si Si No No via SSPX Asia (SSPX perspective — critical of sedevacantism)",
+      "publisher": "Si Si No No via SSPX Asia",
+      "publisherNote": "SSPX perspective — critical of sedevacantism",
       "type": "analysis"
     },
     {
       "id": "imbc-murro-guerard",
       "title": "Life of Mgr. Guérard des Lauriers O.P. (Giuseppe Murro)",
       "url": "https://ttu-files.s3.us-east-2.amazonaws.com/Life-of-Mgr-Guerard-des-Lauriers-OP.pdf",
-      "publisher": "Istituto Mater Boni Consilii (sedeprivationist biography — labeled as such)",
+      "publisher": "Istituto Mater Boni Consilii",
+      "publisherNote": "sedeprivationist biography — labeled as such",
       "type": "analysis"
     },
     {
       "id": "novusordowatch-fellay-2018",
       "title": "Fellay, Schmidberger elected General Councillors — quoting the SSPX General House communiqué of 20 July 2018",
       "url": "https://novusordowatch.org/2018/07/fellay-schmidberger-advisors-sspx-leadership/",
-      "publisher": "Novus Ordo Watch (sedevacantist site — labeled as such; reproduces the SSPX communiqué)",
+      "publisher": "Novus Ordo Watch",
+      "publisherNote": "sedevacantist site — labeled as such; reproduces the SSPX communiqué",
       "type": "analysis"
     },
     {
@@ -2397,7 +2424,8 @@
       "id": "religioperennis-rama",
       "title": "Rama P. Coomaraswamy (1929–2006) — memorial by Stoddart & de Azevedo",
       "url": "http://www.religioperennis.org/documents/stoddart/On_Rama_Coomaraswamy-by_Stoddart_and_de_Azevedo.pdf",
-      "publisher": "religioperennis.org (participant/sympathetic — labeled)",
+      "publisher": "religioperennis.org",
+      "publisherNote": "participant/sympathetic — labeled",
       "type": "analysis"
     },
     {
@@ -2411,21 +2439,24 @@
       "id": "rama-validity-wayback",
       "title": "Rama Coomaraswamy, 'On the Validity of My Ordination' (the-pope.com, via Wayback)",
       "url": "https://web.archive.org/web/20061130041405/http://www.the-pope.com/validity.html",
-      "publisher": "the-pope.com via Internet Archive (primary — his own account)",
+      "publisher": "the-pope.com via Internet Archive",
+      "publisherNote": "primary — his own account",
       "type": "testimony"
     },
     {
       "id": "angelus-1983-clarification",
       "title": "'Clarification of Misinformation' — editorial, The Angelus, June 1983 (on the departure of the 'Nine' and the Ridgefield faculty)",
       "url": "https://isidore.co/misc/Res%20pro%20Deo/Pope%20St.%20Pius%20X%20&%E2%81%84or%20SSPX/The%20Angelus/HTMLs/768.html",
-      "publisher": "The Angelus / Angelus Press (SSPX magazine — the Society's own side of the 1983 split)",
+      "publisher": "The Angelus / Angelus Press",
+      "publisherNote": "SSPX magazine — the Society's own side of the 1983 split",
       "type": "analysis"
     },
     {
       "id": "stas-seminary-history",
       "title": "'Saying Good Bye to our Alma Mater' (11 June 2016) — Armada to Ridgefield in 1979, the 1983 exit of the 'Nine', Winona in 1988",
       "url": "https://stas.org/en/news/saying-good-bye-our-alma-mater-7546",
-      "publisher": "St. Thomas Aquinas Seminary / SSPX District of the USA (official)",
+      "publisher": "St. Thomas Aquinas Seminary / SSPX District of the USA",
+      "publisherNote": "official",
       "type": "news",
       "official": true
     },
@@ -2433,14 +2464,16 @@
       "id": "truerestoration-cekada-1983",
       "title": "Interview with Fr. Anthony Cekada on Archbishop Lefebvre and the 1983 split with the SSPX",
       "url": "https://truerestoration.org/an-interview-with-fr-anthony-cekada-regarding-archbishop-lefebvre-and-the-1983-split-with-the-sspx/",
-      "publisher": "True Restoration (sedevacantist site — one of the 'Nine' giving his own account; labeled as such)",
+      "publisher": "True Restoration",
+      "publisherNote": "sedevacantist site — one of the 'Nine' giving his own account; labeled as such",
       "type": "testimony"
     },
     {
       "id": "en-academic-rama",
       "title": "Rama Coomaraswamy — mirror of a since-deleted Wikipedia article",
       "url": "https://en-academic.com/dic.nsf/enwiki/548402",
-      "publisher": "en-academic.com (unattributed mirror of a deleted Wikipedia article — weak source, cited here only for claims explicitly flagged unverified)",
+      "publisher": "en-academic.com",
+      "publisherNote": "unattributed mirror of a deleted Wikipedia article — weak source, cited here only for claims explicitly flagged unverified",
       "type": "encyclopedia"
     },
     {
@@ -2455,7 +2488,8 @@
       "id": "laportelatine-lille-1976",
       "title": "Sermon of Archbishop Lefebvre at Lille, 29 August 1976 (full French text)",
       "url": "https://laportelatine.org/formation/mgr-lefebvre/sermons-historiques/lille-29-aout-1976",
-      "publisher": "La Porte Latine — SSPX District of France (the Society's own archive of the text; sympathetic)",
+      "publisher": "La Porte Latine — SSPX District of France",
+      "publisherNote": "the Society's own archive of the text; sympathetic",
       "type": "official",
       "official": true
     },
@@ -2463,42 +2497,48 @@
       "id": "cns-antipope-1976",
       "title": "Paul VI accused Archbishop Lefebvre of acting like an 'antipope' (Josephine Peterson, Catholic News Service, May 2018; republished by the USCCB, 16 July 2026)",
       "url": "https://www.usccb.org/news/2026/archives-paul-vi-accused-archbishop-lefebvre-acting-antipope",
-      "publisher": "USCCB / Catholic News Service (mainstream Catholic news service; reports the meeting note published in Mons. Leonardo Sapienza's 2018 book 'La Barca di Paolo')",
+      "publisher": "USCCB / Catholic News Service",
+      "publisherNote": "mainstream Catholic news service; reports the meeting note published in Mons. Leonardo Sapienza's 2018 book 'La Barca di Paolo'",
       "type": "news"
     },
     {
       "id": "pclt-note-1996",
       "title": "Explanatory Note on the excommunication for schism incurred by adherents of the movement of Archbishop Lefebvre (Pontifical Council for the Interpretation of Legislative Texts, 24 August 1996)",
       "url": "https://www.catholicculture.org/culture/library/view.cfm?recnum=1224",
-      "publisher": "Catholic Culture library (English text of a Holy See document; the carrier is a conservative Catholic library site — labeled as such)",
+      "publisher": "Catholic Culture library",
+      "publisherNote": "English text of a Holy See document; the carrier is a conservative Catholic library site — labeled as such",
       "type": "official"
     },
     {
       "id": "cwr-sspx-2018",
       "title": "Doctrine remains problem in relations, SSPX affirms after Vatican meeting (CNA, 26 November 2018)",
       "url": "https://www.catholicworldreport.com/2018/11/26/doctrine-remains-problem-in-relations-sspx-affirms-after-vatican-meeting/",
-      "publisher": "Catholic World Report / Catholic News Agency (mainstream Catholic news; quotes the SSPX's own assessment)",
+      "publisher": "Catholic World Report / Catholic News Agency",
+      "publisherNote": "mainstream Catholic news; quotes the SSPX's own assessment",
       "type": "news"
     },
     {
       "id": "chiesaepostconcilio-citati-2020",
       "title": "Don Angelo Citati, «L'esperienza della Tradizione o la \"Tradizione integrale\"? Riflessioni sulla situazione attuale della Fraternità Sacerdotale San Pio X» — the essay and his letter of departure (published 9 September 2020)",
       "url": "http://chiesaepostconcilio.blogspot.com/2020/09/lesperienza-della-tradizione-o-la.html",
-      "publisher": "Chiesa e post-concilio (Italian traditionalist blog — labeled as such; carries the priest's own text, i.e. a departing member's account in his own words)",
+      "publisher": "Chiesa e post-concilio",
+      "publisherNote": "Italian traditionalist blog — labeled as such; carries the priest's own text, i.e. a departing member's account in his own words",
       "type": "testimony"
     },
     {
       "id": "swissinfo-huonder-obit",
       "title": "Former bishop of Chur Vitus Huonder dies aged 81 (April 2024)",
       "url": "https://www.swissinfo.ch/eng/history/former-bishop-of-chur-vitus-huonder-dies-aged-81/75027696",
-      "publisher": "SWI swissinfo.ch (Swiss public broadcaster — independent secular perspective)",
+      "publisher": "SWI swissinfo.ch",
+      "publisherNote": "Swiss public broadcaster — independent secular perspective",
       "type": "news"
     },
     {
       "id": "fsspx-huonder",
       "title": "Bishop Vitus Huonder and the SSPX",
       "url": "https://fsspx.news/en/news/bishop-vitus-huonder-and-sspx-43977",
-      "publisher": "FSSPX.News (SSPX official — the Society's own account of its relationship with him; sympathetic)",
+      "publisher": "FSSPX.News",
+      "publisherNote": "SSPX official — the Society's own account of its relationship with him; sympathetic",
       "type": "analysis",
       "official": true
     },
@@ -2506,35 +2546,40 @@
       "id": "onepeterfive-ddf-statement-2026",
       "title": "The SSPX Meets with the Vatican — full text of the DDF statement on the meeting of 12 February 2026 (T. S. Flanders, 12 February 2026)",
       "url": "https://onepeterfive.com/the-sspx-meets-with-the-vatican/",
-      "publisher": "OnePeterFive (traditionalist-leaning — labeled as such; reproduces Diane Montagna's English translation of the Dicastery's statement, followed by the site's own commentary)",
+      "publisher": "OnePeterFive",
+      "publisherNote": "traditionalist-leaning — labeled as such; reproduces Diane Montagna's English translation of the Dicastery's statement, followed by the site's own commentary",
       "type": "analysis"
     },
     {
       "id": "infovaticana-schneider-2026",
       "title": "Msgr. Schneider asks Leo XIV to build a bridge with the FSSPX (24 February 2026)",
       "url": "https://infovaticana.com/en/2026/02/24/msgr-schneider-asks-leo-xiv-to-build-a-bridge-with-the-fsspx/",
-      "publisher": "InfoVaticana (Spanish Catholic news site, traditionalist-leaning — labeled as such)",
+      "publisher": "InfoVaticana",
+      "publisherNote": "Spanish Catholic news site, traditionalist-leaning — labeled as such",
       "type": "news"
     },
     {
       "id": "acidigital-rifan-2025",
       "title": "Leão XIV pede para dom Rifan seguir como bispo da prelazia que mantém liturgia tradicional em Campos (21 November 2025)",
       "url": "https://www.acidigital.com/noticia/65569/leao-xiv-pede-para-dom-rifan-seguir-como-bispo-da-prelazia-que-mantem-liturgia-tradicional-em-campos",
-      "publisher": "ACI Digital (Portuguese-language service of the Catholic News Agency — mainstream Catholic news)",
+      "publisher": "ACI Digital",
+      "publisherNote": "Portuguese-language service of the Catholic News Agency — mainstream Catholic news",
       "type": "news"
     },
     {
       "id": "j3news-rifan-2026",
       "title": "Bispo Dom Fernando Rifan anuncia que deixará o cargo em 2027 (12 January 2026)",
       "url": "https://j3news.com/2026/01/12/bispo-dom-fernando-rifan-anuncia-que-deixara-o-cargo-em-2027/",
-      "publisher": "J3News (regional news, Campos dos Goytacazes, Brazil)",
+      "publisher": "J3News",
+      "publisherNote": "regional news, Campos dos Goytacazes, Brazil",
       "type": "news"
     },
     {
       "id": "infovaticana-rifan-2026",
       "title": "The Pope grants an extension to Mons. Rifan for 18 months to prepare his succession (15 January 2026)",
       "url": "https://infovaticana.com/en/2026/01/15/the-pope-grants-an-extension-to-mons-rifan-for-18-months-to-prepare-his-succession/",
-      "publisher": "InfoVaticana (Spanish Catholic news site, traditionalist-leaning — labeled as such)",
+      "publisher": "InfoVaticana",
+      "publisherNote": "Spanish Catholic news site, traditionalist-leaning — labeled as such",
       "type": "news"
     },
     {
