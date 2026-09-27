@@ -15,11 +15,21 @@
     },
     "renderPage": {
       "reason": "stylesheet path by route depth; page order: Divisions leads, spine/storylines/divisions open the page, genealogy after the chronology (fsspx#28)",
-      "base": "45fda29b9eea"
+      "base": "ad7f7a46fe89"
     },
     "main": {
       "reason": "writes the per-figure pages and adds their routes to the sitemap (ADR-0003)",
-      "base": "7d2f6fde8121"
+      "base": "5a146fdd98fb"
+    }
+  },
+  "tests": {
+    "data-invariants.test.js": {
+      "reason": "fsspx's sitemap also lists the per-figure pages (renderFigurePage)",
+      "base": "274d14a6a81b"
+    },
+    "viz-renderers.test.js": {
+      "reason": "fsspx customises renderPage (page order, figure pages), which the template test's page-order assertions pin",
+      "base": "49113167f361"
     }
   }
 }
