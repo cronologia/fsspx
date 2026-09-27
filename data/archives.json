@@ -1,6 +1,6 @@
 {
   "generatedBy": "scripts/archive-refs.js",
-  "updatedAt": "2026-09-21",
+  "updatedAt": "2026-09-27",
   "snapshots": {
     "http://chiesaepostconcilio.blogspot.com/2020/09/lesperienza-della-tradizione-o-la.html": {
       "refId": "chiesaepostconcilio-citati-2020",
@@ -130,15 +130,15 @@
     },
     "https://fsspx.news/en/news/bishop-vitus-huonder-and-sspx-43977": {
       "refId": "fsspx-huonder",
-      "archiveUrl": "https://web.archive.org/web/20251016181108/https://fsspx.news/en/news/bishop-vitus-huonder-and-sspx-43977",
-      "timestamp": "20251016181108",
-      "checkedAt": "2026-07-25"
+      "archiveUrl": "https://web.archive.org/web/20260927180703/https://fsspx.news/en/news/bishop-vitus-huonder-and-sspx-43977",
+      "timestamp": "20260927180703",
+      "checkedAt": "2026-09-27"
     },
     "https://fsspx.news/en/news/death-bishop-bernard-tissier-mallerais-47993": {
       "refId": "fsspx-news-tissier-obit",
-      "archiveUrl": "https://web.archive.org/web/20260831135446/https://fsspx.news/en/news/death-bishop-bernard-tissier-mallerais-47993",
-      "timestamp": "20260831135446",
-      "checkedAt": "2026-08-31"
+      "archiveUrl": "https://web.archive.org/web/20260927180140/https://fsspx.news/en/news/death-bishop-bernard-tissier-mallerais-47993",
+      "timestamp": "20260927180140",
+      "checkedAt": "2026-09-27"
     },
     "https://fsspx.news/en/news/general-house-communique-society-files-recourse-against-decree-2-july-2026-60112": {
       "refId": "fsspx-news-recourse",
@@ -166,15 +166,21 @@
     },
     "https://fsspx.org/en/1974-declaration-archbishop-lefebvre-31164": {
       "refId": "fsspx-1974-declaration",
-      "archiveUrl": "https://web.archive.org/web/20260824072557/https://fsspx.org/en/1974-declaration-archbishop-lefebvre-31164",
-      "timestamp": "20260824072557",
-      "checkedAt": "2026-08-24"
+      "archiveUrl": "https://web.archive.org/web/20260927180104/https://fsspx.org/en/1974-declaration-archbishop-lefebvre-31164",
+      "timestamp": "20260927180104",
+      "checkedAt": "2026-09-27"
     },
     "https://infovaticana.com/en/2026/01/15/the-pope-grants-an-extension-to-mons-rifan-for-18-months-to-prepare-his-succession/": {
       "refId": "infovaticana-rifan-2026",
       "archiveUrl": "https://web.archive.org/web/20260907124015/https://infovaticana.com/en/2026/01/15/the-pope-grants-an-extension-to-mons-rifan-for-18-months-to-prepare-his-succession/",
       "timestamp": "20260907124015",
       "checkedAt": "2026-09-07"
+    },
+    "https://infovaticana.com/en/2026/02/24/msgr-schneider-asks-leo-xiv-to-build-a-bridge-with-the-fsspx/": {
+      "refId": "infovaticana-schneider-2026",
+      "archiveUrl": "https://web.archive.org/web/20260224222533/https://infovaticana.com/en/2026/02/24/msgr-schneider-asks-leo-xiv-to-build-a-bridge-with-the-fsspx/",
+      "timestamp": "20260224222533",
+      "checkedAt": "2026-09-27"
     },
     "https://j3news.com/2026/01/12/bispo-dom-fernando-rifan-anuncia-que-deixara-o-cargo-em-2027/": {
       "refId": "j3news-rifan-2026",
@@ -232,15 +238,15 @@
     },
     "https://sspx.org/en/1988-episcopal-consecrations-sermon-30926": {
       "refId": "sspx-1988-sermon",
-      "archiveUrl": "https://web.archive.org/web/20260803101507/https://sspx.org/en/1988-episcopal-consecrations-sermon-30926",
-      "timestamp": "20260803101507",
-      "checkedAt": "2026-08-03"
+      "archiveUrl": "https://web.archive.org/web/20260927180244/https://sspx.org/en/1988-episcopal-consecrations-sermon-30926",
+      "timestamp": "20260927180244",
+      "checkedAt": "2026-09-27"
     },
     "https://sspx.org/en/news/funeral-bishop-bernard-tissier-mallerais-48150": {
       "refId": "sspx-tissier-funeral",
-      "archiveUrl": "https://web.archive.org/web/20260221034208/https://sspx.org/en/news/funeral-bishop-bernard-tissier-mallerais-48150",
-      "timestamp": "20260221034208",
-      "checkedAt": "2026-07-25"
+      "archiveUrl": "https://web.archive.org/web/20260927180215/https://sspx.org/en/news/funeral-bishop-bernard-tissier-mallerais-48150",
+      "timestamp": "20260927180215",
+      "checkedAt": "2026-09-27"
     },
     "https://sspx.org/en/news/timeline-society-saint-pius-xs-july-1-2026-episcopal-consecrations-60126": {
       "refId": "sspx-org",
@@ -412,15 +418,15 @@
     },
     "https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html": {
       "refId": "summorum-pontificum",
-      "archiveUrl": "https://web.archive.org/web/20260903172557/https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html",
-      "timestamp": "20260903172557",
-      "checkedAt": "2026-09-07"
+      "archiveUrl": "https://web.archive.org/web/20260927175620/https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html",
+      "timestamp": "20260927175620",
+      "checkedAt": "2026-09-27"
     },
     "https://www.vatican.va/content/francesco/en/apost_letters/documents/papa-francesco-lettera-ap_20161120_misericordia-et-misera.html": {
       "refId": "misericordia-et-misera",
-      "archiveUrl": "https://web.archive.org/web/20260831134702/https://www.vatican.va/content/francesco/en/apost_letters/documents/papa-francesco-lettera-ap_20161120_misericordia-et-misera.html",
-      "timestamp": "20260831134702",
-      "checkedAt": "2026-08-31"
+      "archiveUrl": "https://web.archive.org/web/20260927175722/https://www.vatican.va/content/francesco/en/apost_letters/documents/papa-francesco-lettera-ap_20161120_misericordia-et-misera.html",
+      "timestamp": "20260927175722",
+      "checkedAt": "2026-09-27"
     },
     "https://www.vatican.va/content/francesco/en/motu_proprio/documents/20210716-motu-proprio-traditionis-custodes.html": {
       "refId": "traditionis-custodes",
@@ -430,9 +436,9 @@
     },
     "https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html": {
       "refId": "ecclesia-dei",
-      "archiveUrl": "https://web.archive.org/web/20260907122844/https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html",
-      "timestamp": "20260907122844",
-      "checkedAt": "2026-09-07"
+      "archiveUrl": "https://web.archive.org/web/20260927175549/https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html",
+      "timestamp": "20260927175549",
+      "checkedAt": "2026-09-27"
     },
     "https://www.vatican.va/content/paul-vi/it/audiences/1969/documents/hf_p-vi_aud_19691119.html": {
       "refId": "vatican-audience-19691119",
@@ -442,15 +448,15 @@
     },
     "https://www.vatican.va/roman_curia/congregations/cbishops/documents/rc_con_cbishops_doc_20090121_remissione-scomunica_en.html": {
       "refId": "decree-2009",
-      "archiveUrl": "https://web.archive.org/web/20260831134630/https://www.vatican.va/roman_curia/congregations/cbishops/documents/rc_con_cbishops_doc_20090121_remissione-scomunica_en.html",
-      "timestamp": "20260831134630",
-      "checkedAt": "2026-08-31"
+      "archiveUrl": "https://web.archive.org/web/20260927175650/https://www.vatican.va/roman_curia/congregations/cbishops/documents/rc_con_cbishops_doc_20090121_remissione-scomunica_en.html",
+      "timestamp": "20260927175650",
+      "checkedAt": "2026-09-27"
     },
     "https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html": {
       "refId": "ecclesia-dei-marriages",
-      "archiveUrl": "https://web.archive.org/web/20260831134830/https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html",
-      "timestamp": "20260831134830",
-      "checkedAt": "2026-09-07"
+      "archiveUrl": "https://web.archive.org/web/20260907122947/https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html",
+      "timestamp": "20260907122947",
+      "checkedAt": "2026-09-27"
     },
     "https://www.washingtonpost.com/obituaries/2025/01/31/bishop-richard-williamson-dead/": {
       "refId": "wapo-williamson-obit",
