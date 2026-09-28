@@ -1,6 +1,6 @@
 {
   "generatedBy": "scripts/archive-refs.js",
-  "updatedAt": "2026-09-27",
+  "updatedAt": "2026-09-28",
   "snapshots": {
     "http://chiesaepostconcilio.blogspot.com/2020/09/lesperienza-della-tradizione-o-la.html": {
       "refId": "chiesaepostconcilio-citati-2020",
@@ -160,9 +160,9 @@
     },
     "https://fsspx.org/en": {
       "refId": "fsspx-org",
-      "archiveUrl": "https://web.archive.org/web/20260706132245/https://fsspx.org/en",
-      "timestamp": "20260706132245",
-      "checkedAt": "2026-07-30"
+      "archiveUrl": "https://web.archive.org/web/20260928135221/https://fsspx.org/en",
+      "timestamp": "20260928135221",
+      "checkedAt": "2026-09-28"
     },
     "https://fsspx.org/en/1974-declaration-archbishop-lefebvre-31164": {
       "refId": "fsspx-1974-declaration",
@@ -182,6 +182,12 @@
       "timestamp": "20260224222533",
       "checkedAt": "2026-09-27"
     },
+    "https://isidore.co/misc/Res%20pro%20Deo/Pope%20St.%20Pius%20X%20&%E2%81%84or%20SSPX/The%20Angelus/HTMLs/768.html": {
+      "refId": "angelus-1983-clarification",
+      "archiveUrl": "https://web.archive.org/web/20260928135548/https://isidore.co/misc/Res%20pro%20Deo/Pope%20St.%20Pius%20X%20&%E2%81%84or%20SSPX/The%20Angelus/HTMLs/768.html",
+      "timestamp": "20260928135548",
+      "checkedAt": "2026-09-28"
+    },
     "https://j3news.com/2026/01/12/bispo-dom-fernando-rifan-anuncia-que-deixara-o-cargo-em-2027/": {
       "refId": "j3news-rifan-2026",
       "archiveUrl": "https://web.archive.org/web/20260214010243/https://j3news.com/2026/01/12/bispo-dom-fernando-rifan-anuncia-que-deixara-o-cargo-em-2027/",
@@ -190,9 +196,9 @@
     },
     "https://laportelatine.org/formation/mgr-lefebvre/sermons-historiques/lille-29-aout-1976": {
       "refId": "laportelatine-lille-1976",
-      "archiveUrl": "https://web.archive.org/web/20260309094230/https://laportelatine.org/formation/mgr-lefebvre/sermons-historiques/lille-29-aout-1976",
-      "timestamp": "20260309094230",
-      "checkedAt": "2026-07-25"
+      "archiveUrl": "https://web.archive.org/web/20260928135749/https://laportelatine.org/formation/mgr-lefebvre/sermons-historiques/lille-29-aout-1976",
+      "timestamp": "20260928135749",
+      "checkedAt": "2026-09-28"
     },
     "https://magnuslundberg.net/2016/04/30/chronological-outline-of-the-palmarian-church/": {
       "refId": "lundberg-palmar",
@@ -250,9 +256,9 @@
     },
     "https://sspx.org/en/news/timeline-society-saint-pius-xs-july-1-2026-episcopal-consecrations-60126": {
       "refId": "sspx-org",
-      "archiveUrl": "https://web.archive.org/web/20260715072715/https://sspx.org/en/news/timeline-society-saint-pius-xs-july-1-2026-episcopal-consecrations-60126",
-      "timestamp": "20260715072715",
-      "checkedAt": "2026-07-19"
+      "archiveUrl": "https://web.archive.org/web/20260928135148/https://sspx.org/en/news/timeline-society-saint-pius-xs-july-1-2026-episcopal-consecrations-60126",
+      "timestamp": "20260928135148",
+      "checkedAt": "2026-09-28"
     },
     "https://sspx.org/en/validity-holy-orders-31796": {
       "refId": "angelus-1978-validity-orders",
@@ -268,9 +274,9 @@
     },
     "https://stas.org/en/news/saying-good-bye-our-alma-mater-7546": {
       "refId": "stas-seminary-history",
-      "archiveUrl": "https://web.archive.org/web/20260810081650/https://stas.org/en/news/saying-good-bye-our-alma-mater-7546",
-      "timestamp": "20260810081650",
-      "checkedAt": "2026-08-10"
+      "archiveUrl": "https://web.archive.org/web/20260928135631/https://stas.org/en/news/saying-good-bye-our-alma-mater-7546",
+      "timestamp": "20260928135631",
+      "checkedAt": "2026-09-28"
     },
     "https://traditionalistblog.blogspot.com/2022/01/Olavodeath.html": {
       "refId": "sedgwick-blog-olavo-death",
@@ -430,9 +436,9 @@
     },
     "https://www.vatican.va/content/francesco/en/motu_proprio/documents/20210716-motu-proprio-traditionis-custodes.html": {
       "refId": "traditionis-custodes",
-      "archiveUrl": "https://web.archive.org/web/20260904171645/https://www.vatican.va/content/francesco/en/motu_proprio/documents/20210716-motu-proprio-traditionis-custodes.html",
-      "timestamp": "20260904171645",
-      "checkedAt": "2026-09-07"
+      "archiveUrl": "https://web.archive.org/web/20260923170730/https://www.vatican.va/content/francesco/en/motu_proprio/documents/20210716-motu-proprio-traditionis-custodes.html",
+      "timestamp": "20260923170730",
+      "checkedAt": "2026-09-28"
     },
     "https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html": {
       "refId": "ecclesia-dei",
@@ -442,9 +448,9 @@
     },
     "https://www.vatican.va/content/paul-vi/it/audiences/1969/documents/hf_p-vi_aud_19691119.html": {
       "refId": "vatican-audience-19691119",
-      "archiveUrl": "https://web.archive.org/web/20260712042951/https://www.vatican.va/content/paul-vi/it/audiences/1969/documents/hf_p-vi_aud_19691119.html",
-      "timestamp": "20260712042951",
-      "checkedAt": "2026-07-25"
+      "archiveUrl": "https://web.archive.org/web/20260927180549/https://www.vatican.va/content/paul-vi/it/audiences/1969/documents/hf_p-vi_aud_19691119.html",
+      "timestamp": "20260927180549",
+      "checkedAt": "2026-09-28"
     },
     "https://www.vatican.va/roman_curia/congregations/cbishops/documents/rc_con_cbishops_doc_20090121_remissione-scomunica_en.html": {
       "refId": "decree-2009",
@@ -454,9 +460,9 @@
     },
     "https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html": {
       "refId": "ecclesia-dei-marriages",
-      "archiveUrl": "https://web.archive.org/web/20260907122947/https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html",
-      "timestamp": "20260907122947",
-      "checkedAt": "2026-09-27"
+      "archiveUrl": "https://web.archive.org/web/20260927175752/https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html",
+      "timestamp": "20260927175752",
+      "checkedAt": "2026-09-28"
     },
     "https://www.washingtonpost.com/obituaries/2025/01/31/bishop-richard-williamson-dead/": {
       "refId": "wapo-williamson-obit",
