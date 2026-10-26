@@ -1,6 +1,6 @@
 {
   "generatedBy": "scripts/archive-refs.js",
-  "updatedAt": "2026-10-19",
+  "updatedAt": "2026-10-26",
   "snapshots": {
     "http://chiesaepostconcilio.blogspot.com/2020/09/lesperienza-della-tradizione-o-la.html": {
       "refId": "chiesaepostconcilio-citati-2020",
@@ -196,9 +196,9 @@
     },
     "https://laportelatine.org/formation/mgr-lefebvre/sermons-historiques/lille-29-aout-1976": {
       "refId": "laportelatine-lille-1976",
-      "archiveUrl": "https://web.archive.org/web/20260928135749/https://laportelatine.org/formation/mgr-lefebvre/sermons-historiques/lille-29-aout-1976",
-      "timestamp": "20260928135749",
-      "checkedAt": "2026-09-28"
+      "archiveUrl": "https://web.archive.org/web/20261026130822/https://laportelatine.org/formation/mgr-lefebvre/sermons-historiques/lille-29-aout-1976",
+      "timestamp": "20261026130822",
+      "checkedAt": "2026-10-26"
     },
     "https://magnuslundberg.net/2016/04/30/chronological-outline-of-the-palmarian-church/": {
       "refId": "lundberg-palmar",
@@ -432,7 +432,7 @@
       "refId": "summorum-pontificum",
       "archiveUrl": "https://web.archive.org/web/20261012152031/https://www.vatican.va/content/benedict-xvi/en/motu_proprio/documents/hf_ben-xvi_motu-proprio_20070707_summorum-pontificum.html",
       "timestamp": "20261012152031",
-      "checkedAt": "2026-10-12"
+      "checkedAt": "2026-10-26"
     },
     "https://www.vatican.va/content/francesco/en/apost_letters/documents/papa-francesco-lettera-ap_20161120_misericordia-et-misera.html": {
       "refId": "misericordia-et-misera",
@@ -450,7 +450,7 @@
       "refId": "ecclesia-dei",
       "archiveUrl": "https://web.archive.org/web/20261012151904/https://www.vatican.va/content/john-paul-ii/en/motu_proprio/documents/hf_jp-ii_motu-proprio_02071988_ecclesia-dei.html",
       "timestamp": "20261012151904",
-      "checkedAt": "2026-10-12"
+      "checkedAt": "2026-10-26"
     },
     "https://www.vatican.va/content/paul-vi/it/audiences/1969/documents/hf_p-vi_aud_19691119.html": {
       "refId": "vatican-audience-19691119",
@@ -466,9 +466,9 @@
     },
     "https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html": {
       "refId": "ecclesia-dei-marriages",
-      "archiveUrl": "https://web.archive.org/web/20260927175752/https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html",
-      "timestamp": "20260927175752",
-      "checkedAt": "2026-09-28"
+      "archiveUrl": "https://web.archive.org/web/20260928135011/https://www.vatican.va/roman_curia/pontifical_commissions/ecclsdei/documents/rc_com_ecclsdei_doc_20170327_lettera-presuli_en.html",
+      "timestamp": "20260928135011",
+      "checkedAt": "2026-10-26"
     },
     "https://www.washingtonpost.com/obituaries/2025/01/31/bishop-richard-williamson-dead/": {
       "refId": "wapo-williamson-obit",
